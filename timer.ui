@@ -1,0 +1,114 @@
+import QtQuick 2.4
+import QtGraphicalEffects 1.0
+
+Item {
+    id: element
+    width: 400
+    height: 400
+
+    Rectangle {
+        id: rectangle2
+        x: 0
+        y: 0
+        width: 401
+        height: 401
+        color: "#a0acac"
+    }
+
+    Button {
+        id: start_stop
+        y: 231
+        width: 118
+        height: 136
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 25
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+
+        Rectangle {
+            id: rectangle
+            x: -2
+            y: 0
+            width: 120
+            height: 139
+            color: "#78d51d"
+            radius: 60
+            anchors.leftMargin: 30
+            anchors.bottomMargin: 25
+        }
+    }
+
+    Rectangle {
+        id: rectangle1
+        width: 344
+        height: 200
+        color: "#30cfd0"
+        radius: 40
+        gradient: Gradient {
+            GradientStop {
+                position: 0
+                color: "#81cbcb"
+            }
+
+            GradientStop {
+                position: 0.328
+                color: "#81cbcb"
+            }
+
+            GradientStop {
+                position: 1
+                color: "#330867"
+            }
+        }
+        visible: true
+        opacity: 0.37
+        clip: false
+        anchors.top: parent.top
+        anchors.topMargin: 25
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+    }
+
+    Text {
+        id: timer
+        x: 62
+        y: 87
+        width: 282
+        height: 106
+        text: qsTr("00:00:00")
+        styleColor: "#010000"
+        textFormat: Text.AutoText
+        lineHeight: 10
+        fontSizeMode: Text.VerticalFit
+        horizontalAlignment: Text.AlignHCenter
+        font.pixelSize: 60
+    }
+
+    Button {
+        id: start_stop1
+        x: -6
+        y: 224
+        width: 118
+        height: 136
+        anchors.leftMargin: 30
+        anchors.bottomMargin: 25
+        Rectangle {
+            id: rectangle3
+            x: 155
+            y: 13
+            width: 120
+            height: 139
+            color: "#78d51d"
+            radius: 60
+            anchors.bottomMargin: 25
+            anchors.leftMargin: 30
+        }
+    }
+}
+
+/*##^##
+Designer {
+    D{i:2;anchors_height:136;anchors_x:33;anchors_y:231}D{i:4;anchors_x:42;anchors_y:27}
+D{i:10;anchors_height:136;anchors_x:33;anchors_y:231}
+}
+##^##*/
