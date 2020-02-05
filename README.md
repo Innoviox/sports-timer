@@ -1,2 +1,8 @@
 # sports-timer
-An incredibly innovative small sports timer app
+ZFC: Zermelo-Fraenkel Choice
+
+Ideas
+
+- gradient of best to worst laps
+- triangle ui
+- 
