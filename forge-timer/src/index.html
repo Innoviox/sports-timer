@@ -3,12 +3,23 @@
   <head>
     <meta charset="UTF-8">
     <title>Sports Timer</title>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="odometer-theme-default.css" />
-    <script src="lib/odometer.js"></script>
+    <link rel="stylesheet" href="lib/odometer-theme-default.css" />
+    <script src="lib/odometer.min.js"></script>
+
+    <script src="dom.js"></script>
   </head>
+
   <body>
     <h1>Timer</h1>
-    <p></p>
+    <div id="timer">
+      <div id="hours" class="odometer">00</div>:
+      <div id="minutes" class="odometer">00</div>:
+      <div id="seconds" class="odometer">00</div>.
+      <div id="ms" class="odometer">00</div>
+    </div>
   </body>
 </html>
