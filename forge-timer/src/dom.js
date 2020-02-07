@@ -11,10 +11,11 @@ const pad = (number, zeros) => {
 const tick = (el, max, padding, update_time) => {
     setInterval(() => {
         let time = Date.now() - start;
-        console.log(time, update_time, time / update_time);
-        el.html(pad((time / update_time) % max, padding));
+        el.html(pad(parseInt(time / update_time) % max, padding));
     }, update_time);
 };
+
+
 
 $(document).ready(() => {
     tick($("#hours"), 99, 2, 360000);
