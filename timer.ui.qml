@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 2.0
 
 Item {
     id: element
@@ -7,7 +8,7 @@ Item {
     height: 400
 
     Rectangle {
-        id: rectangle2
+        id: background
         x: 0
         y: 0
         width: 401
@@ -15,31 +16,8 @@ Item {
         color: "#000000"
     }
 
-    Button {
-        id: lap
-        y: 239
-        width: 102
-        height: 136
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 25
-        anchors.left: parent.left
-        anchors.leftMargin: 30
-
-        Rectangle {
-            id: rectangle
-            x: -2
-            y: 0
-            width: 104
-            height: 139
-            color: "#78d51d"
-            radius: 60
-            anchors.leftMargin: 30
-            anchors.bottomMargin: 25
-        }
-    }
-
     Rectangle {
-        id: rectangle1
+        id: timer_background
         width: 344
         height: 200
         color: "#30cfd0"
@@ -73,7 +51,9 @@ Item {
             x: 0
             y: 0
             width: 344
-            height: 200
+            height: 192
+            text: qsTr("Button")
+            visible: false
         }
     }
 
@@ -93,32 +73,48 @@ Item {
         font.pixelSize: 60
     }
 
-    Button {
-        id: reset
-        x: 272
-        y: 239
-        width: 102
-        height: 136
-        anchors.leftMargin: 30
-        anchors.bottomMargin: 25
-        Rectangle {
-            id: rectangle4
-            x: -2
+    Rectangle {
+        id: lap_background
+        x: 30
+        y: 262
+        width: 87
+        height: 106
+        color: "#21ef3a"
+        radius: 40
+        border.width: 1
+
+        Button {
+            id: lap
+            x: 0
             y: 0
-            width: 104
-            height: 139
-            color: "#78d51d"
-            radius: 60
-            anchors.bottomMargin: 25
-            anchors.leftMargin: 30
+            width: 87
+            height: 106
+            text: qsTr("Button")
+            visible: false
+        }
+    }
+
+    Rectangle {
+        id: reset_background
+        x: 287
+        y: 262
+        width: 87
+        height: 106
+        color: "#21ef3a"
+        radius: 40
+        border.width: 1
+
+        Button {
+            id: reset_button
+            x: 0
+            y: 0
+            width: 87
+            height: 106
+            text: qsTr("Button")
+            visible: false
         }
     }
 }
 
-/*##^##
-Designer {
-    D{i:2;anchors_height:136;anchors_x:33;anchors_y:231}D{i:4;anchors_x:42;anchors_y:27}
-D{i:11;anchors_height:136;anchors_x:33;anchors_y:231}
-}
-##^##*/
+
 
