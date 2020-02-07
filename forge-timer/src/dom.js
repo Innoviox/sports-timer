@@ -24,5 +24,5 @@ $(document).ready(() => {
     tick($("#hours"), 99, 2, 360000);
     tick($('#minutes'), 60, 2, 60000);
     tick($('#seconds'), 60, 2, 1000);
-    tick($('#ms'), 1000, 4, 100);
+    tick($('#ms'), 100, 4, 10);
 });
