@@ -49,7 +49,7 @@ const start = (reset_first) => {
     }
 
     isPaused = false; // start the timer
-    $("#toggle-button").html("Pause"); // the toggle button now pauses
+    $("#toggle-button").html("<u>P</u>ause"); // the toggle button now pauses
 
     tick($("#hours"), 99, 2, 360000, 0);
     tick($('#minutes'), 60, 2, 60000, 1);
@@ -74,7 +74,7 @@ const reset = () => {
     $("#ms").html("");
 
     isPaused = true;
-    $("#toggle-button").html("Start"); // the toggle button now starts
+    $("#toggle-button").html("<u>S</u>tart"); // the toggle button now starts
 
     pauseTime = undefined;
 };
@@ -96,17 +96,26 @@ const addLap = () => {
  */
 const timer_toggle = () => {
     if (isPaused) {
-        if (pauseTime !== undefined) {
-            offset += Date.now() - pauseTime;
-        }
-        
+        if (pauseTime !== undefined) { offset += Date.now() - pauseTime; }
         start(offset===0);
     } else {
         isPaused = true;
         pauseTime = Date.now();
-        $("#toggle-button").html("Resume");
+        $("#toggle-button").html("R<u>e</u>sume");
     }
 };
 
 // $(document).ready(start);
 
+$(document).keypress(e => {
+    switch (e.key) {
+        case "l": addLap(); break;
+        case "r": reset(); break;
+        case "s":
+        case "e":
+        case "p":
+            timer_toggle();
+            break;
+        default: break;
+    }
+});
