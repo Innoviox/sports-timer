@@ -41,3 +41,7 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+const addLap = () => {
+    console.log($("#timer *"));
+}

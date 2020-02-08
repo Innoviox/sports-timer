@@ -33,6 +33,7 @@ body {
 #lap_list {
 	grid-column: 2 / 4;
 	background-color: white;
+	overflow: scroll;
 }
 
 .container > button {
