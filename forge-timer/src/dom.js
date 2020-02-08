@@ -125,7 +125,8 @@ $(document).keypress(e => {
     if (e.key === "l") { addLap(); }
     else if (e.key === "r") { reset(); }
     else if (e.key === "s" && isPaused ||
-        e.key === "p" && !isPaused) {
+        e.key === "p" && !isPaused ||
+        e.key === " ") {
         toggleTimer();
     }
 });
