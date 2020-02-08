@@ -6,7 +6,7 @@ Each timer is broken down into phases (warmup, etc.)
 
 Each phase is broken down into segments.
 
-Each segment has a length and a direction (up/down).
+Each segment has a length and a direction (up/down) or (Stopwatch/Timer).
 
 For example:
 
