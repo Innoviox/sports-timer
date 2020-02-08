@@ -62,7 +62,7 @@ const reset = () => {
 const addLap = () => {
     let newLap = `${timer[0]}:${timer[1]}:${timer[2]}.${timer[3]}`; //Get current stopwatch t
     laps.push(newLap);
-    $("#lap_list").append(newLap + "<br>");
+    $("#lap-list").append(newLap + "<br>");
 }
 
 $(document).ready(start);

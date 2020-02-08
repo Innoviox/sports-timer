@@ -8,7 +8,7 @@ body {
 .container {
 
 	width: 40rem;
-	height: 12rem;
+	height: 14rem;
 
 	display: grid;
 	grid-template-columns: repeat(4, 1fr); /* four equal spaced columns */
@@ -25,12 +25,17 @@ body {
 
 #timer {
 	grid-column: 1 / 5; /*Span the entire 3-column container*/
-    font-size: 60pt;
-    background-color: lightblue;
+	background-color: lightblue;
     text-align: center;
+    font-size: 60pt;
 }
 
-#lap_list {
+#timer .timer-label {
+	font-size: 24pt;
+	font-weight: bold;
+}
+
+#lap-list {
 	grid-column: 2 / 4;
 	background-color: white;
 	overflow: scroll;
