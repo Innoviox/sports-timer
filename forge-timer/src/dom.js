@@ -7,6 +7,7 @@ let isPaused = true; // If the timer is paused or not; starts paused
 let intervals = []; // the set of intervals
 let direction = ""; // direction (Stopwatch -> count up, Timer -> count down)
 let amount = []; // max amount for Timer, array of hours/minutes/seconds/ms
+let total = 0; // the amount array, reduced to milliseconds
 
 window.odometerOptions = {
     auto: false, // Don't automatically initialize everything with class 'odometer'
@@ -37,10 +38,11 @@ const tick = (el, max, padding, updateTime, index) => {
         let currentTime = Date.now() - startTime;
         let number;
         if (direction === "Stopwatch") {
-            number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
+            number = currentTime - offset
         } else {
-            number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
+            number = total - currentTime - offset;
         }
+        number = pad(parseInt(number) % max, padding);
         timer[index] = number;
         el.html(number);
     }, 10);

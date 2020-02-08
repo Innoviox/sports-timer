@@ -19,8 +19,14 @@ $(document).ready(() => {
     $("#create-form").on('submit', (e) => {
         e.preventDefault();
         direction = $("#direction-select").val();
-        amount = $(".amount").map(function() { return this.value; }).get();
-        console.log(amount);
+        amount = $(".amount").map(function() {
+            let v = parseInt(this.value);
+            if (isNaN(v)) {
+                return 0;
+            }
+            return v
+        }).get();
+        total = amount.map((e, idx) => e * [360000, 60000, 1000, 10][idx]).reduce((a, b) => a + b);
         reset();
     })
 });
