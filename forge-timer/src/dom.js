@@ -1,5 +1,6 @@
 let startTime = Date.now();
 let offset = 0; // Amount of time the user has paused the current stopwatch
+let pauseTime; // Time that the user paused
 let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
 let isPaused = true; // If the timer is paused or not; starts paused
@@ -41,12 +42,14 @@ const tick = (el, max, padding, updateTime, index) => {
  * Start incrementing the stopwatch counters. 
  * (Right now, it just automatically starts up.)
  */ 
-const start = () => {
-    reset();
+const start = (reset_first) => {
+    if (reset_first) {
+        reset();
+        startTime = Date.now();
+    }
+
     isPaused = false; // start the timer
     $("#toggle-button").html("Pause"); // the toggle button now pauses
-
-    startTime = Date.now();
 
     tick($("#hours"), 99, 2, 360000, 0);
     tick($('#minutes'), 60, 2, 60000, 1);
@@ -62,15 +65,18 @@ const start = () => {
 const reset = () => {
     timer = ['00', '00', '00', '00'];
     laps = [];
+    offset = 0;
 
     $("#lap-list").html("");
-    $("#hours").html("")
+    $("#hours").html("");
     $("#minutes").html("");
     $("#seconds").html("");
     $("#ms").html("");
 
     isPaused = true;
     $("#toggle-button").html("Start"); // the toggle button now starts
+
+    pauseTime = undefined;
 };
 
 /**
@@ -90,9 +96,16 @@ const addLap = () => {
  */
 const timer_toggle = () => {
     if (isPaused) {
-        start();
-    } else {
+        if (pauseTime !== undefined) {
+            offset += Date.now() - pauseTime;
+        }
 
+        console.log(offset);
+
+        start(offset===0);
+    } else {
+        isPaused = true;
+        pauseTime = Date.now();
         $("#toggle-button").html("Resume");
     }
 };
