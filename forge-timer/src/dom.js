@@ -5,6 +5,8 @@ let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
 let isPaused = true; // If the timer is paused or not; starts paused
 let intervals = []; // the set of intervals
+let direction = ""; // direction (Stopwatch -> count up, Timer -> count down)
+let amount = []; // max amount for Timer, array of hours/minutes/seconds/ms
 
 window.odometerOptions = {
     auto: false, // Don't automatically initialize everything with class 'odometer'
@@ -33,7 +35,12 @@ const tick = (el, max, padding, updateTime, index) => {
     intervals[index] = setInterval(() => {
         if (isPaused) return; // don't update the timer if paused
         let currentTime = Date.now() - startTime;
-        let number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
+        let number;
+        if (direction === "Stopwatch") {
+            number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
+        } else {
+            number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
+        }
         timer[index] = number;
         el.html(number);
     }, 10);
@@ -65,15 +72,15 @@ const start = (resetFirst) => {
  * Called when the user presses 'Reset'.
  */ 
 const reset = () => {
-    timer = ['00', '00', '00', '00'];
+    timer = amount; // ['00', '00', '00', '00'];
     laps = [];
     offset = 0;
 
     $("#lap-list").html("");
-    $("#hours").html("");
-    $("#minutes").html("");
-    $("#seconds").html("");
-    $("#ms").html("");
+    $("#hours").html(timer[0]);
+    $("#minutes").html(timer[1]);
+    $("#seconds").html(timer[2]);
+    $("#ms").html(timer[3]);
 
     isPaused = true;
     $("#toggle-button").html("<u>S</u>tart"); // the toggle button now starts
