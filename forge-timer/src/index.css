@@ -5,7 +5,27 @@ body {
     padding: 2rem;
 }
 
-#timer {
-    font-size: 72px;
+.container {
 
+	width: 40em;
+	height: 10em;
+
+	display: grid;
+	grid-template-columns: 25% 40% 25%; 
+	grid-template-rows: 65% 25%; 
+
+	justify-content: space-around;
+	align-content: space-around;
+	padding: 10px;
+
+	background-color: blue;	
+	
 }
+
+#timer {
+	grid-column: 1 / 4; /*Span the entire 3-column container*/
+    font-size: 72px;
+    background-color: lightblue;
+    text-align: center;
+}
+

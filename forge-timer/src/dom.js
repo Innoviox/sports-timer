@@ -1,5 +1,6 @@
 let start = Date.now();
 
+/** Pad. */
 const pad = (number, zeros) => {
     let string = number.toString();
     while (string.length < zeros) {
@@ -8,6 +9,13 @@ const pad = (number, zeros) => {
     return string
 };
 
+/** 
+ * Regularly increment the number in the given timer segment.
+ * @param {Object} el - HTML element to regularly increment
+ * @param {number} max - Greatest value this segment should display
+ * @param {number} padding - Minimum number of digits segments should display
+ * @param {number} update_time - How many milliseconds it should be between updates
+ */
 const tick = (el, max, padding, update_time) => {
     setInterval(() => {
         let time = Date.now() - start;
