@@ -26,7 +26,7 @@ const pad = (number, zeros) => {
  * @param {Object} el - HTML element to regularly increment
  * @param {number} max - Greatest value this segment should display
  * @param {number} padding - Minimum number of digits segments should display
- * @param {number} update_time - How many milliseconds it should be between updates
+ * @param {number} updateTime - How many milliseconds it should be between updates
  * @param {number} index - What element of 'timer' should this time segment be displayed?
  */
 const tick = (el, max, padding, updateTime, index) => {
