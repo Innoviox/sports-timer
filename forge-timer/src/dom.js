@@ -3,7 +3,8 @@ let offset = 0; // Amount of time the user has paused the current stopwatch
 let timer = []; // Stores the current time on the stopwatch
 let intervalIDs = []; //Stores the IDs of the intervals updating the timer segments, required for stopping increment
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
-let timerPaused = true; // Is the stopwatch not incrementing?
+let isTimerPaused = true; // Is the stopwatch not incrementing?
+let timePaused = 0; //When the timer was last paused
 
 window.odometerOptions = {
     auto: false, // Don't automatically initialize everything with class 'odometer'
@@ -34,26 +35,36 @@ const tick = (el, max, padding, updateTime, index) => {
         let number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
         timer[index] = number;
         el.html(number);
-    }, updateTime);
+    }, 10);
 };
 
 /**
  * Start incrementing the stopwatch counters. 
  */ 
 const start = () => {
+    //let offset = Date.now() - timePaused;
+    //startTime += offset;
     tick($("#hours"), 99, 2, 360000, 0);
     tick($('#minutes'), 60, 2, 60000, 1);
     tick($('#seconds'), 60, 2, 1000, 2);
     tick($('#ms'), 100, 2, 10, 3);
+    isTimerPaused = false;
 };
 
 /**
  * Stop incrementing the timers.
  */
 const stop = () => {
-    for(const id of intervalIDs) {
+    // Remove incrementers
+    for (const id of intervalIDs) {
         clearInterval(id);
     }
+    // If the timer wasn't already paused, store the time
+    // to calculate the offset later
+    if(!isTimerPaused) {
+        timePaused = Date.now();
+    }
+    isTimerPaused = true;      
 }
 
 /**
@@ -61,12 +72,10 @@ const stop = () => {
  * Called when user presses start/stop button.
  */ 
 const toggleStartStop = () => {
-    if(timerPaused) {
+    if(isTimerPaused) {
         start();
-        timerPaused = true;
     } else {
         stop();
-        timerPaused = false;      
     }
 }
 
@@ -100,6 +109,7 @@ $(document).keypress(e => {
     else if (e.key === "r") { reset(); }
     else if (e.key === "s") { start(); }
     else if (e.key === "p") { stop(); }
+    else if (e.key == " ") {toggleStartStop(); }
 });
 
 $(document).ready(reset)
