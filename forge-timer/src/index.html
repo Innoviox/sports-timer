@@ -11,6 +11,7 @@
     <script src="lib/odometer.min.js"></script>
 
     <script src="dom.js"></script>
+    <script src="create.js"></script>
   </head>
 
   <body>
@@ -32,5 +33,13 @@
 
     </div>
     <a href="creator.html">Create</a>
+  <form id="create-form">
+      <select id="direction-select">
+          <option>Stopwatch</option>
+          <option>Timer</option>
+      </select>
+      <input hidden id="amount">
+      <button id="submit-button">Create Timer</button>
+  </form>
   </body>
 </html>

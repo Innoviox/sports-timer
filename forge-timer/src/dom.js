@@ -107,8 +107,6 @@ const toggleTimer = () => {
     }
 };
 
-// $(document).ready(start);
-
 /**
  * Handle when the user presses a key.
  * This is tied to document so that it
