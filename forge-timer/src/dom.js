@@ -107,14 +107,19 @@ const timer_toggle = () => {
 
 // $(document).ready(start);
 
+/**
+ * Handle when the user presses a key.
+ * This is tied to document so that it
+ * triggers on every press.
+ */
 $(document).keypress(e => {
     switch (e.key) {
-        case "l": addLap(); break;
-        case "r": reset(); break;
-        case "s":
-        case "e":
-        case "p":
-            timer_toggle();
+        case "l": addLap(); break; // l for Lap
+        case "r": reset(); break; // r for Reset
+        case "s": // s for Start
+        case "e": // e for rEsume
+        case "p": // p for Pause
+            timer_toggle(); // S/E/P all just toggle
             break;
         default: break;
     }
