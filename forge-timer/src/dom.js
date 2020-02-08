@@ -43,8 +43,8 @@ const tick = (el, max, padding, updateTime, index) => {
  * Start incrementing the stopwatch counters. 
  * (Right now, it just automatically starts up.)
  */ 
-const start = (reset_first) => {
-    if (reset_first) {
+const start = (resetFirst) => {
+    if (resetFirst) {
         reset();
         startTime = Date.now();
     }
@@ -97,7 +97,7 @@ const addLap = () => {
  * Toggle the timer. If it's paused, start it.
  * If it's running, pause it.
  */
-const timer_toggle = () => {
+const toggleTimer = () => {
     if (isPaused) {
         if (pauseTime !== undefined) { offset += Date.now() - pauseTime; }
         start(offset===0);
@@ -121,6 +121,6 @@ $(document).keypress(e => {
     else if (e.key === "r") { reset(); }
     else if (e.key === "s" && state === 1 ||
         e.key === "p" && state === 0) {
-        timer_toggle();
+        toggleTimer();
     }
 });
