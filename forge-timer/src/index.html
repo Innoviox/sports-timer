@@ -16,16 +16,14 @@
   <body>
     <!--<h1>Timer</h1>-->
     <div class="container">
-      <div id="timer">
+      <button id="timer" onclick="toggleStartStop()">
         <div id="hours" class="odometer"></div>:
         <div id="minutes" class="odometer"></div>:
         <div id="seconds" class="odometer"></div>.
         <div id="ms" class="odometer"></div>
-        <br> 
-
-        <div class="timer-label" id="toggle-button" onclick="timer_toggle()"><u>S</u>tart</div>
-      </div>
-
+        <br>       
+        <div class="timer-label">[TIMER LABEL]</div>
+      </button>
       <button id="add-lap" onclick="addLap()"><u>L</u>ap</button>
       <div id="lap-list"></div>
       <button id="reset" onclick="reset()"><u>R</u>eset</button>

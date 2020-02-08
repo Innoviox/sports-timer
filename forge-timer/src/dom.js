@@ -1,10 +1,9 @@
 let startTime = Date.now();
 let offset = 0; // Amount of time the user has paused the current stopwatch
-let pauseTime; // Time that the user paused
 let timer = []; // Stores the current time on the stopwatch
+let intervalIDs = []; //Stores the IDs of the intervals updating the timer segments, required for stopping increment
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
-let isPaused = true; // If the timer is paused or not; starts paused
-let state = 1; // 0: running, 1: stopped
+let timerPaused = true; // Is the stopwatch not incrementing?
 
 window.odometerOptions = {
     auto: false, // Don't automatically initialize everything with class 'odometer'
@@ -30,56 +29,55 @@ const pad = (number, zeros) => {
  * @param {number} index - What element of 'timer' should this time segment be displayed?
  */
 const tick = (el, max, padding, updateTime, index) => {
-    setInterval(() => {
-        if (isPaused) return; // don't update the timer if paused
+    intervalIDs[index] = setInterval(() => {
         let currentTime = Date.now() - startTime;
         let number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
         timer[index] = number;
         el.html(number);
-    }, 10);
+    }, updateTime);
 };
 
 /**
  * Start incrementing the stopwatch counters. 
- * (Right now, it just automatically starts up.)
  */ 
-const start = (reset_first) => {
-    if (reset_first) {
-        reset();
-        startTime = Date.now();
-    }
-
-    state = 0; // running
-    isPaused = false; // start the timer
-    $("#toggle-button").html("<u>P</u>ause"); // the toggle button now pauses
-
+const start = () => {
     tick($("#hours"), 99, 2, 360000, 0);
     tick($('#minutes'), 60, 2, 60000, 1);
     tick($('#seconds'), 60, 2, 1000, 2);
     tick($('#ms'), 100, 2, 10, 3);
 };
 
+/**
+ * Stop incrementing the timers.
+ */
+const stop = () => {
+    for(const id of intervalIDs) {
+        clearInterval(id);
+    }
+}
+
+/**
+ * Toggle whether the stopwatch is incrementing or not.
+ * Called when user presses start/stop button.
+ */ 
+const toggleStartStop = () => {
+    if(timerPaused) {
+        start();
+        timerPaused = true;
+    } else {
+        stop();
+        timerPaused = false;      
+    }
+}
+
 /** 
- * Reset the stopwatch - reser counters to zero and stop updating the display.
- * Also clear lap-list
+ * Reset the stopwatch - reset counters to zero.
  * Called when the user presses 'Reset'.
  */ 
 const reset = () => {
     timer = ['00', '00', '00', '00'];
-    laps = [];
-    offset = 0;
-
-    $("#lap-list").html("");
-    $("#hours").html("");
-    $("#minutes").html("");
-    $("#seconds").html("");
-    $("#ms").html("");
-
-    isPaused = true;
-    $("#toggle-button").html("<u>S</u>tart"); // the toggle button now starts
-
-    pauseTime = undefined;
-    state = 1; // stopped
+    startTime = Date.now();
+    //TODO This triggers the odometer animation, which is a bit annoying
 };
 
 /**
@@ -87,29 +85,10 @@ const reset = () => {
  * Triggered by clicking the 'Lap' button.
  */
 const addLap = () => {
-    if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
     let newLap = `Lap ${laps.length + 1}: ${timer[0]}:${timer[1]}:${timer[2]}.${timer[3]}`; //Get current stopwatch time
     laps.push(newLap);
-    $("#lap-list").append(newLap + "<br>");
+    $('#lap-list').append(newLap + '<br>');
 };
-
-/**
- * Toggle the timer. If it's paused, start it.
- * If it's running, pause it.
- */
-const timer_toggle = () => {
-    if (isPaused) {
-        if (pauseTime !== undefined) { offset += Date.now() - pauseTime; }
-        start(offset===0);
-    } else {
-        state = 1; // paused
-        isPaused = true;
-        pauseTime = Date.now();
-        $("#toggle-button").html("<u>S</u>tart");
-    }
-};
-
-// $(document).ready(start);
 
 /**
  * Handle when the user presses a key.
@@ -119,8 +98,8 @@ const timer_toggle = () => {
 $(document).keypress(e => {
     if (e.key === "l") { addLap(); }
     else if (e.key === "r") { reset(); }
-    else if (e.key === "s" && state === 1 ||
-        e.key === "p" && state === 0) {
-        timer_toggle();
-    }
+    else if (e.key === "s") { start(); }
+    else if (e.key === "p") { stop(); }
 });
+
+$(document).ready(reset)
