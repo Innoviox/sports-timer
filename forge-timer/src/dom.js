@@ -1,6 +1,8 @@
 let startTime = Date.now();
+let offset = 0; // Amount of time the user has paused the current stopwatch
 let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
+let isPaused = false; // If the timer is paused or not
 
 window.odometerOptions = {
     auto: false, // Don't automatically initialize everything with class 'odometer'
@@ -27,8 +29,9 @@ const pad = (number, zeros) => {
  */
 const tick = (el, max, padding, updateTime, index) => {
     setInterval(() => {
+        if (isPaused) return; // don't update the timer if paused
         let currentTime = Date.now() - startTime;
-        let number = pad(parseInt(currentTime / updateTime) % max, padding);
+        let number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
         timer[index] = number;
         el.html(number);
     }, updateTime);
@@ -40,8 +43,8 @@ const tick = (el, max, padding, updateTime, index) => {
  * (Right now, it just automatically starts up.)
  */ 
 const start = () => {
-    timer = ['00', '00', '00', '00'];
-    laps = [];
+    reset();
+    isPaused = false; // start the timer
 
     startTime = Date.now();
 
@@ -53,10 +56,20 @@ const start = () => {
 
 /** 
  * Reset the stopwatch - reser counters to zero and stop updating the display.
+ * Also clear lap-list
  * Called when the user presses 'Reset'.
  */ 
 const reset = () => {
-    //TODO Implement
+    timer = ['00', '00', '00', '00'];
+    laps = [];
+
+    $("#lap-list").html("");
+    $("#hours").html("")
+    $("#minutes").html("");
+    $("#seconds").html("");
+    $("#ms").html("");
+
+    isPaused = true;
 };
 
 /**
@@ -64,7 +77,7 @@ const reset = () => {
  * Triggered by clicking the 'Lap' button.
  */
 const addLap = () => {
-    console.log(timer);
+    if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
     let newLap = `Lap ${laps.length + 1}: ${timer[0]}:${timer[1]}:${timer[2]}.${timer[3]}`; //Get current stopwatch time
     laps.push(newLap);
     $("#lap-list").append(newLap + "<br>");
