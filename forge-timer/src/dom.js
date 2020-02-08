@@ -5,6 +5,7 @@ let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
 let isPaused = true; // If the timer is paused or not; starts paused
 let state = 1; // 0: running, 1: stopped
+let intervals = []; // the set of intervals
 
 window.odometerOptions = {
     auto: false, // Don't automatically initialize everything with class 'odometer'
@@ -30,7 +31,7 @@ const pad = (number, zeros) => {
  * @param {number} index - What element of 'timer' should this time segment be displayed?
  */
 const tick = (el, max, padding, updateTime, index) => {
-    setInterval(() => {
+    intervals[index] = setInterval(() => {
         if (isPaused) return; // don't update the timer if paused
         let currentTime = Date.now() - startTime;
         let number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
@@ -42,7 +43,8 @@ const tick = (el, max, padding, updateTime, index) => {
 /**
  * Start incrementing the stopwatch counters. 
  * (Right now, it just automatically starts up.)
- */ 
+ * @param {boolean} resetFirst - if start should reset the startTime
+ */
 const start = (resetFirst) => {
     if (resetFirst) {
         reset();
