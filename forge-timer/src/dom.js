@@ -5,8 +5,8 @@ let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
 let isPaused = true; // If the timer is paused or not; starts paused
 let intervals = []; // the set of intervals
-let direction = ""; // direction (Stopwatch -> count up, Timer -> count down)
-let amount = []; // max amount for Timer, array of hours/minutes/seconds/ms
+let direction = "Stopwatch"; // direction (Stopwatch -> count up, Timer -> count down)
+let amount = [0, 0, 0, 0]; // max amount for Timer, array of hours/minutes/seconds/ms
 let total = 0; // the amount array, reduced to milliseconds
 
 window.odometerOptions = {

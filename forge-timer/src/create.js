@@ -57,6 +57,7 @@ $(document).ready(() => {
             }
             return v
         }).get();
+        if (direction === "Stopwatch") { amount = [0, 0, 0, 0]; }
         // represent amount as milliseconds
         total = reduceToMs(amount);
         reset();
