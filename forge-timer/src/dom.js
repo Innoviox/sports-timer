@@ -39,7 +39,6 @@ const tick = (el, max, padding, updateTime, index) => {
 
 /**
  * Start incrementing the stopwatch counters. 
- * [TODO] Called when the user presses 'Start'.
  * (Right now, it just automatically starts up.)
  */ 
 const start = () => {
