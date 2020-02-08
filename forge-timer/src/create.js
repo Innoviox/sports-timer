@@ -3,6 +3,7 @@
  */
 const loadTimer = () => {
     let template = window.location.search;
+    if (template === "") return;
     let lines = template.split("=")[1].split("%0D%0A"); // %0D%0A = \n
     console.log(lines);
 
