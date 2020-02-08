@@ -42,7 +42,7 @@ const tick = (el, max, padding, updateTime, index) => {
         } else {
             number = total - currentTime - offset;
         }
-        number = pad(parseInt(number) % max, padding);
+        number = pad(parseInt(number / updateTime) % max, padding);
         timer[index] = number;
         el.html(number);
     }, 10);
@@ -74,7 +74,7 @@ const start = (resetFirst) => {
  * Called when the user presses 'Reset'.
  */ 
 const reset = () => {
-    timer = amount; // ['00', '00', '00', '00'];
+    timer = amount.slice(); // ['00', '00', '00', '00'];
     laps = [];
     offset = 0;
 
