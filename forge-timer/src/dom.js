@@ -99,9 +99,7 @@ const timer_toggle = () => {
         if (pauseTime !== undefined) {
             offset += Date.now() - pauseTime;
         }
-
-        console.log(offset);
-
+        
         start(offset===0);
     } else {
         isPaused = true;
