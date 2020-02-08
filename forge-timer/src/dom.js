@@ -8,7 +8,7 @@ window.odometerOptions = {
     duration: 100 // Doesn't work
 };
 
-/** Pad. */
+/** Pad {number} to {zeros} digits */
 const pad = (number, zeros) => {
     let string = number.toString();
     while (string.length < zeros) {
@@ -40,12 +40,16 @@ const tick = (el, max, padding, updateTime, index) => {
  * (Right now, it just automatically starts up.)
  */ 
 const start = () => {
+    timer = ['00', '00', '00', '00'];
+    laps = [];
+
     startTime = Date.now();
+
     tick($("#hours"), 99, 2, 360000, 0);
     tick($('#minutes'), 60, 2, 60000, 1);
     tick($('#seconds'), 60, 2, 1000, 2);
     tick($('#ms'), 100, 2, 10, 3);
-}
+};
 
 /** 
  * Reset the stopwatch - reser counters to zero and stop updating the display.
@@ -53,17 +57,18 @@ const start = () => {
  */ 
 const reset = () => {
     //TODO Implement
-}
+};
 
 /**
  * Adds the current time to the list of laps and the HTML text box display.
  * Triggered by clicking the 'Lap' button.
  */
 const addLap = () => {
-    let newLap = `${timer[0]}:${timer[1]}:${timer[2]}.${timer[3]}`; //Get current stopwatch t
+    console.log(timer);
+    let newLap = `Lap ${laps.length + 1}: ${timer[0]}:${timer[1]}:${timer[2]}.${timer[3]}`; //Get current stopwatch time
     laps.push(newLap);
     $("#lap-list").append(newLap + "<br>");
-}
+};
 
 $(document).ready(start);
 

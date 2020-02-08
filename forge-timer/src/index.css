@@ -6,7 +6,6 @@ body {
 }
 
 .container {
-
 	width: 40rem;
 	height: 14rem;
 
@@ -39,6 +38,7 @@ body {
 	grid-column: 2 / 4;
 	background-color: white;
 	overflow: scroll;
+	padding: 5px;
 }
 
 .container > button {
