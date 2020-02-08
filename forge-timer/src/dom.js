@@ -36,7 +36,7 @@ const tick = (el, max, padding, updateTime, index) => {
         let number = pad(parseInt((currentTime - offset) / updateTime) % max, padding);
         timer[index] = number;
         el.html(number);
-    }, updateTime);
+    }, 10);
 };
 
 /**
