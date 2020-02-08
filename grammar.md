@@ -12,7 +12,7 @@ For example:
 
 ```
 # Exercise
-Phase 1: Warmup
+1. Warmup
 	up 10:00
 	down 0:30
 ```
@@ -20,12 +20,6 @@ Phase 1: Warmup
 Shorthands:
 
 If a phase has a single segment, it can be written as follows:
-
-```
-Phase 1: Warmup - up 10:00
-```
-
-Instead of writing `Phase 1: `, the user can write `1.`.
 
 ```
 1. Warmup - up 10:00
