@@ -4,7 +4,7 @@ let pauseTime; // Time that the user paused
 let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
 let isPaused = true; // If the timer is paused or not; starts paused
-let state = 2; // 0: running, 1: paused, 2: stopped
+let state = 1; // 0: running, 1: stopped
 
 window.odometerOptions = {
     auto: false, // Don't automatically initialize everything with class 'odometer'
@@ -79,7 +79,7 @@ const reset = () => {
     $("#toggle-button").html("<u>S</u>tart"); // the toggle button now starts
 
     pauseTime = undefined;
-    state = 2; // stopped
+    state = 1; // stopped
 };
 
 /**
@@ -105,7 +105,7 @@ const timer_toggle = () => {
         state = 1; // paused
         isPaused = true;
         pauseTime = Date.now();
-        $("#toggle-button").html("R<u>e</u>sume");
+        $("#toggle-button").html("<u>S</u>tart");
     }
 };
 
@@ -119,8 +119,7 @@ const timer_toggle = () => {
 $(document).keypress(e => {
     if (e.key === "l") { addLap(); }
     else if (e.key === "r") { reset(); }
-    else if (e.key === "s" && state === 2 ||
-        e.key === "e" && state === 1 ||
+    else if (e.key === "s" && state === 1 ||
         e.key === "p" && state === 0) {
         timer_toggle();
     }
