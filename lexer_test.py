@@ -57,26 +57,3 @@ timer = """# My Timer
 
 # print(parse(timer))
 disp_timers(timer)
-
-[
-    ['1. 1st Phase',
-     [
-         ['  1. 1st Cell',
-          [
-              ['Plank',
-               [
-                   ['down', '0:15']
-                   ]
-               ]
-              ]
-          ],
-         [' 2nd Cell',
-          [
-              ['up', '20:00'],
-              ['down', '30:00']
-              ]
-          ]
-         ]
-     ]
-    ]
-
