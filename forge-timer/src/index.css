@@ -44,3 +44,11 @@ body {
 .container > button {
 	font-size: 28pt;
 }
+
+.odometer.odometer-animating-up .odometer-ribbon-inner, .odometer.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
+    -webkit-transition-duration: 100ms !important;
+    -moz-transition-duration: 100ms !important;
+    -ms-transition-duration: 100ms !important;
+    -o-transition-duration: 100ms !important;
+    transition-duration: 100ms !important
+}
