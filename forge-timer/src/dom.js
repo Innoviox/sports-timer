@@ -108,10 +108,11 @@ const addLap = () => {
 const toggleTimer = () => {
     if (isPaused) {
         if (pauseTime !== undefined) {
+            let diff = Date.now() - pauseTime;
             if (direction === "Stopwatch") {
-                offset += Date.now() - pauseTime;
+                offset += diff;
             } else {
-                offset -= Date.now() - pauseTime;
+                offset -= diff;
             }
         }
         start(offset===0);
