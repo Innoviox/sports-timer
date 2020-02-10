@@ -61,11 +61,6 @@ const start = (resetFirst) => {
 
     isPaused = false; // start the timer
     $("#toggle-button").html("<u>P</u>ause"); // the toggle button now pauses
-
-    tick($("#hours"), 99, 2, 360000, 0);
-    tick($('#minutes'), 60, 2, 60000, 1);
-    tick($('#seconds'), 60, 2, 1000, 2);
-    tick($('#ms'), 100, 2, 10, 3);
 };
 
 /** 
@@ -136,4 +131,12 @@ $(document).keypress(e => {
         e.key === " ") {
         toggleTimer();
     }
+});
+
+// Set up timers when document loads
+$(document).ready(() => {
+    tick($("#hours"), 99, 2, 360000, 0);
+    tick($('#minutes'), 60, 2, 60000, 1);
+    tick($('#seconds'), 60, 2, 1000, 2);
+    tick($('#ms'), 100, 2, 10, 3);
 });
