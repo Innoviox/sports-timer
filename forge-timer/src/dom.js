@@ -24,6 +24,14 @@ const pad = (number, zeros) => {
     return string;
 };
 
+/**
+ * Pause timer and update timer text
+ */
+const pause = (paused) => {
+    isPaused = paused;
+    $("#toggle-button").html(paused ? "<u>S</u>tart" : "<u>P</u>ause");
+};
+
 /** 
  * Regularly increment the number in the given timer segment.
  * @param {Object} el - HTML element to regularly increment
@@ -45,7 +53,7 @@ const tick = (el, max, padding, updateTime, index) => {
         
         if (direction === "Timer" && number <= 0) {
             // pause time if timer finishes
-            isPaused = true;
+            pause(true);
             number = 0;
         }
 
@@ -66,8 +74,7 @@ const start = (resetFirst) => {
         startTime = Date.now();
     }
 
-    isPaused = false; // start the timer
-    $("#toggle-button").html("<u>P</u>ause"); // the toggle button now pauses
+    pause(false);
 };
 
 /** 
@@ -86,8 +93,7 @@ const reset = () => {
     $("#seconds").html(timer[2]);
     $("#ms").html(timer[3]);
 
-    isPaused = true;
-    $("#toggle-button").html("<u>S</u>tart"); // the toggle button now starts
+    pause(true);
 
     pauseTime = undefined;
 };
@@ -119,9 +125,8 @@ const toggleTimer = () => {
         }
         start(offset===0);
     } else {
-        isPaused = true;
+        pause(true);
         pauseTime = Date.now();
-        $("#toggle-button").html("<u>S</u>tart");
     }
 };
 
