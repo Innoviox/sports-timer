@@ -42,6 +42,13 @@ const tick = (el, max, padding, updateTime, index) => {
         } else {
             number = total - currentTime - offset;
         }
+        
+        if (direction === "Timer" && number <= 0) {
+            // pause time if timer finishes
+            isPaused = true;
+            number = 0;
+        }
+
         number = pad(parseInt(number / updateTime) % max, padding);
         timer[index] = number;
         el.html(number);
