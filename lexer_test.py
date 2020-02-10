@@ -8,8 +8,8 @@ def parse_phases(s, d=0):
     for k, phase in enumerate(found_phases):
         n1 = phase.split("\n")[0]
         if "-" in n1:
-            *_, name, _, di, t = n1.strip().split()
-            phases.append([name, [[di, t]]])
+            *name, _, di, t = n1.strip().split()
+            phases.append([' '.join(name), [[di, t]]])
         else:
             name, *lines = phase.split("\n")
             lines = "\n".join(lines)
@@ -20,7 +20,7 @@ def parse_phases(s, d=0):
     return phases
 
 def parse(s):
-    name = "Custon Timer"
+    name = "Custom Timer"
     
     lines = s.split("\n")
     if lines[0].startswith("#"):
