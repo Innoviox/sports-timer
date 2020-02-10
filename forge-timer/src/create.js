@@ -34,7 +34,7 @@ const loadTimer = () => {
  * @param arr
  * @returns {number | any | BigInt | T}
  */
-const reduceToMs = (arr) => arr.map((e, idx) => e * [360000, 60000, 1000, 10][idx]).reduce((a, b) => a + b);
+const reduceToMs = (arr) => arr.map((e, idx) => e * [3600000, 60000, 1000, 10][idx]).reduce((a, b) => a + b);
 
 
 $(document).ready(() => {
