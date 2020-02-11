@@ -6,9 +6,10 @@ let newRow =
 </div>`;
 
 const addNewRow = () => {
-    $("#rows").append(newRow);
+    console.log($("#rows").append(newRow));
 }
 
 const deleteLastRow = () => {
+    $("#rows").children().last().animate({height: '0%'});
     $("#rows").children().last().remove();
 }

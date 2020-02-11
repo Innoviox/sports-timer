@@ -4,10 +4,31 @@
 
 #create-custom-form {
 	display: grid;
-	grid-template: 
-	'top-bar top-bar top-bar'
-	'rows rows rows'
-	'bottom bottom bottom';
+	grid-template-rows: repeat(3, auto);
+	grid-template-columns: repeat(3, auto);
 	}
 
-#
+#type-select {
+	grid-area: 1/1/2/2;
+}
+
+#custom-name {
+	grid-area: 1/2/2/4;
+}
+
+#rows {
+	grid-area: 2/1/3/4;
+	width: 100%
+}
+
+#add-row {
+	grid-area: 3/1/4/2;
+}
+
+#delete-row {
+	grid-area: 3/2/4/3;
+}
+
+#submit-custom-button {
+	grid-area: 3/3/4/4;
+}
