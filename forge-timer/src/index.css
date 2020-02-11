@@ -19,7 +19,6 @@ body {
 	grid-gap: 10px;
 
 	background-color: blue;	
-	
 }
 
 #timer {
@@ -29,11 +28,6 @@ body {
     font-size: 60pt;
     justify-content: center;
     align-content: center;
-}
-
-#time {
-    padding-left: 22%;
-    display: flex;
 }
 
 #timer .timer-label {
