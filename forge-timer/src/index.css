@@ -58,6 +58,23 @@ body {
 
 #create-form {
     grid-column: 1 / 5;
+    display: grid;
+}
+
+#direction-select {
+    grid-column: 1 / 3;
+}
+
+#submit-button {
+    grid-column: 3 / 5;
+}
+
+#amount-container {
+    grid-column: 2 / 4;
+}
+
+#form-div {
+    grid-column: 1 / 5;
 }
 
 .amount {

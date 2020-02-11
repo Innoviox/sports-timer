@@ -12,6 +12,8 @@
       <link rel="stylesheet" href="lib/slick.css" />
       <script src="lib/slick.js"></script>
 
+      <script src="https://unpkg.com/animate-css-grid@1.4.3/dist/main.js"></script>
+
       <link rel="stylesheet" href="index.css">
 
       <script src="dom.js"></script>
@@ -47,15 +49,19 @@
 
                       <form id="create-form">
                           <select id="direction-select">
-                              <option>Stopwatch</option>
-                              <option>Timer</option>
+                            <option>Stopwatch</option>
+                            <option>Timer</option>
                           </select>
+
                           <div hidden id="amount-container">
-                              <input class="amount" type="text" maxlength="2" size="2"/>:
-                              <input class="amount" type="text" maxlength="2" size="2"/>:
-                              <input class="amount" type="text" maxlength="2" size="2"/>.
-                              <input class="amount" type="text" maxlength="2" size="2"/>
+                              <div>
+                                  <input class="amount" type="text" maxlength="2" size="2"/>:
+                                  <input class="amount" type="text" maxlength="2" size="2"/>:
+                                  <input class="amount" type="text" maxlength="2" size="2"/>.
+                                  <input class="amount" type="text" maxlength="2" size="2"/>
+                              </div>
                           </div>
+
                           <button id="submit-button">Create Timer</button>
                       </form>
                   </div>

@@ -7,10 +7,24 @@ const reduceToMs = (arr) => arr.map((e, idx) => e * [3600000, 60000, 1000, 10][i
 
 
 $(document).ready(() => {
+    const { unwrapGrid, forceGridAnimation } = animateCSSGrid.wrapGrid(document.querySelector('#create-form'), {duration : 600});
+
     $("#direction-select").change((e) => {
         switch ($("#direction-select").val()) {
-            case "Stopwatch": $("#amount-container").hide(); break;
-            case "Timer": $("#amount-container").show(); break;
+            case "Stopwatch": {
+                $("#amount-container").hide();
+                $('#direction-select').css('grid-column', '1 / 3');
+                $('#submit-button').css('grid-column', '3 / 5');
+                forceGridAnimation();
+                break;
+            }
+            case "Timer": {
+                $("#amount-container").show();
+                $('#direction-select').css('grid-column', '1 / 1');
+                $('#submit-button').css('grid-column', '5 / 5');
+                forceGridAnimation();
+                break;
+            }
             default: break;
         }
     });
