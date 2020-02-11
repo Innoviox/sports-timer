@@ -1,8 +1,8 @@
 let newRow = 
 `<tr class="row">
-    <td><input type="text" id="name"></input></td>
-    <td><!-- <input id="direction"></input></td> -->
-    <td><input type="text" id="length"></input></td>
+    <td><input type="text" class="phase-name"></input></td>
+    <td><input class="direction"></input></td>
+    <td><input type="text" class="length"></input></td>
 </tr>`;
 
 /** 

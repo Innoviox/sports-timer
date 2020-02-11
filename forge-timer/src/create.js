@@ -48,6 +48,20 @@ $(document).ready(() => {
           
     $("#create-custom-form").on('submit', (e) => {
         e.preventDefault();
+        let timerJSON = {
+          "name": $("#custom-name").get()[0].value, // Get & store name of timer
+          "phases": []
+        }; 
+        table = $("#rows").get()[0].children; // Get an HTMLCollection of the rows of the table
+        for (row of table) { // get the values for every phase (name, direction, length) and add to timerJSON
+          let phaseJSON = {
+            "phase-name": row.getElementsByClassName("phase-name")[0].value,
+            "direction": row.getElementsByClassName("direction")[0].value,
+            "length": row.getElementsByClassName("length")[0].value
+          }
+          timerJSON["phases"].push(phaseJSON);
+        }
+        console.log(timerJSON);
     });
 
     $("#type-select").change(() => {
