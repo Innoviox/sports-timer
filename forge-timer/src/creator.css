@@ -1,3 +1,13 @@
 .row {
 	width: 100%; /* TODO: Fix width limit */
 }
+
+#create-custom-form {
+	display: grid;
+	grid-template: 
+	'top-bar top-bar top-bar'
+	'rows rows rows'
+	'bottom bottom bottom';
+	}
+
+#

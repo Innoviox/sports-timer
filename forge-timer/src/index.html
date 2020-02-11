@@ -63,14 +63,15 @@
               </div>
               <div class="swipe-tab-content">
                   <form id="create-custom-form">
-                      <select id="type-select">
-                          <option>Custom</option>
-                          <option>Football</option>
-                      </select>
+                        <select id="type-select">
+                            <option>Custom</option> <!--- TODO not hardcode this in HTML --->
+                            <option>Football</option>
+                        </select>
+                        <input id="custom-name"></input>
                       <div id="rows"></div>
-                      <button id="new-row" onclick="addNewRow()">New Row</button>
-                      <button id="delete-row" onclick="deleteLastRow()">Delete Row</button>
-                      <button type="submit" id="submit-custom-button">Create</button>
+                        <button id="new-row" onclick="addNewRow()">New Row</button>
+                        <button id="delete-row" onclick="deleteLastRow()">Delete Row</button>
+                        <button type="submit" id="submit-custom-button">Create</button>div>
                   </form>
               </div>
           </div>
