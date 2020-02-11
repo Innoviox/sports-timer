@@ -1,35 +1,4 @@
 /**
- * Load timer from user input (stored in the query parameters)
- */
-const loadTimer = () => {
-    let template = window.location.search;
-    if (template === "") return;
-    let lines = template.split("=")[1].split("%0D%0A"); // %0D%0A = \n
-    console.log(lines);
-
-    let name = "Custom Timer";
-    if (lines[0].startsWith("%23")) {
-        name = lines[0].substring(3).replace("+", " ").trim();
-        lines.shift();
-    }
-
-    let phases = [];
-    let phase = [];
-    while (lines.length > 0) {
-        let line = lines[0].split("+");
-        if (line[0].includes(".")) { // new phase start
-            if (phase.length > 0) {
-                phases.push(phase);
-                phase = [];
-            }
-            phase.push(line[1]);
-            
-        }
-        lines.shift();
-    }
-};
-
-/**
  * Reduce an array to milliseconds
  * @param arr
  * @returns {number | any | BigInt | T}
@@ -38,7 +7,6 @@ const reduceToMs = (arr) => arr.map((e, idx) => e * [3600000, 60000, 1000, 10][i
 
 
 $(document).ready(() => {
-    loadTimer();
     $("#direction-select").change((e) => {
         switch ($("#direction-select").val()) {
             case "Stopwatch": $("#amount-container").hide(); break;
@@ -63,3 +31,81 @@ $(document).ready(() => {
         reset();
     })
 });
+
+$(document).ready(() => {
+          $("#type-select").change(() => {
+              if ($("#type-select").val() === "Football") {
+                  $("#user-text").val("# Football\n" +
+                      "1. 1st Quarter - down 15:00\n" +
+                      "2. 2nd Quarter - down 15:00\n" +
+                      "3. 3rd Quarter - down 15:00\n" +
+                      "4. 4th Quarter - down 15:00");
+              }
+          });
+      });
+
+      $(function () {
+          'use strict';
+
+          var $swipeTabsContainer = $('.swipe-tabs'),
+              $swipeTabs = $('.swipe-tab'),
+              $swipeTabsContentContainer = $('.swipe-tabs-container'),
+              currentIndex = 0,
+              activeTabClassName = 'active-tab';
+
+          $swipeTabsContainer.on('init', function(event, slick) {
+              $swipeTabsContentContainer.removeClass('invisible');
+              $swipeTabsContainer.removeClass('invisible');
+
+              currentIndex = slick.getCurrent();
+              $swipeTabs.removeClass(activeTabClassName);
+              $('.swipe-tab[data-slick-index=' + currentIndex + ']').addClass(activeTabClassName);
+          });
+
+          $swipeTabsContainer.slick({
+              //slidesToShow: 3.25,
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              arrows: false,
+              infinite: false,
+              swipeToSlide: true,
+              touchThreshold: 10
+          });
+
+          $swipeTabsContentContainer.slick({
+              asNavFor: $swipeTabsContainer,
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              arrows: false,
+              infinite: false,
+              swipeToSlide: true,
+              draggable: false,
+              touchThreshold: 10
+          });
+
+
+          $swipeTabs.on('click', function(event) {
+              // gets index of clicked tab
+              currentIndex = $(this).data('slick-index');
+              $swipeTabs.removeClass(activeTabClassName);
+              $('.swipe-tab[data-slick-index=' + currentIndex +']').addClass(activeTabClassName);
+              $swipeTabsContainer.slick('slickGoTo', currentIndex);
+              $swipeTabsContentContainer.slick('slickGoTo', currentIndex);
+          });
+
+          //initializes slick navigation tabs swipe handler
+          $swipeTabsContentContainer.on('swipe', function(event, slick, direction) {
+              currentIndex = $(this).slick('slickCurrentSlide');
+              $swipeTabs.removeClass(activeTabClassName);
+              $('.swipe-tab[data-slick-index=' + currentIndex + ']').addClass(activeTabClassName);
+          });
+      });
+
+let newRow = 
+`<div>
+    Hello!
+</div>`;
+
+const addNewRow = () => {
+    $("#user-input").append(newRow);
+}
