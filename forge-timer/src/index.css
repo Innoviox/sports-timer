@@ -40,6 +40,8 @@ body {
 	background-color: white;
 	overflow: scroll;
 	padding: 5px;
+    min-height: 68px;
+    max-height: 68px;
 }
 
 .container > button {
