@@ -9,8 +9,8 @@
       <link rel="stylesheet" href="lib/odometer-theme-default.css" />
       <script src="lib/odometer.min.js"></script>
 
-      <!--<link rel="stylesheet" href="lib/slick.css" />-->
-      <!--<script src="lib/slick.js"></script>-->
+      <link rel="stylesheet" href="lib/slick.css" />
+      <script src="lib/slick.js"></script>
 
       <link rel="stylesheet" href="index.css">
 
@@ -26,35 +26,37 @@
           </div>
       </div>
       <div class="main-container">
-          <div class="swipe-tabs-container ">
+          <div class="swipe-tabs-container">
               <div class="swipe-tab-content">
-                  <div id="timer">
-                      <div id="hours" class="odometer"></div>:
-                      <div id="minutes" class="odometer"></div>:
-                      <div id="seconds" class="odometer"></div>.
-                      <div id="ms" class="odometer"></div>
-                      <br>
+                  <div class="container">
+                      <div id="timer">
+                          <div id="hours" class="odometer"></div>:
+                          <div id="minutes" class="odometer"></div>:
+                          <div id="seconds" class="odometer"></div>.
+                          <div id="ms" class="odometer"></div>
+                          <br>
 
-                      <div class="timer-label" id="toggle-button" onclick="toggleTimer()"><u>S</u>tart</div>
-                  </div>
-
-                  <button id="add-lap" onclick="addLap()"><u>L</u>ap</button>
-                  <div id="lap-list"></div>
-                  <button id="reset" onclick="reset()"><u>R</u>eset</button>
-
-                  <form id="create-form">
-                      <select id="direction-select">
-                          <option>Stopwatch</option>
-                          <option>Timer</option>
-                      </select>
-                      <div hidden id="amount-container">
-                          <input class="amount" type="text" maxlength="2"/>:
-                          <input class="amount" type="text" maxlength="2"/>:
-                          <input class="amount" type="text" maxlength="2"/>.
-                          <input class="amount" type="text" maxlength="2"/>
+                          <div class="timer-label" id="toggle-button" onclick="toggleTimer()"><u>S</u>tart</div>
                       </div>
-                      <button id="submit-button">Create Timer</button>
-                  </form>
+
+                      <button id="add-lap" onclick="addLap()"><u>L</u>ap</button>
+                      <div id="lap-list"></div>
+                      <button id="reset" onclick="reset()"><u>R</u>eset</button>
+
+                      <form id="create-form">
+                          <select id="direction-select">
+                              <option>Stopwatch</option>
+                              <option>Timer</option>
+                          </select>
+                          <div hidden id="amount-container">
+                              <input class="amount" type="text" maxlength="2"/>:
+                              <input class="amount" type="text" maxlength="2"/>:
+                              <input class="amount" type="text" maxlength="2"/>.
+                              <input class="amount" type="text" maxlength="2"/>
+                          </div>
+                          <button id="submit-button">Create Timer</button>
+                      </form>
+                  </div>
               </div>
               <div class="swipe-tab-content">
                   <form id="create-custom-form" action="index.html">

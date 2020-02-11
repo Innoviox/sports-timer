@@ -6,8 +6,8 @@ body {
 }
 
 .container {
-	/*width: 40rem;*/
-	/*height: 14rem;*/
+	width: 40rem;
+	height: 14rem;
 
 	display: grid;
 	grid-template-columns: repeat(4, 1fr); /* four equal spaced columns */
@@ -27,14 +27,6 @@ body {
 	background-color: lightblue;
     text-align: center;
     font-size: 60pt;
-}
-
-#hours {
-    grid-column: 1
-}
-
-#minutes {
-    grid-column: 2
 }
 
 #timer .timer-label {
