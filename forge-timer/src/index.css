@@ -1,6 +1,55 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: auto;
+    /*max-width: 38rem;*/
+    /*padding: 2rem;*/
+}
+
+.container {
+	/*width: 40rem;*/
+	/*height: 14rem;*/
+
+	display: grid;
+	grid-template-columns: repeat(4, 1fr); /* four equal spaced columns */
+	grid-template-rows: 4fr 2fr;
+
+	justify-content: center;
+	align-content: center;
+	padding: 10px;
+	grid-gap: 10px;
+
+	background-color: blue;	
+}
+
+#timer {
+    grid-column: 1 / 5; /*Span the entire 3-column container*/
+    background-color: lightblue;
+    text-align: center;
+    font-size: 60pt;
+    justify-content: center;
+    align-content: center;
+}
+
+#timer .timer-label {
+	font-size: 24pt;
+	font-weight: bold;
+}
+
+#lap-list {
+	grid-column: 2 / 4;
+	background-color: white;
+	overflow: scroll;
+	padding: 5px;
+}
+
+.container > button {
+	font-size: 28pt;
+}
+
+.odometer.odometer-animating-up .odometer-ribbon-inner, .odometer.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
+    -webkit-transition-duration: 100ms !important;
+    -moz-transition-duration: 100ms !important;
+    -ms-transition-duration: 100ms !important;
+    -o-transition-duration: 100ms !important;
+    transition-duration: 100ms !important
 }
