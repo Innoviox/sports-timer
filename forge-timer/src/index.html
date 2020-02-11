@@ -12,7 +12,8 @@
       <link rel="stylesheet" href="lib/slick.css" />
       <script src="lib/slick.js"></script>
 
-      <script src="https://unpkg.com/animate-css-grid@1.4.3/dist/main.js"></script>
+      <script src="lib/semantic.min.js"></script>
+      <link rel="stylesheet" href="lib/semantic.min.css" />
 
       <link rel="stylesheet" href="index.css">
       <link rel="stylesheet" href="creator.css">
@@ -48,27 +49,28 @@
                       <div id="lap-list"></div>
                       <button id="reset" onclick="reset()"><u>R</u>eset</button>
 
-                      <form id="create-form">
-                          <select id="direction-select">
-                            <option>Stopwatch</option>
-                            <option>Timer</option>
-                          </select>
-
-                          <div hidden id="amount-container">
-                              <div>
-                                  <input class="amount" type="text" maxlength="2" size="2"/>:
-                                  <input class="amount" type="text" maxlength="2" size="2"/>:
-                                  <input class="amount" type="text" maxlength="2" size="2"/>.
-                                  <input class="amount" type="text" maxlength="2" size="2"/>
+                      <form id="create-form" class="ui form">
+                          <div class="ui action input">
+                              <select id='direction-select' class="ui compact selection dropdown">
+                                  <option>Stopwatch</option>
+                                  <option>Timer</option>
+                              </select>
+                              <div hidden id="amount-container">
+                                  <div>
+                                      <input class="amount" type="text" maxlength="2" size="2"/>:
+                                      <input class="amount" type="text" maxlength="2" size="2"/>:
+                                      <input class="amount" type="text" maxlength="2" size="2"/>.
+                                      <input class="amount" type="text" maxlength="2" size="2"/>
+                                  </div>
                               </div>
+                              <div id=submit-button class="ui button">Create Timer</div>
                           </div>
-
-                          <button id="submit-button">Create Timer</button>
                       </form>
                   </div>
               </div>
               <div class="swipe-tab-content">
                   <form id="create-custom-form">
+
                         <select id="type-select">
                             <option>Custom</option> <!--- TODO not hardcode this in HTML --->
                             <option>Football</option>
