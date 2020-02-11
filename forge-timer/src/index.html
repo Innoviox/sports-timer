@@ -13,6 +13,7 @@
       <script src="lib/slick.js"></script>
 
       <link rel="stylesheet" href="index.css">
+      <link rel="stylesheet" href="creator.css">
 
       <script src="dom.js"></script>
       <script src="create.js"></script>
@@ -67,7 +68,8 @@
                           <option>Football</option>
                       </select>
                       <div id="rows"></div>
-                      <button id="new-row" onclick="addNewRow()"></button>
+                      <button id="new-row" onclick="addNewRow()">New Row</button>
+                      <button id="delete-row" onclick="deleteLastRow()">Delete Row</button>
                       <button type="submit" id="submit-custom-button">Create</button>
                   </form>
               </div>
