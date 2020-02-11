@@ -6,12 +6,12 @@ body {
 }
 
 .container {
-	width: 40rem;
-	height: 14rem;
+	/*width: 40rem;*/
+	/*height: 14rem;*/
 
 	display: grid;
 	grid-template-columns: repeat(4, 1fr); /* four equal spaced columns */
-	grid-template-rows: 3fr 2fr; 
+	grid-template-rows: 4fr 2fr;
 
 	justify-content: center;
 	align-content: center;
@@ -23,10 +23,15 @@ body {
 }
 
 #timer {
-	grid-column: 1 / 5; /*Span the entire 3-column container*/
-	background-color: lightblue;
+    grid-column: 1 / 5; /*Span the entire 3-column container*/
+    background-color: lightblue;
     text-align: center;
     font-size: 60pt;
+    justify-content: center;
+    align-content: center;
+}
+
+#time {
     display: flex;
 }
 

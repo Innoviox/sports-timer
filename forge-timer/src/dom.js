@@ -151,4 +151,6 @@ $(document).ready(() => {
     tick($('#minutes'), 60, 2, 60000, 1);
     tick($('#seconds'), 60, 2, 1000, 2);
     tick($('#ms'), 100, 2, 10, 3);
+
+    reset();
 });
