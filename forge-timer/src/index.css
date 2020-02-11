@@ -18,7 +18,7 @@ body {
 	padding: 10px;
 	grid-gap: 10px;
 
-	background-color: blue;	
+	/*background-color: blue;	*/
 }
 
 #timer {
@@ -54,4 +54,11 @@ body {
     -ms-transition-duration: 100ms !important;
     -o-transition-duration: 100ms !important;
     transition-duration: 100ms !important
+}
+
+#create-form {
+    grid-column: 1 / 5;
+}
+
+.amount {
 }
