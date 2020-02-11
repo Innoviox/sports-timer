@@ -16,6 +16,7 @@
 
       <script src="dom.js"></script>
       <script src="create.js"></script>
+      <script src="creator.js"></script>
   </head>
 
   <body>
@@ -60,12 +61,13 @@
                   </div>
               </div>
               <div class="swipe-tab-content">
-                  <form id="create-custom-form" action="index.html">
+                  <form id="create-custom-form">
                       <select id="type-select">
                           <option>Custom</option>
                           <option>Football</option>
                       </select>
-                      <textarea name="text" id="user-text"></textarea>
+                      <div id="rows"></div>
+                      <button id="new-row" onclick="addNewRow()"></button>
                       <button type="submit" id="submit-custom-button">Create</button>
                   </form>
               </div>
