@@ -32,6 +32,7 @@ body {
 }
 
 #time {
+    padding-left: 22%;
     display: flex;
 }
 
