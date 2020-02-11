@@ -5,11 +5,20 @@ let newRow =
     <input id="length"></input>
 </div>`;
 
+/** 
+ * Append a new row onto 'rows'. 
+ */ 
 const addNewRow = () => {
-    console.log($("#rows").append(newRow));
+ 	$("#rows").append(newRow);	
+ 	$("#rows").children().last().css('height', '0px');
+ 	$("#rows").children().last().animate({height: '30px'});
 }
 
+/**
+ * Shrink height of last element in 'rows' to zero, then remove it. 
+ */
 const deleteLastRow = () => {
-    $("#rows").children().last().animate({height: '0%'});
-    $("#rows").children().last().remove();
+    $("#rows").children().last().animate({height: '0px'}, () => {
+		$("#rows").children().last().remove();
+    });
 }
