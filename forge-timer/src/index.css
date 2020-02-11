@@ -27,6 +27,7 @@ body {
 	background-color: lightblue;
     text-align: center;
     font-size: 60pt;
+    display: flex;
 }
 
 #timer .timer-label {
