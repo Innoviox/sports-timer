@@ -1,9 +1,9 @@
 let newRow = 
-`<div class="row">
-    <input id="name"></input>
-    <input id="direction"></input>
-    <input id="length"></input>
-</div>`;
+`<tr class="row">
+    <td><input type="text" id="name"></input></td>
+    <td><!-- <input id="direction"></input></td> -->
+    <td><input type="text" id="length"></input></td>
+</tr>`;
 
 /** 
  * Append a new row onto 'rows'. 
