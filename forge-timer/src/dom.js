@@ -8,7 +8,7 @@ let intervals = []; // the set of intervals
 let direction = "Stopwatch"; // direction (Stopwatch -> count up, Timer -> count down)
 let amount = [0, 0, 0, 0]; // max amount for Timer, array of hours/minutes/seconds/ms
 let total = 0; // the amount array, reduced to milliseconds
-
+let customTimer = [];
 /** Pad {number} to {zeros} digits */
 const pad = (number, zeros) => {
     let string = number.toString();
@@ -56,6 +56,39 @@ const tick = (el, max, padding, updateTime, index) => {
         el.html(number);
     }, 10);
 };
+
+/*
+* Create an interval to run custom timers in
+*/
+const userTimer = () => {
+	intervals.push(setInterval(() => {
+		if(direction === "Timer" && total - (Date.now() - startTime) <= 0){	
+			if(customTimer.length !== 0){
+				goToNextPeriod();
+			}
+	}}), 10)
+}
+
+/*
+* Reset the timer and go to the next phase
+*/
+const goToNextPeriod = () => {
+	
+	timer = customTimer.shift().length.replace("[","").replace("]","").split(",").map(Number);
+	
+    $("#hours").html(timer[0]);
+    $("#minutes").html(timer[1]);
+    $("#seconds").html(timer[2]);
+    $("#ms").html(timer[3]);
+
+    pause(false);
+	offset = 0;
+    pauseTime = undefined;
+	console.log(timer);
+	console.log("Running custom timer");
+	total = reduceToMs(timer);
+}
+
 
 /**
  * Start incrementing the stopwatch counters. 
@@ -151,6 +184,7 @@ $(document).ready(() => {
     tick($('#minutes'), 60, 2, 60000, 1);
     tick($('#seconds'), 60, 2, 1000, 2);
     tick($('#ms'), 100, 2, 10, 3);
+	userTimer();
 
     reset();
 });

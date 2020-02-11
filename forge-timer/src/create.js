@@ -47,6 +47,26 @@ $(document).ready(() => {
         }
     });
 
+	$("#create-custom-form").on('submit', (e) =>{
+		e.preventDefault();
+		console.log($("#user-text").val());
+		var newTimer = []
+		$("#user-text").val().split("\n").forEach(function (item, index) {
+			var temp = item.split(" ");
+			newTimer.push({name: temp[0],
+						  length: JSON.stringify(temp[1].split(":").map(Number))
+						});
+		});
+		var jsonTimer = {}
+		for(var i = 0; i < newTimer.length; i++){
+			jsonTimer["period" + (i+1)] = newTimer[i];
+		}
+		customTimer = newTimer;
+		direction = "Timer";
+		goToNextPeriod();
+	});
+
+
     $("#create-form").on('submit', (e) => {
         e.preventDefault();
         direction = $("#direction-select").val();
@@ -61,5 +81,5 @@ $(document).ready(() => {
         // represent amount as milliseconds
         total = reduceToMs(amount);
         reset();
-    })
+    });
 });
