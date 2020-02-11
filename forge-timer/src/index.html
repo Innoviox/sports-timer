@@ -6,45 +6,139 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="lib/odometer-theme-default.css" />
-    <script src="lib/odometer.min.js"></script>
 
-    <script src="dom.js"></script>
+      <script src="lib/slick.js"></script>
+      <link rel="stylesheet" href="lib/slick.css" />
+
+      <link rel="stylesheet" href="lib/odometer-theme-default.css" />
+      <script src="lib/odometer.min.js"></script>
+
+      <link rel="stylesheet" href="index.css">
+
+      <script src="dom.js"></script>
     <script src="create.js"></script>
   </head>
 
   <body>
-    <!--<h1>Timer</h1>-->
-    <div class="container">
-      <div id="timer">
-        <div id="hours" class="odometer"></div>:
-        <div id="minutes" class="odometer"></div>:
-        <div id="seconds" class="odometer"></div>.
-        <div id="ms" class="odometer"></div>
-        <br> 
+      <div class="sub-header">
+          <div class="swipe-tabs">
+              <div class="swipe-tab">Timer</div>
+              <div class="swipe-tab">Create</div>
+          </div>
+      </div>
+      <div class="main-container">
+          <div class="swipe-tabs-container ">
+              <div class="swipe-tab-content">
+                  <div id="timer">
+                      <div id="hours" class="odometer"></div>:
+                      <div id="minutes" class="odometer"></div>:
+                      <div id="seconds" class="odometer"></div>.
+                      <div id="ms" class="odometer"></div>
+                      <br>
 
-        <div class="timer-label" id="toggle-button" onclick="toggleTimer()"><u>S</u>tart</div>
+                      <div class="timer-label" id="toggle-button" onclick="toggleTimer()"><u>S</u>tart</div>
+                  </div>
+
+                  <button id="add-lap" onclick="addLap()"><u>L</u>ap</button>
+                  <div id="lap-list"></div>
+                  <button id="reset" onclick="reset()"><u>R</u>eset</button>
+
+                  <form id="create-form">
+                      <select id="direction-select">
+                          <option>Stopwatch</option>
+                          <option>Timer</option>
+                      </select>
+                      <div hidden id="amount-container">
+                          <input class="amount" type="text" maxlength="2"/>:
+                          <input class="amount" type="text" maxlength="2"/>:
+                          <input class="amount" type="text" maxlength="2"/>.
+                          <input class="amount" type="text" maxlength="2"/>
+                      </div>
+                      <button id="submit-button">Create Timer</button>
+                  </form>
+              </div>
+              <div class="swipe-tab-content">
+                  <form id="create-custom-form" action="index.html">
+                      <select id="type-select">
+                          <option>Custom</option>
+                          <option>Football</option>
+                      </select>
+                      <textarea name="text" id="user-text"></textarea>
+                      <button type="submit" id="submit-custom-button">Create</button>
+                  </form>
+              </div>
+          </div>
       </div>
 
-      <button id="add-lap" onclick="addLap()"><u>L</u>ap</button>
-      <div id="lap-list"></div>
-      <button id="reset" onclick="reset()"><u>R</u>eset</button>
+      <script>
+          $(document).ready(() => {
+              $("#type-select").change(() => {
+                  if ($("#type-select").val() === "Football") {
+                      $("#user-text").val("# Football\n" +
+                          "1. 1st Quarter - down 15:00\n" +
+                          "2. 2nd Quarter - down 15:00\n" +
+                          "3. 3rd Quarter - down 15:00\n" +
+                          "4. 4th Quarter - down 15:00");
+                  }
+              });
+          });
 
-    </div>
-    <a href="creator.html">Create</a>
-  <form id="create-form">
-      <select id="direction-select">
-          <option>Stopwatch</option>
-          <option>Timer</option>
-      </select>
-      <div hidden id="amount-container">
-        <input class="amount" type="text" maxlength="2"/>:
-        <input class="amount" type="text" maxlength="2"/>:
-        <input class="amount" type="text" maxlength="2"/>.
-        <input class="amount" type="text" maxlength="2"/>
-      </div>
-      <button id="submit-button">Create Timer</button>
-  </form>
+          $(function () {
+              'use strict';
+
+              var $swipeTabsContainer = $('.swipe-tabs'),
+                  $swipeTabs = $('.swipe-tab'),
+                  $swipeTabsContentContainer = $('.swipe-tabs-container'),
+                  currentIndex = 0,
+                  activeTabClassName = 'active-tab';
+
+              $swipeTabsContainer.on('init', function(event, slick) {
+                  $swipeTabsContentContainer.removeClass('invisible');
+                  $swipeTabsContainer.removeClass('invisible');
+
+                  currentIndex = slick.getCurrent();
+                  $swipeTabs.removeClass(activeTabClassName);
+                  $('.swipe-tab[data-slick-index=' + currentIndex + ']').addClass(activeTabClassName);
+              });
+
+              $swipeTabsContainer.slick({
+                  //slidesToShow: 3.25,
+                  slidesToShow: 2,
+                  slidesToScroll: 1,
+                  arrows: false,
+                  infinite: false,
+                  swipeToSlide: true,
+                  touchThreshold: 10
+              });
+
+              $swipeTabsContentContainer.slick({
+                  asNavFor: $swipeTabsContainer,
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  arrows: false,
+                  infinite: false,
+                  swipeToSlide: true,
+                  draggable: false,
+                  touchThreshold: 10
+              });
+
+
+              $swipeTabs.on('click', function(event) {
+                  // gets index of clicked tab
+                  currentIndex = $(this).data('slick-index');
+                  $swipeTabs.removeClass(activeTabClassName);
+                  $('.swipe-tab[data-slick-index=' + currentIndex +']').addClass(activeTabClassName);
+                  $swipeTabsContainer.slick('slickGoTo', currentIndex);
+                  $swipeTabsContentContainer.slick('slickGoTo', currentIndex);
+              });
+
+              //initializes slick navigation tabs swipe handler
+              $swipeTabsContentContainer.on('swipe', function(event, slick, direction) {
+                  currentIndex = $(this).slick('slickCurrentSlide');
+                  $swipeTabs.removeClass(activeTabClassName);
+                  $('.swipe-tab[data-slick-index=' + currentIndex + ']').addClass(activeTabClassName);
+              });
+          });
+      </script>
   </body>
 </html>
