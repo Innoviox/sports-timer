@@ -9,12 +9,6 @@ let direction = "Stopwatch"; // direction (Stopwatch -> count up, Timer -> count
 let amount = [0, 0, 0, 0]; // max amount for Timer, array of hours/minutes/seconds/ms
 let total = 0; // the amount array, reduced to milliseconds
 
-window.odometerOptions = {
-    auto: false, // Don't automatically initialize everything with class 'odometer'
-    numberLength: 2,
-    duration: 100 // Doesn't work
-};
-
 /** Pad {number} to {zeros} digits */
 const pad = (number, zeros) => {
     let string = number.toString();
@@ -147,6 +141,12 @@ $(document).keypress(e => {
 
 // Set up timers when document loads
 $(document).ready(() => {
+    window.odometerOptions = {
+        auto: false, // Don't automatically initialize everything with class 'odometer'
+        numberLength: 2,
+        duration: 100 // Doesn't work
+    };
+    
     tick($("#hours"), 99, 2, 3600000, 0);
     tick($('#minutes'), 60, 2, 60000, 1);
     tick($('#seconds'), 60, 2, 1000, 2);
