@@ -53,7 +53,7 @@ $(document).ready(() => {
           "phases": []
         }; 
         table = $("#rows").get()[0].children; // Get an HTMLCollection of the rows of the table
-        for (row of table) { // get the values for every phase (name, direction, length) and add to timerJSON
+        for (row of table) { // Get the values for every phase (name, direction, length) and add to timerJSON
           let phaseJSON = {
             "phase-name": row.getElementsByClassName("phase-name")[0].value,
             "direction": row.getElementsByClassName("direction")[0].value,
@@ -62,6 +62,7 @@ $(document).ready(() => {
           timerJSON["phases"].push(phaseJSON);
         }
         console.log(timerJSON);
+        customTimers.push(timerJSON); // Store the new timer in the set
     });
 
     $("#type-select").change(() => {

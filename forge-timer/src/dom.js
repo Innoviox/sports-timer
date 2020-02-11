@@ -1,13 +1,16 @@
-let startTime = Date.now();
-let offset = 0; // Amount of time the user has paused the current stopwatch
-let pauseTime; // Time that the user paused
 let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
+
+let startTime = Date.now();
+let offset = 0; // Amount of time the user has paused the current stopwatch
 let isPaused = true; // If the timer is paused or not; starts paused
 let intervals = []; // the set of intervals
-let direction = "Stopwatch"; // direction (Stopwatch -> count up, Timer -> count down)
-let amount = [0, 0, 0, 0]; // max amount for Timer, array of hours/minutes/seconds/ms
-let total = 0; // the amount array, reduced to milliseconds
+
+let direction = "Stopwatch"; // Direction (Stopwatch -> count up, Timer -> count down)
+let amount = [0, 0, 0, 0]; // Max amount for Timer, array of hours/minutes/seconds/ms
+let total = 0; // The amount array, reduced to milliseconds
+
+customTimers = []; // A set of all the timers that have been created
 
 /** Pad {number} to {zeros} digits */
 const pad = (number, zeros) => {
@@ -19,7 +22,7 @@ const pad = (number, zeros) => {
 };
 
 /**
- * Pause timer and update timer text
+ * Pause timer and update timer text.
  */
 const pause = (paused) => {
     isPaused = paused;
@@ -40,7 +43,7 @@ const tick = (el, max, padding, updateTime, index) => {
         let currentTime = Date.now() - startTime;
         let number;
         if (direction === "Stopwatch") {
-            number = currentTime - offset
+            number = currentTime - offset;
         } else {
             number = total - currentTime - offset;
         }
