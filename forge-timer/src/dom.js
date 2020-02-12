@@ -84,7 +84,8 @@ const reset = () => {
     laps = [];
     offset = 0;
 
-    $("#lap-list").html("");
+    $("#lap-numbers").html("");
+    $("#lap-amounts").html("");
     $("#hours").html(timer[0]);
     $("#minutes").html(timer[1]);
     $("#seconds").html(timer[2]);
@@ -101,9 +102,21 @@ const reset = () => {
  */
 const addLap = () => {
     if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
-    let newLap = `Lap ${laps.length + 1}: ${timer[0]}:${timer[1]}:${timer[2]}.${timer[3]}`; //Get current stopwatch time
-    laps.push(newLap);
-    $("#lap-list").append(newLap + "<br>");
+    let lapN = `Lap ${laps.length + 1}`;
+
+    let last = laps.slice(-1)[0]; // get last element
+    let diff = reduceToMs(timer);
+    if (last !== undefined) {
+        diff -= reduceToMs(last);
+        console.log(last, reduceToMs(last));
+    }
+    let lap = totalFromMs(diff);
+
+    let newLap = `${lap[0]}:${lap[1]}:${lap[2]}.${lap[3]}`; //Get current stopwatch time
+    laps.push(timer.slice());
+
+    $("#lap-numbers").html(lapN + "<br>" + $("#lap-numbers").html());
+    $("#lap-amounts").html(newLap + "<br>" + $("#lap-amounts").html());
 };
 
 /**

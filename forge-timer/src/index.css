@@ -79,3 +79,20 @@ body {
 
 .amount {
 }
+
+#lap-list {
+    font-family: monospace;
+}
+
+#lap-numbers {
+    float: left;
+    display: inline-block;
+    text-align: left;
+    width: 100px;
+}
+
+#lap-amounts {
+    float: right;
+    display: inline-block;
+    text-align: right;
+}
