@@ -50,8 +50,6 @@ const next = (from, to) => {
 }(jQuery));
 
 $(document).ready(() => {
-    $("#create-timer").inputFilter(/^[0–9]{2}$/.test);
-
     $("#direction-select").change((e) => {
         $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
         switch ($("#direction-select").val()) {
@@ -92,6 +90,7 @@ $(document).ready(() => {
                     total = reduceToMs(amount);
                     reset();
                 });
+                $("#create-timer").inputFilter(i => /^[0–9]$/.test(i));
                 break;
             }
             default: break;
