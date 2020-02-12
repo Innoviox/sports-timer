@@ -35,21 +35,17 @@ $(document).ready(() => {
         $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
         switch ($("#direction-select").val()) {
             case "Stopwatch": {
-                $("#time").html("<div class=\"hours main odometer\"></div>:\n" +
-                    "<div class=\"minutes main odometer\"></div>:\n" +
-                    "<div class=\"seconds main odometer\"></div>.\n" +
-                    "<div class=\"ms main odometer\"></div>\n");
+                $('#create-timer').hide();
+                $('#time').show();
+                amount = [0, 0, 0, 0];
+                total = 0;
                 direction = $("#direction-select").val();
                 reset();
                 break;
             }
             case "Timer": {
-                $("#time").html("<form id='create-timer'>" +
-                    "<input id='hours-input' class=\"amount\" type=\"text\" maxlength=\"2\" placeholder='00' size=\"2\"/>:" +
-                    "<input id='min-input' class=\"amount\" type=\"text\" maxlength=\"2\" placeholder='00' size=\"2\"/>:" +
-                    "<input id='sec-input' class=\"amount\" type=\"text\" maxlength=\"2\" placeholder='00' size=\"2\"/>." +
-                    "<input id='ms-input' class=\"amount\" type=\"text\" maxlength=\"2\" placeholder='00' size=\"2\"/>" +
-                    "</form>");
+                $('#create-timer').show();
+                $('#time').hide();
                 $("#hours-input").focus();
                 next('hours-input', 'min-input');
                 next('min-input', 'sec-input');
@@ -65,10 +61,8 @@ $(document).ready(() => {
                         }
                         return v
                     }).get();
-                    $("#time").html("<div class=\"hours main odometer\"></div>:" +
-                        "<div class=\"minutes main odometer\"></div>:" +
-                        "<div class=\"seconds main odometer\"></div>." +
-                        "<div class=\"ms main odometer\"></div>");
+                    $('#create-timer').hide();
+                    $('#time').show();
                     // represent amount as milliseconds
                     total = reduceToMs(amount);
                     reset();

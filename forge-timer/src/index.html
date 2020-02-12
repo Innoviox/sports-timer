@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Sports Timer</title>
 
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
-    <script src="lib/jquery-3.js"></script> 
+     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!--<script src="lib/jquery-3.js"></script> -->
 
       <link rel="stylesheet" href="lib/odometer-theme-default.css" />
+      <!--<script src="https://github.hubspot.com/odometer/odometer.js"></script>-->
       <script src="lib/odometer.min.js"></script>
 
       <link rel="stylesheet" href="lib/slick.css" />
@@ -41,6 +42,12 @@
                               <div class="seconds main odometer"></div>.
                               <div class="ms main odometer"></div>
                           </div>
+                          <form hidden id='create-timer'>
+                              <input id='hours-input' class="amount" type="text" maxlength="2" placeholder='00' size="2"/>:
+                              <input id='min-input' class="amount" type="text" maxlength="2" placeholder='00' size="2"/>:
+                              <input id='sec-input' class="amount" type="text" maxlength="2" placeholder='00' size="2"/>.
+                              <input id='ms-input' class="amount" type="text" maxlength="2" placeholder='00' size="2"/>
+                          </form>
 
                           <div class="timer-label" id="toggle-button" onclick="toggleTimer()"><u>S</u>tart</div>
                       </div>
