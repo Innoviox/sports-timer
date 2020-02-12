@@ -79,9 +79,9 @@ body {
 
 .amount {
     font-size: 60pt;
-    font-weight: bold;
     background-color: lightblue;
     border: none;
+    padding: 0;
 }
 
 #lap-list {
