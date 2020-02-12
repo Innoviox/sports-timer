@@ -118,8 +118,8 @@ const recolor_laps = () => {
 
     _set_color($(".lap-number")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)');
     _set_color($(".lap-amount")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)');
-    _set_color($(".lap-number")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(0, 255, 0)');
-    _set_color($(".lap-amount")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(0, 255, 0)');
+    _set_color($(".lap-number")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(82, 222, 82)');
+    _set_color($(".lap-amount")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(82, 222, 82)');
 };
 
 const addLapDiv = () => {
