@@ -78,6 +78,10 @@ body {
 }
 
 .amount {
+    font-size: 60pt;
+    font-weight: bold;
+    background-color: lightblue;
+    border: none;
 }
 
 #lap-list {
@@ -103,5 +107,9 @@ body {
 }
 
 .lap {
+    display: inline-block;
+}
+
+.main {
     display: inline-block;
 }
