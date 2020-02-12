@@ -117,21 +117,29 @@ $(document).ready(() => {
           
     $("#create-custom-form").on('submit', (e) => {
         e.preventDefault();
-        let timerJSON = {
-          "name": $("#custom-name").get()[0].value, // Get & store name of timer
-          "phases": []
-        }; 
-        table = $("#rows").get()[0].children; // Get an HTMLCollection of the rows of the table
-        for (row of table) { // Get the values for every phase (name, direction, length) and add to timerJSON
-          let phaseJSON = {
-            "phase-name": row.getElementsByClassName("phase-name")[0].value,
-            "direction": row.getElementsByClassName("direction")[0].value,
-            "length": row.getElementsByClassName("length")[0].value
+        let customName = $("#custom-name").get()[0].value
+        // if the name is not nothing and isn't already taken...
+        if (customName !== "" && !customTimerNames().includes(customName)) { 
+          let timerJSON = {
+            "name": customName, // Get & store name of timer
+            "phases": []
+          }; 
+          table = $("#rows").get()[0].children; // Get an HTMLCollection of the rows of the table
+          for (row of table) { // Get the values for every phase (name, direction, length) and add to timerJSON
+            let phaseJSON = {
+              "phase-name": row.getElementsByClassName("phase-name")[0].value,
+              "direction": row.getElementsByClassName("direction")[0].value,
+              "length": row.getElementsByClassName("length")[0].value
+            }
+            timerJSON["phases"].push(phaseJSON);
           }
-          timerJSON["phases"].push(phaseJSON);
-        }
-        console.log(timerJSON);
         customTimers.push(timerJSON); // Store the new timer in the set
+        updateTimerLists();
+        } else {
+          //TODO visible display of improper name
+          //TODO edit already existing custom timer if name is redundant
+          console.log(`The timer name '${customName}' is not a valid name.`);
+        }
     });
 
     $("#type-select").change(() => {
