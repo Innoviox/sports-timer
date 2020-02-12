@@ -44,6 +44,10 @@ $(document).ready(() => {
                 break;
             }
             case "Timer": {
+                $("#hours-input").val('');
+                $("#min-input").val('');
+                $("#sec-input").val('');
+                $("#ms-input").val('');
                 $('#create-timer').show();
                 $('#time').hide();
                 $("#hours-input").focus();
@@ -146,6 +150,7 @@ $(function () {
       arrows: false,
       infinite: false,
       swipeToSlide: true,
+      swipe: false,
       touchThreshold: 10
   });
 
@@ -157,6 +162,7 @@ $(function () {
       infinite: false,
       swipeToSlide: true,
       draggable: false,
+      swipe: false,
       touchThreshold: 10
   });
 
