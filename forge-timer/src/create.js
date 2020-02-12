@@ -52,6 +52,7 @@ $(document).ready(() => {
             return v
         }).get();
         if (direction === "Stopwatch") { amount = [0, 0, 0, 0]; }
+        $("#add-lap").attr('disabled', direction==="Timer");
         // represent amount as milliseconds
         total = reduceToMs(amount);
         reset();

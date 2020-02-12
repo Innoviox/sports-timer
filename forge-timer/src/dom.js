@@ -103,6 +103,7 @@ const reset = () => {
 };
 
 const addLapDiv = () => {
+    if (direction !== "Stopwatch") { return }
     ['hours', 'minutes', 'seconds', 'ms'].map(i => $(".lap").removeClass(i));
     $("#lap-numbers").html(`<span>Lap ${laps.length + 1}</span><br>` + $("#lap-numbers").html());
     $("#lap-amounts").html('<div class="time">' +
