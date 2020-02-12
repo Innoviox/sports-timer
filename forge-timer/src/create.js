@@ -30,7 +30,28 @@ const next = (from, to) => {
     onFinish(from, () => $('#'+to).focus());
 };
 
+// Restricts input for the given textbox to the given inputFilter function.
+// thanks https://stackoverflow.com/questions/995183/how-to-allow-only-numeric-0-9-in-html-inputbox-using-jquery/995193#995193
+(function($) {
+    $.fn.inputFilter = function(inputFilter) {
+        return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+            if (inputFilter(this.value)) {
+                this.oldValue = this.value;
+                this.oldSelectionStart = this.selectionStart;
+                this.oldSelectionEnd = this.selectionEnd;
+            } else if (this.hasOwnProperty("oldValue")) {
+                this.value = this.oldValue;
+                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+            } else {
+                this.value = "";
+            }
+        });
+    };
+}(jQuery));
+
 $(document).ready(() => {
+    $("#create-timer").inputFilter(/^[0–9]{2}$/.test);
+
     $("#direction-select").change((e) => {
         $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
         switch ($("#direction-select").val()) {
