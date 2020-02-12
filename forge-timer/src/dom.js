@@ -173,6 +173,7 @@ $(document).keypress(e => {
     else if (e.key === "s" && isPaused ||
         e.key === "p" && !isPaused ||
         e.key === " ") {
+        e.preventDefault(); // prevent scroll on space press
         toggleTimer();
     }
 });
