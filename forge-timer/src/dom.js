@@ -1,7 +1,8 @@
 let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
+let lap_lengths = [];
 
-let startTime = Date.now();
+let startTime = Date.now(), pauseTime;
 let offset = 0; // Amount of time the user has paused the current stopwatch
 let isPaused = true; // If the timer is paused or not; starts paused
 let intervals = []; // the set of intervals
@@ -85,6 +86,7 @@ const start = (resetFirst) => {
 const reset = () => {
     timer = amount.slice(); // ['00', '00', '00', '00'];
     laps = [];
+    lap_lengths = [];
     offset = 0;
 
     $("#lap-numbers").html("");
@@ -102,16 +104,35 @@ const reset = () => {
     pauseTime = undefined;
 };
 
+const _set_color = (el, color) => {
+    if (el !== undefined) {
+        el.style.color = color;
+    }
+};
+
+const recolor_laps = () => {
+    let amts = lap_lengths.map(reduceToMs);
+
+    $(".lap-number").css('color', 'rgb(0, 0, 0)');
+    $(".lap-amount").css('color', 'rgb(0, 0, 0)');
+
+    _set_color($(".lap-number")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)');
+    _set_color($(".lap-amount")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)');
+    _set_color($(".lap-number")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(0, 255, 0)');
+    _set_color($(".lap-amount")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(0, 255, 0)');
+};
+
 const addLapDiv = () => {
     if (direction !== "Stopwatch") { return }
     ['hours', 'minutes', 'seconds', 'ms'].map(i => $(".lap").removeClass(i));
-    $("#lap-numbers").html(`<span>Lap ${laps.length + 1}</span><br>` + $("#lap-numbers").html());
-    $("#lap-amounts").html('<div class="time">' +
-        '<div class="hours lap odometer">00</div>:' +
-        '<div class="minutes lap odometer">00</div>:' +
-        '<div class="seconds lap odometer">00</div>.' +
-        '<div class="ms lap odometer">00</div>' +
+    $("#lap-numbers").html(`<span class="lap-number">Lap ${laps.length + 1}</span><br>` + $("#lap-numbers").html());
+    $("#lap-amounts").html('<div class="time lap-amount">' +
+        '<div class="hours lap">00</div>:' +
+        '<div class="minutes lap">00</div>:' +
+        '<div class="seconds lap">00</div>.' +
+        '<div class="ms lap">00</div>' +
         '</div>' + $("#lap-amounts").html());
+    recolor_laps();
 };
 
 const currentLapLength = () => {
@@ -129,15 +150,8 @@ const currentLapLength = () => {
  */
 const addLap = () => {
     if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
-    // let lapN = `Lap ${laps.length + 1}`;
-    //
-    // let lap = currentLapLength();
-    //
-    // let newLap = `${lap[0]}:${lap[1]}:${lap[2]}.${lap[3]}`; //Get current stopwatch time
+    lap_lengths.push(currentLapLength().slice());
     laps.push(timer.slice());
-
-    // $("#lap-numbers").html(lapN + "<br>" + $("#lap-numbers").html());
-    // $("#lap-amounts").html(newLap + "<br>" + $("#lap-amounts").html());
     addLapDiv();
 };
 
