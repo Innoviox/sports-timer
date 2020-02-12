@@ -95,4 +95,13 @@ body {
     float: right;
     display: inline-block;
     text-align: right;
+    width: 150px;
+}
+
+.time {
+    display: inline-block;
+}
+
+.lap {
+    display: inline-block;
 }

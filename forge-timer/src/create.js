@@ -4,7 +4,18 @@
  * @returns {number | any | BigInt | T}
  */
 const reduceToMs = (arr) => arr.map((e, idx) => e * [3600000, 60000, 1000, 10][idx]).reduce((a, b) => a + b);
-const totalFromMs = (total) => [3600000, 60000, 1000, 10].map(i => pad(Math.trunc(total / i), 2).substring(0, 2));
+// const totalFromMs = (total) => [3600000, 60000, 1000, 10].map(i => pad(Math.trunc(total / i), 2).substring(0, 2));
+const totalFromMs = (total) => {
+    var milliseconds = parseInt((total % 1000) / 10),
+        seconds = Math.floor((total / 1000) % 60),
+        minutes = Math.floor((total / (1000 * 60)) % 60),
+        hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+    return [hours, minutes, seconds, milliseconds].map(i => pad(i, 2).substring(0, 2));
+}
 
 $(document).ready(() => {
     // const { unwrapGrid, forceGridAnimation } = animateCSSGrid.wrapGrid(document.querySelector('#create-form'), {duration : 600});

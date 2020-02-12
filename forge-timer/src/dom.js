@@ -56,7 +56,10 @@ const tick = (el, max, padding, updateTime, index) => {
 
         number = pad(Math.trunc(number / updateTime) % max, padding);
         timer[index] = number;
-        el.html(number);
+        $(el+".main").html(number);
+
+        let lap_n = currentLapLength()[index];
+        $(el+".lap").html(lap_n);
     }, 10);
 };
 
@@ -86,15 +89,38 @@ const reset = () => {
 
     $("#lap-numbers").html("");
     $("#lap-amounts").html("");
-    $("#hours").html(timer[0]);
-    $("#minutes").html(timer[1]);
-    $("#seconds").html(timer[2]);
-    $("#ms").html(timer[3]);
+
+    addLapDiv();
+
+    $(".hours").html(timer[0]);
+    $(".minutes").html(timer[1]);
+    $(".seconds").html(timer[2]);
+    $(".ms").html(timer[3]);
 
     pause(true);
 
     pauseTime = undefined;
 };
+
+const addLapDiv = () => {
+    ['hours', 'minutes', 'seconds', 'ms'].map(i => $(".lap").removeClass(i));
+    $("#lap-numbers").html(`<span>Lap ${laps.length + 1}</span><br>` + $("#lap-numbers").html());
+    $("#lap-amounts").html('<div class="time">' +
+        '<div class="hours lap odometer">00</div>:' +
+        '<div class="minutes lap odometer">00</div>:' +
+        '<div class="seconds lap odometer">00</div>.' +
+        '<div class="ms lap odometer">00</div>' +
+        '</div>' + $("#lap-amounts").html());
+};
+
+const currentLapLength = () => {
+    let last = laps.slice(-1)[0]; // get last element
+    let diff = reduceToMs(timer);
+    if (last !== undefined) {
+        diff -= reduceToMs(last);
+    }
+    return totalFromMs(diff);
+}
 
 /**
  * Adds the current time to the list of laps and the HTML text box display.
@@ -102,21 +128,16 @@ const reset = () => {
  */
 const addLap = () => {
     if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
-    let lapN = `Lap ${laps.length + 1}`;
-
-    let last = laps.slice(-1)[0]; // get last element
-    let diff = reduceToMs(timer);
-    if (last !== undefined) {
-        diff -= reduceToMs(last);
-        console.log(last, reduceToMs(last));
-    }
-    let lap = totalFromMs(diff);
-
-    let newLap = `${lap[0]}:${lap[1]}:${lap[2]}.${lap[3]}`; //Get current stopwatch time
+    // let lapN = `Lap ${laps.length + 1}`;
+    //
+    // let lap = currentLapLength();
+    //
+    // let newLap = `${lap[0]}:${lap[1]}:${lap[2]}.${lap[3]}`; //Get current stopwatch time
     laps.push(timer.slice());
 
-    $("#lap-numbers").html(lapN + "<br>" + $("#lap-numbers").html());
-    $("#lap-amounts").html(newLap + "<br>" + $("#lap-amounts").html());
+    // $("#lap-numbers").html(lapN + "<br>" + $("#lap-numbers").html());
+    // $("#lap-amounts").html(newLap + "<br>" + $("#lap-amounts").html());
+    addLapDiv();
 };
 
 /**
@@ -163,10 +184,10 @@ $(document).ready(() => {
         duration: 100 // Doesn't work
     };
     
-    tick($("#hours"), 99, 2, 3600000, 0);
-    tick($('#minutes'), 60, 2, 60000, 1);
-    tick($('#seconds'), 60, 2, 1000, 2);
-    tick($('#ms'), 100, 2, 10, 3);
+    tick(".hours", 99, 2, 3600000, 0);
+    tick('.minutes', 60, 2, 60000, 1);
+    tick('.seconds', 60, 2, 1000, 2);
+    tick('.ms', 100, 2, 10, 3);
 
     reset();
 });
