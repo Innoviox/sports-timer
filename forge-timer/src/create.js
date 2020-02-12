@@ -15,25 +15,58 @@ const totalFromMs = (total) => {
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
     return [hours, minutes, seconds, milliseconds].map(i => pad(i, 2).substring(0, 2));
-}
+};
+
+const onFinish = (el, f) => {
+    $('#'+el).on("keyup", function() {
+        var maxLength = $('#'+el).attr("maxlength");
+        if(maxLength == $('#'+el).val().length) {
+            f();
+        }
+    })
+};
+
+const next = (from, to) => {
+    onFinish(from, () => $('#'+to).focus());
+};
 
 $(document).ready(() => {
-    // const { unwrapGrid, forceGridAnimation } = animateCSSGrid.wrapGrid(document.querySelector('#create-form'), {duration : 600});
-
     $("#direction-select").change((e) => {
+        $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
         switch ($("#direction-select").val()) {
             case "Stopwatch": {
-                $("#amount-container").hide();
-                $('#direction-select').css('grid-column', '1 / 3');
-                $('#submit-button').css('grid-column', '3 / 5');
-                // forceGridAnimation();
+                $('#create-timer').hide();
+                $('#time').show();
+                amount = [0, 0, 0, 0];
+                total = 0;
+                direction = $("#direction-select").val();
+                reset();
                 break;
             }
             case "Timer": {
-                $("#amount-container").show();
-                $('#direction-select').css('grid-column', '1 / 1');
-                $('#submit-button').css('grid-column', '5 / 5');
-                // forceGridAnimation();
+                $('#create-timer').show();
+                $('#time').hide();
+                $("#hours-input").focus();
+                next('hours-input', 'min-input');
+                next('min-input', 'sec-input');
+                next('sec-input', 'ms-input');
+                onFinish('ms-input', () => $("#create-timer").submit());
+                $("#create-timer").submit(e => {
+                    e.preventDefault();
+                    direction = $("#direction-select").val();
+                    amount = $(".amount").map(function() { // get user time input
+                        let v = parseInt(this.value);
+                        if (isNaN(v)) {
+                            return 0;
+                        }
+                        return v
+                    }).get();
+                    $('#create-timer').hide();
+                    $('#time').show();
+                    // represent amount as milliseconds
+                    total = reduceToMs(amount);
+                    reset();
+                });
                 break;
             }
             default: break;
@@ -41,22 +74,22 @@ $(document).ready(() => {
     });
 
     //Form on 'Timer' page
-    $("#create-form").on('submit', (e) => {
-        e.preventDefault();
-        direction = $("#direction-select").val();
-        amount = $(".amount").map(function() { // get user time input
-            let v = parseInt(this.value);
-            if (isNaN(v)) {
-                return 0;
-            }
-            return v
-        }).get();
-        if (direction === "Stopwatch") { amount = [0, 0, 0, 0]; }
-        $("#add-lap").attr('disabled', direction==="Timer");
-        // represent amount as milliseconds
-        total = reduceToMs(amount);
-        reset();
-    });
+    // $("#create-form").on('submit', (e) => {
+    //     e.preventDefault();
+    //     direction = $("#direction-select").val();
+    //     amount = $(".amount").map(function() { // get user time input
+    //         let v = parseInt(this.value);
+    //         if (isNaN(v)) {
+    //             return 0;
+    //         }
+    //         return v
+    //     }).get();
+    //     if (direction === "Stopwatch") { amount = [0, 0, 0, 0]; }
+    //     $("#add-lap").attr('disabled', direction==="Timer");
+    //     // represent amount as milliseconds
+    //     total = reduceToMs(amount);
+    //     reset();
+    // });
           
     $("#create-custom-form").on('submit', (e) => {
         e.preventDefault();
