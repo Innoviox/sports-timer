@@ -36,6 +36,10 @@
           <div class="swipe-tabs-container">
               <div class="swipe-tab-content">
                   <div class="container">
+                      <select id="direction-select">
+                          <option>Stopwatch</option>
+                          <option>Timer</option>
+                      </select>
                       <div id="timer">
                           <div id="time">
                               <div class="hours main odometer"></div>:
@@ -59,29 +63,11 @@
                           <div id="lap-amounts"></div>
                       </div>
                       <button id="reset" onclick="reset()"><u>R</u>eset</button>
-
-                      <!--<form id="create-form">-->
-                      <!-- TODO remove hardcoded values? --> 
-                      <select id="direction-select">
-                        <option>Stopwatch</option>
-                        <option>Timer</option>
-                      </select>
-
-                          <!--<div hidden id="amount-container">-->
-                              <!--<div>-->
-                                  <!--<input class="amount" type="text" maxlength="2" size="2"/>:-->
-                                  <!--<input class="amount" type="text" maxlength="2" size="2"/>:-->
-                                  <!--<input class="amount" type="text" maxlength="2" size="2"/>.-->
-                                  <!--<input class="amount" type="text" maxlength="2" size="2"/>-->
-                              <!--</div>-->
-                          <!--</div>-->
-
-                          <!--<button id="submit-button">Create Timer</button>-->
-                      <!--</form>-->
                   </div>
               </div>
               <div class="swipe-tab-content">
                   <form id="create-custom-form">
+                      <!-- TODO remove hardcoded values? -->
                         <select id="type-select" />
                         <input id="custom-name" />
                       <table id="rows"></table>
