@@ -61,6 +61,7 @@
                       <button id="reset" onclick="reset()"><u>R</u>eset</button>
 
                       <!--<form id="create-form">-->
+                      <!-- TODO remove hardcoded values? --> 
                       <select id="direction-select">
                         <option>Stopwatch</option>
                         <option>Timer</option>
@@ -81,11 +82,8 @@
               </div>
               <div class="swipe-tab-content">
                   <form id="create-custom-form">
-                        <select id="type-select">
-                            <option>Custom</option> <!--- TODO not hardcode this in HTML --->
-                            <option>Football</option>
-                        </select>
-                        <input id="custom-name">
+                        <select id="type-select" />
+                        <input id="custom-name" />
                       <table id="rows"></table>
                         <button type="button" id="add-row" onclick="addNewRow()">Add Row</button>
                         <button type="button" id="delete-row" onclick="deleteLastRow()">Delete Row</button>
