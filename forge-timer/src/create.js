@@ -34,13 +34,15 @@ const next = (from, to) => {
 // thanks https://stackoverflow.com/questions/995183/how-to-allow-only-numeric-0-9-in-html-inputbox-using-jquery/995193#995193
 (function($) {
     $.fn.inputFilter = function(inputFilter) {
-        return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+        return this.on("input keydown keyup", function() {
             if (inputFilter(this.value)) {
                 this.oldValue = this.value;
                 this.oldSelectionStart = this.selectionStart;
                 this.oldSelectionEnd = this.selectionEnd;
             } else if (this.hasOwnProperty("oldValue")) {
-                this.value = this.oldValue;
+                let v = this.value.split("");
+                v.pop();
+                this.value = v.join("");
                 this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
             } else {
                 this.value = "";
@@ -50,6 +52,7 @@ const next = (from, to) => {
 }(jQuery));
 
 $(document).ready(() => {
+    $(".amount").inputFilter(i => /^\d*$/.test(i));
     $("#direction-select").change((e) => {
         $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
         switch ($("#direction-select").val()) {
@@ -63,10 +66,9 @@ $(document).ready(() => {
                 break;
             }
             case "Timer": {
-                $("#hours-input").val('');
-                $("#min-input").val('');
-                $("#sec-input").val('');
-                $("#ms-input").val('');
+                ['hours', 'min', 'sec', 'ms'].map(i => {
+                    $(`#${i}-input`).val('');
+                });
                 $('#create-timer').show();
                 $('#time').hide();
                 $("#hours-input").focus();
@@ -90,7 +92,6 @@ $(document).ready(() => {
                     total = reduceToMs(amount);
                     reset();
                 });
-                $("#create-timer").inputFilter(i => /^[0–9]$/.test(i));
                 break;
             }
             default: break;
