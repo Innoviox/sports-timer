@@ -178,7 +178,8 @@ $(function () {
       slidesToScroll: 1,
       arrows: false,
       infinite: false,
-      swipeToSlide: true,
+      swipeToSlide: false,
+      accessibility: false,
       swipe: false,
       touchThreshold: 10
   });
@@ -189,8 +190,9 @@ $(function () {
       slidesToScroll: 1,
       arrows: false,
       infinite: false,
-      swipeToSlide: true,
+      swipeToSlide: false,
       draggable: false,
+      accessibility: false,
       swipe: false,
       touchThreshold: 10
   });
@@ -205,7 +207,7 @@ $(function () {
       $swipeTabsContentContainer.slick('slickGoTo', currentIndex);
   });
 
-  //initializes slick navigation tabs swipe handler
+  // initializes slick navigation tabs swipe handler
   $swipeTabsContentContainer.on('swipe', function(event, slick, direction) {
       currentIndex = $(this).slick('slickCurrentSlide');
       $swipeTabs.removeClass(activeTabClassName);
