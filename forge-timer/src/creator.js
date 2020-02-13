@@ -1,15 +1,15 @@
 let newRow = 
 `<tr class="row">
-    <td><input type="text" class="phase-name" placeholder="Phase Name"></input></td>
+    <td><input type="text" class="phase-name" placeholder="Phase Name" /></td>
     <td><select class="direction">
     	<option value="up">Stopwatch</option>
 		<option value="down">Timer</option>
     </select></td>
     <td><div class="length">
-    	<input type="number" class="hours" placeholder="hh"></input>:
-    	<input type="number" class="minutes" placeholder="mm"></input>:
-    	<input type="number" class="seconds" placeholder="ss"></input>.
-    	<input type="number" class="centiseconds" placeholder="cc"></input>
+    	<input type="number" class="hours time-in" placeholder="hh" size="2" maxlength="2" />:
+    	<input type="number" class="minutes time-in" placeholder="mm" size="2" maxlength="2" />:
+    	<input type="number" class="seconds time-in" placeholder="ss" size="2" maxlength="2" />.
+    	<input type="number" class="centiseconds time-in" placeholder="cc" size="2" maxlength="2" />
     </div></td>
 </tr>`;
 

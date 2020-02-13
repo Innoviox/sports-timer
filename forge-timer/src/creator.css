@@ -38,24 +38,20 @@
 	column-gap: 10px;
 	display: flex;
 	width: 100%;
-
 }
 
-.name {
-	width: 50%;
+.phase-name {
+	column-span: 1;
 }
 
 .direction {
-	width: 25%;
+    column-span: 1;
 }
 
 .length {
-	width: 25%;
-	column-gap: 10px;
-	display: flex;	
-	margin-top: auto; /* Hopefully, display at end of box */
+    column-span: 1;
 }
 
-input {
-	width: 100%;
+.time-in {
+    width: 20%;
 }
