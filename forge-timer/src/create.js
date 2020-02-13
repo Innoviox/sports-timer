@@ -3,7 +3,7 @@
  * @param arr
  * @returns {number | any | BigInt | T}
  */
-const reduceToMs = (arr) => arr.map((e, idx) => e * [3600000, 60000, 1000, 10][idx]).reduce((a, b) => a + b);   
+const reduceToMs = (arr) => arr.map((e, idx) => (isNaN(e) ? 0 : e) * [3600000, 60000, 1000, 10][idx]).reduce((a, b) => a + b);
 
 // const totalFromMs = (total) => [3600000, 60000, 1000, 10].map(i => pad(Math.trunc(total / i), 2).substring(0, 2));
 const totalFromMs = (total) => {
@@ -174,7 +174,7 @@ $(document).ready(() => {
           }
         customTimers.push(timerJSON); // Store the new timer in the set
         updateTimerLists();
-            toastr.success('Have fun!', 'Timer created!');
+            toastr.success('Have fun!', `Timer ${customName} created!`);
             $(".swipe-tab")[0].click();
         } else {
           //TODO visible display of improper name

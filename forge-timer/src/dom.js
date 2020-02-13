@@ -95,8 +95,7 @@ const tick = (el, max, padding, updateTime, index) => {
 */
 const userTimer = () => {
 	intervals.push(setInterval(() => {
-        if (customTimer !== undefined) {
-            console.log(customTimer, total, Date.now() - startTime);
+        if (customTimer !== undefined && !isPaused) {
             if ((total - (Date.now() - startTime) <= 0)) {
                 if (customTimer.length !== 0 && timerIndex < currentTimer.phases.length) {
                     goToNextPeriod();
@@ -126,8 +125,8 @@ const goToNextPeriod = () => {
 	console.log("Running custom timer");
 	console.log(timer);
 	toastr.info(`Starting phase ${phase['phase-name']}`);
-	total = reduceToMs(timer);
-}
+    total = reduceToMs(timer);
+};
 
 
 /**
