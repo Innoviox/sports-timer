@@ -1,14 +1,44 @@
-let startTime = Date.now();
-let offset = 0; // Amount of time the user has paused the current stopwatch
-let pauseTime; // Time that the user paused
 let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
+let lap_lengths = [];
+
+let startTime = Date.now(), pauseTime;
+let offset = 0; // Amount of time the user has paused the current stopwatch
 let isPaused = true; // If the timer is paused or not; starts paused
 let intervals = []; // the set of intervals
+
 let direction = "Stopwatch"; // direction (Stopwatch -> count up, Timer -> count down)
 let amount = [0, 0, 0, 0]; // max amount for Timer, array of hours/minutes/seconds/ms
 let total = 0; // the amount array, reduced to milliseconds
-let customTimer = [];
+let timerIndex = 0;
+
+
+customTimers = [{
+    "name": "Football",
+    "phases": [
+        {
+            "phase-name": "Quarter 1",
+            "length": 15*60,
+            "direction": "down"
+        },
+        {
+            "phase-name": "Quarter 2",
+            "length": 15*60,
+            "direction": "down"
+        },
+        {
+            "phase-name": "Quarter 3",
+            "length": 15*60,
+            "direction": "down"
+        },
+        {
+            "phase-name": "Quarter 4",
+            "length": 15*60,
+            "direction": "down"
+        }
+    ]
+}]; // A set of all the timers that have been created
+
 /** Pad {number} to {zeros} digits */
 const pad = (number, zeros) => {
     let string = number.toString();
@@ -19,7 +49,7 @@ const pad = (number, zeros) => {
 };
 
 /**
- * Pause timer and update timer text
+ * Pause timer and update timer text.
  */
 const pause = (paused) => {
     isPaused = paused;
@@ -40,7 +70,7 @@ const tick = (el, max, padding, updateTime, index) => {
         let currentTime = Date.now() - startTime;
         let number;
         if (direction === "Stopwatch") {
-            number = currentTime - offset
+            number = currentTime - offset;
         } else {
             number = total - currentTime - offset;
         }
@@ -53,8 +83,11 @@ const tick = (el, max, padding, updateTime, index) => {
 
         number = pad(Math.trunc(number / updateTime) % max, padding);
         timer[index] = number;
-        el.html(number);
-    }, 10);
+        $(el+".main").html(number);
+
+        let lap_n = currentLapLength()[index];
+        $(el+".lap").html(lap_n);
+    }, 1);
 };
 
 /*
@@ -74,7 +107,7 @@ const userTimer = () => {
 */
 const goToNextPeriod = () => {
 	
-	timer = customTimer.shift().length.replace("[","").replace("]","").split(",").map(Number);
+	
 	
     $("#hours").html(timer[0]);
     $("#minutes").html(timer[1]);
@@ -112,18 +145,66 @@ const start = (resetFirst) => {
 const reset = () => {
     timer = amount.slice(); // ['00', '00', '00', '00'];
     laps = [];
+    lap_lengths = [];
     offset = 0;
 
-    $("#lap-list").html("");
-    $("#hours").html(timer[0]);
-    $("#minutes").html(timer[1]);
-    $("#seconds").html(timer[2]);
-    $("#ms").html(timer[3]);
+    $("#lap-numbers").html("");
+    $("#lap-amounts").html("");
+
+    addLapDiv();
+
+    $(".hours").html(timer[0]);
+    $(".minutes").html(timer[1]);
+    $(".seconds").html(timer[2]);
+    $(".ms").html(timer[3]);
 
     pause(true);
 
     pauseTime = undefined;
 };
+
+// helper method to update el, *if* el is defined,
+// so we don't get dumb errors.
+const setStyle = (el, color, style) => {
+    if (el !== undefined) {
+        el.style.color = color;
+        style === 'italic' ? el.style.fontStyle = style : el.style.fontWeight = style;
+    }
+};
+
+const recolorLaps = () => {
+    let amts = lap_lengths.map(reduceToMs);
+
+    $(".lap-number").css('color', 'rgb(0, 0, 0)').css('font-style', '').css('font-weight', '');
+    $(".lap-amount").css('color', 'rgb(0, 0, 0)').css('font-style', '').css('font-weight', '');
+
+    setStyle($(".lap-number")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)', 'bold');
+    setStyle($(".lap-amount")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)', 'bold');
+    setStyle($(".lap-number")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(37, 138, 54)', 'italic');
+    setStyle($(".lap-amount")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(37, 138, 54)', 'italic');
+};
+
+const addLapDiv = () => {
+    if (direction !== "Stopwatch") { return }
+    ['hours', 'minutes', 'seconds', 'ms'].map(i => $(".lap").removeClass(i));
+    $("#lap-numbers").html(`<span class="lap-number">Lap ${laps.length + 1}</span><br>` + $("#lap-numbers").html());
+    $("#lap-amounts").html('<div class="time lap-amount">' +
+        '<div class="hours lap">00</div>:' +
+        '<div class="minutes lap">00</div>:' +
+        '<div class="seconds lap">00</div>.' +
+        '<div class="ms lap">00</div>' +
+        '</div>' + $("#lap-amounts").html());
+    recolorLaps();
+};
+
+const currentLapLength = () => {
+    let last = laps.slice(-1)[0]; // get last element
+    let diff = reduceToMs(timer);
+    if (last !== undefined) {
+        diff -= reduceToMs(last);
+    }
+    return totalFromMs(diff);
+}
 
 /**
  * Adds the current time to the list of laps and the HTML text box display.
@@ -131,9 +212,9 @@ const reset = () => {
  */
 const addLap = () => {
     if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
-    let newLap = `Lap ${laps.length + 1}: ${timer[0]}:${timer[1]}:${timer[2]}.${timer[3]}`; //Get current stopwatch time
-    laps.push(newLap);
-    $("#lap-list").append(newLap + "<br>");
+    lap_lengths.push(currentLapLength().slice());
+    laps.push(timer.slice());
+    addLapDiv();
 };
 
 /**
@@ -168,6 +249,7 @@ $(document).keypress(e => {
     else if (e.key === "s" && isPaused ||
         e.key === "p" && !isPaused ||
         e.key === " ") {
+        e.preventDefault(); // prevent scroll on space press
         toggleTimer();
     }
 });
@@ -185,6 +267,7 @@ $(document).ready(() => {
     tick($('#seconds'), 60, 2, 1000, 2);
     tick($('#ms'), 100, 2, 10, 3);
 	userTimer();
+
 
     reset();
 });

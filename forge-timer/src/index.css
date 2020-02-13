@@ -11,14 +11,14 @@ body {
 
 	display: grid;
 	grid-template-columns: repeat(4, 1fr); /* four equal spaced columns */
-	grid-template-rows: 4fr 2fr;
+	grid-template-rows: 1fr 4fr 2fr;
 
 	justify-content: center;
 	align-content: center;
 	padding: 10px;
 	grid-gap: 10px;
 
-	background-color: blue;	
+	/*background-color: blue;	*/
 }
 
 #timer {
@@ -40,6 +40,8 @@ body {
 	background-color: white;
 	overflow: scroll;
 	padding: 5px;
+    min-height: 68px;
+    max-height: 68px;
 }
 
 .container > button {
@@ -52,4 +54,70 @@ body {
     -ms-transition-duration: 100ms !important;
     -o-transition-duration: 100ms !important;
     transition-duration: 100ms !important
+}
+
+#create-form {
+    grid-column: 1 / 5;
+    display: grid;
+}
+
+#direction-select {
+    grid-column: 1 / 5;
+}
+
+#submit-button {
+    grid-column: 3 / 5;
+}
+
+#amount-container {
+    grid-column: 2 / 4;
+}
+
+#form-div {
+    grid-column: 1 / 5;
+}
+
+.amount {
+    font-size: 60pt;
+    background-color: lightblue;
+    border: none;
+    padding: 0;
+    font-family: "Helvetica Neue", sans-serif;
+    width: 89px;
+    height: 101px;
+    line-height: 1.1em;
+}
+
+#create-timer {
+    height: 106px;
+}
+
+#lap-list {
+    font-family: monospace;
+}
+
+#lap-numbers {
+    float: left;
+    display: inline-block;
+    text-align: left;
+    width: 100px;
+}
+
+#lap-amounts {
+    float: right;
+    display: inline-block;
+    text-align: right;
+    width: 150px;
+}
+
+.time {
+    display: inline-block;
+}
+
+.lap {
+    display: inline-block;
+}
+
+.main {
+    display: inline;
 }
