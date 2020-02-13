@@ -11,29 +11,29 @@ let direction = "Stopwatch"; // direction (Stopwatch -> count up, Timer -> count
 let amount = [0, 0, 0, 0]; // max amount for Timer, array of hours/minutes/seconds/ms
 let total = 0; // the amount array, reduced to milliseconds
 let timerIndex = 0;
-
+let currentTimer = 0;
 
 customTimers = [{
     "name": "Football",
     "phases": [
         {
             "phase-name": "Quarter 1",
-            "length": 15*60,
+            "length": [0,0,10,10],
             "direction": "down"
         },
         {
             "phase-name": "Quarter 2",
-            "length": 15*60,
+            "length": [0,0,10,10],
             "direction": "down"
         },
         {
             "phase-name": "Quarter 3",
-            "length": 15*60,
+            "length": [0,0,10,10],
             "direction": "down"
         },
         {
             "phase-name": "Quarter 4",
-            "length": 15*60,
+            "length": [0,0,10,10],
             "direction": "down"
         }
     ]
@@ -96,7 +96,7 @@ const tick = (el, max, padding, updateTime, index) => {
 const userTimer = () => {
 	intervals.push(setInterval(() => {
 		if(direction === "Timer" && total - (Date.now() - startTime) <= 0){	
-			if(customTimer.length !== 0){
+			if(customTimer.length !== 0 && timerIndex < currentTimer.length){
 				goToNextPeriod();
 			}
 	}}), 10)
@@ -106,8 +106,7 @@ const userTimer = () => {
 * Reset the timer and go to the next phase
 */
 const goToNextPeriod = () => {
-	
-	
+	timer = currentTimer.phases[timerIndex++].length;
 	
     $("#hours").html(timer[0]);
     $("#minutes").html(timer[1]);
@@ -119,7 +118,7 @@ const goToNextPeriod = () => {
     pauseTime = undefined;
 	console.log(timer);
 	console.log("Running custom timer");
-	total = reduceToMs(timer);
+	total = reduceToMs(timer.length);
 }
 
 
