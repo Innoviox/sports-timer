@@ -11,7 +11,31 @@ let direction = "Stopwatch"; // Direction (Stopwatch -> count up, Timer -> count
 let amount = [0, 0, 0, 0]; // Max amount for Timer, array of hours/minutes/seconds/ms
 let total = 0; // The amount array, reduced to milliseconds
 
-customTimers = []; // A set of all the timers that have been created
+customTimers = [{
+    "name": "Football",
+    "phases": [
+        {
+            "phase-name": "Quarter 1",
+            "length": 15*60,
+            "direction": "down"
+        },
+        {
+            "phase-name": "Quarter 2",
+            "length": 15*60,
+            "direction": "down"
+        },
+        {
+            "phase-name": "Quarter 3",
+            "length": 15*60,
+            "direction": "down"
+        },
+        {
+            "phase-name": "Quarter 4",
+            "length": 15*60,
+            "direction": "down"
+        }
+    ]
+}]; // A set of all the timers that have been created
 
 /** Pad {number} to {zeros} digits */
 const pad = (number, zeros) => {
