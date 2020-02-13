@@ -7,11 +7,14 @@ let newRow =
 
 /** 
  * Append a new row onto 'rows'. 
+ * @param {boolean} animate - whether the row should animate height when added
  */ 
-const addNewRow = () => {
- 	$("#rows").append(newRow);	
- 	$("#rows").children().last().css('height', '0px');
- 	$("#rows").children().last().animate({height: '30px'});
+const addNewRow = (animate) => {
+ 	$("#rows").append(newRow);
+ 	if (animate) {	
+	 	$("#rows").children().last().css('height', '0px');
+ 		$("#rows").children().last().animate({height: '30px'});
+ 	}
 };
 
 /**
@@ -62,6 +65,30 @@ const addOption = (select, value) => {
  */
 const customTimerNames = () => {
 	return customTimers.map((timer) => timer["name"]);
+}
+
+/** 
+ * Display a given customTimer JSON object in 'Create' table.
+ * @param {Object} customTimer - custom timer to display
+ */
+const displayCustomTimer = (customTimer) => {
+	$("#rows").empty();
+	$("#custom-name").html = customTimer["name"]; 
+	let lastRow = undefined;
+	console.log(lastRow);
+	// add all phases into table
+	for (phase of customTimer["phases"]) {
+		addNewRow(false);
+		lastRow = $("#rows").children().last();  // note: jQuery selector, not HTML object 
+		console.log("phase");
+		console.log(phase);
+		console.log("lastRow");
+		console.log(lastRow);
+		lastRow.find(".phase-name").val(phase["phase-name"]);
+		console.log(phase["phase-name"]);
+		lastRow.find(".direction").val(phase["direction"]);
+		lastRow.find(".length").val(phase["length"]);
+	}
 }
 
 $(document).ready(() => {

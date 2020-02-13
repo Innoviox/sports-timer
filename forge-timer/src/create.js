@@ -53,6 +53,7 @@ const next = (from, to) => {
 
 $(document).ready(() => {
     $(".amount").inputFilter(i => /^\d*$/.test(i));
+
     $("#direction-select").change((e) => {
         $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
         switch ($("#direction-select").val()) {
@@ -144,15 +145,14 @@ $(document).ready(() => {
     });
 
     $("#type-select").change(() => {
-              if ($("#type-select").val() === "Football") {
-                  $("#user-text").val("# Football\n" +
-                      "1. 1st Quarter - down 15:00\n" +
-                      "2. 2nd Quarter - down 15:00\n" +
-                      "3. 3rd Quarter - down 15:00\n" +
-                      "4. 4th Quarter - down 15:00");
-              }
-          });
-      });
+        selectName = $("#type-select").val();
+        selectedTimer = customTimers.filter((x) => x["name"] === selectName);
+        console.log(selectedTimer);
+        if (selectedTimer) { // timer is not nothing 
+          displayCustomTimer(selectedTimer[0]);
+        }
+    });
+});
 
 $(function () {
   'use strict';
