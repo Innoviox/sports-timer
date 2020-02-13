@@ -36,6 +36,9 @@
 
 .row {
 	column-gap: 10px;
+	display: flex;
+	width: 100%;
+
 }
 
 .name {
@@ -48,6 +51,9 @@
 
 .length {
 	width: 25%;
+	column-gap: 10px;
+	display: flex;	
+	margin-top: auto; /* Hopefully, display at end of box */
 }
 
 input {
