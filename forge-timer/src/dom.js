@@ -133,15 +133,15 @@ const reset = () => {
 const _set_style = (el, color, style) => {
     if (el !== undefined) {
         el.style.color = color;
-        el.style.fontStyle = style;
+        style === 'italic' ? el.style.fontStyle = style : el.style.fontWeight = style;
     }
 };
 
 const recolor_laps = () => {
     let amts = lap_lengths.map(reduceToMs);
 
-    $(".lap-number").css('color', 'rgb(0, 0, 0)').css('font-style', '');
-    $(".lap-amount").css('color', 'rgb(0, 0, 0)').css('font-style', '');
+    $(".lap-number").css('color', 'rgb(0, 0, 0)').css('font-style', '').css('font-weight', '');
+    $(".lap-amount").css('color', 'rgb(0, 0, 0)').css('font-style', '').css('font-weight', '');
 
     _set_style($(".lap-number")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)', 'bold');
     _set_style($(".lap-amount")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)', 'bold');
