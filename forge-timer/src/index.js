@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -19,6 +19,18 @@ const createWindow = () => {
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools();
+
+
+    //open links externally by default
+    const handleRedirect = (e, url) => {
+        if(url !== mainWindow.webContents.getURL()) {
+            e.preventDefault();
+            shell.openExternal(url)
+        }
+    }
+
+    mainWindow.webContents.on('will-navigate', handleRedirect);
+    // mainWindow.webContents.on('new-window', handleRedirect);
 };
 
 // This method will be called when Electron has finished
