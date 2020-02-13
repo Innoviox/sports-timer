@@ -19,7 +19,9 @@ let newRow =
  */
 const inputFixer = () => {
     $(".time-in").numberFilter();
-    $("#rows").children().last()
+    next($(".time-in.hours").last(), $(".time-in.minutes").last());
+    next($(".time-in.minutes").last(), $(".time-in.seconds").last());
+    next($(".time-in.seconds").last(), $(".time-in.centiseconds").last());
 };
 
 /** 
