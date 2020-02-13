@@ -10,13 +10,15 @@ let intervals = []; // the set of intervals
 let direction = "Stopwatch"; // Direction (Stopwatch -> count up, Timer -> count down)
 let amount = [0, 0, 0, 0]; // Max amount for Timer, array of hours/minutes/seconds/ms
 let total = 0; // The amount array, reduced to milliseconds
+let timerIndex = 0;
+let currentTimer = 0;
 
 customTimers = [{
     "name": "Football",
     "phases": [
         {
             "phase-name": "Quarter 1",
-            "length": [0,15,0,0],
+            "length": [0,0,10,10],
             "direction": "down"
         },
         {
@@ -87,6 +89,37 @@ const tick = (el, max, padding, updateTime, index) => {
         $(el+".lap").html(lap_n);
     }, 1);
 };
+/*
+* Create an interval to run custom timers in
+*/
+const userTimer = () => {
+	intervals.push(setInterval(() => {
+		if(direction === "Timer" && total - (Date.now() - startTime) <= 0){	
+			if(customTimer.length !== 0 && timerIndex < currentTimer.length){
+				goToNextPeriod();
+			}
+	}}), 10)
+}
+
+/*
+* Reset the timer and go to the next phase
+*/
+const goToNextPeriod = () => {
+	timer = currentTimer.phases[timerIndex++].length.map(Number);
+	
+    $(".hours").html(timer[0]);
+    $(".minutes").html(timer[1]);
+    $(".seconds").html(timer[2]);
+    $(".ms").html(timer[3]);
+
+    pause(false);
+	offset = 0;
+    pauseTime = undefined;
+	console.log("Running custom timer");
+	console.log(timer);
+	total = reduceToMs(timer);
+}
+
 
 /**
  * Start incrementing the stopwatch counters. 
@@ -231,6 +264,6 @@ $(document).ready(() => {
     tick('.minutes', 60, 2, 60000, 1);
     tick('.seconds', 60, 2, 1000, 2);
     tick('.ms', 100, 2, 10, 3);
-
+	userTimer();
     reset();
 });

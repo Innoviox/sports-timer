@@ -116,7 +116,15 @@ $(document).ready(() => {
                 });
                 break;
             }
-            default: break;
+            default: for(var i = 0; i < customTimers.length; i++){
+				if($("#direction-select").val() === customTimers[i].name){
+						currentTimer = customTimers[i];
+						timerIndex = 0;
+						goToNextPeriod();
+						break;
+				}
+			}
+			break;
         }
     });
 

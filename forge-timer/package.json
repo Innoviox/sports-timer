@@ -1,7 +1,7 @@
 {
   "name": "forge-timer",
   "productName": "forge-timer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Timer For Sports",
   "main": "src/index.js",
   "scripts": {
