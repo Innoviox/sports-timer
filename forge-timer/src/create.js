@@ -70,10 +70,12 @@ $(document).ready(() => {
     $(".amount").numberFilter();
 
     $("#direction-select").change((e) => {
+        $("#toggle-button").html("<u>S</u>tart");
         // disable lap button if type is timer, enable if type is stopwatch
         $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
         switch ($("#direction-select").val()) {
             case "Stopwatch": {
+                customTimer = undefined;
                 $('#create-timer').hide();
                 $('#time').show();
                 amount = [0, 0, 0, 0];
@@ -83,6 +85,7 @@ $(document).ready(() => {
                 break;
             }
             case "Timer": {
+                customTimer = undefined;
                 ['hours', 'min', 'sec', 'ms'].map(i => {
                     $(`#${i}-input`).val(''); // clear previously entered timer
                 });

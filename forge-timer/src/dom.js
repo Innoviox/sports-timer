@@ -54,7 +54,11 @@ const pad = (number, zeros) => {
  */
 const pause = (paused) => {
     isPaused = paused;
-    $("#toggle-button").html(paused ? "<u>S</u>tart" : "<u>P</u>ause");
+    let s = "";
+    if (customTimer !== undefined) {
+        s = `${currentTimer.name} > ${customTimer['phase-name']}: `;
+    }
+    $("#toggle-button").html(s + (paused ? "<u>S</u>tart" : "<u>P</u>ause"));
 };
 
 /** 
@@ -113,6 +117,7 @@ const goToNextPeriod = () => {
     customTimer = phase;
 	timer = phase.length.map(Number);
     direction = phase.direction === "up" ? "Stopwatch" : "Timer";
+    $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
 
     $(".hours").html(timer[0]);
     $(".minutes").html(timer[1]);
@@ -120,7 +125,6 @@ const goToNextPeriod = () => {
     $(".ms").html(timer[3]);
 
     pause(true);
-	offset = 0;
     pauseTime = undefined;
 	console.log("Running custom timer");
 	console.log(timer);
@@ -149,6 +153,7 @@ const start = (resetFirst) => {
  * Called when the user presses 'Reset'.
  */ 
 const reset = () => {
+    $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
     timer = amount.slice(); // ['00', '00', '00', '00'];
     laps = [];
     lap_lengths = [];
@@ -228,6 +233,7 @@ const addLap = () => {
  * If it's running, pause it.
  */
 const toggleTimer = () => {
+    if (!$("#time").is(":visible")) { return } // can't start/pause while inputting timer
     if (isPaused) {
         if (pauseTime !== undefined) {
             let diff = Date.now() - pauseTime;
