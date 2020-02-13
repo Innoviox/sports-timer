@@ -4,8 +4,9 @@
 
 #create-custom-form {
 	display: grid;
-	grid-template-rows: repeat(3, auto);
+	grid-template-rows: 2em 1fr 2em;
 	grid-template-columns: repeat(3, auto);
+	grid-gap: 10px;
 	}
 
 #type-select {
@@ -31,4 +32,24 @@
 
 #submit-custom-button {
 	grid-area: 3/3/4/4;
+}
+
+.row {
+	column-gap: 10px;
+}
+
+.name {
+	width: 50%;
+}
+
+.direction {
+	width: 25%;
+}
+
+.length {
+	width: 25%;
+}
+
+input {
+	width: 100%;
 }

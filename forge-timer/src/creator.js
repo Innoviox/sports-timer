@@ -1,8 +1,16 @@
 let newRow = 
 `<tr class="row">
     <td><input type="text" class="phase-name"></input></td>
-    <td><input class="direction"></input></td>
-    <td><input type="text" class="length"></input></td>
+    <td><select class="direction">
+    	<option value="up">Stopwatch</option>
+		<option value="down">Timer</option>
+    </select></td>
+    <td><div class="length">
+    	<input type="number" class="hours"></input>:
+    	<input type="number" class="minutes"></input>:
+    	<input type="number" class="seconds"></input>.
+    	<input type="number" class="centiseconds"></input>
+    </div></td>
 </tr>`;
 
 /** 

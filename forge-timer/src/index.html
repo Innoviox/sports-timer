@@ -65,10 +65,15 @@
               </div>
               <div class="swipe-tab-content">
                   <form id="create-custom-form">
-                      <!-- TODO remove hardcoded values? -->
                         <select id="type-select" />
                         <input id="custom-name" />
-                      <table id="rows"></table>
+                      <table id="rows">
+                      	<colgroup>
+    						<col class="name">
+    						<col class="direction">
+    						<col class="length">
+  						</colgroup>
+                      </table>
                         <button type="button" id="add-row" onclick="addNewRow()">Add Row</button>
                         <button type="button" id="delete-row" onclick="deleteLastRow()">Delete Row</button>
                         <button type="submit" id="submit-custom-button">Create</button>

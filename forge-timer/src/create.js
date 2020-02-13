@@ -3,7 +3,8 @@
  * @param arr
  * @returns {number | any | BigInt | T}
  */
-const reduceToMs = (arr) => arr.map((e, idx) => e * [3600000, 60000, 1000, 10][idx]).reduce((a, b) => a + b);
+const reduceToMs = (arr) => arr.map((e, idx) => e * [3600000, 60000, 1000, 10][idx]).reduce((a, b) => a + b);   
+
 // const totalFromMs = (total) => [3600000, 60000, 1000, 10].map(i => pad(Math.trunc(total / i), 2).substring(0, 2));
 const totalFromMs = (total) => {
     var milliseconds = parseInt((total % 1000) / 10),
