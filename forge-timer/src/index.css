@@ -133,3 +133,8 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+.red-input {
+    /*box-shadow: 0 0 3px #FF0000;*/
+    border: 1px solid #f00;
+}

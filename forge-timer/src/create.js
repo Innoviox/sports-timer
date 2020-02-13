@@ -182,17 +182,31 @@ $(document).ready(() => {
         } else {
           //TODO visible display of improper name
           //TODO edit already existing custom timer if name is redundant
-            toastr.error(`The timer name \'${customName}\' is invalid.`, 'Invalid name!');
+            let s = `The timer name \'${customName}\' is invalid.`;
+            if (customName === "") {
+                s = "Must type a name.";
+            } else if (customName === "Custom") {
+                s = "Name cannot be 'Custom'.";
+            } else {
+                s = "Must choose a new name."
+            }
+            toastr.error(s, 'Invalid name!');
+            $("#custom-name").addClass("red-input");
         }
     });
 
     $("#type-select").change(() => {
         selectName = $("#type-select").val();
+        $("#custom-name").val(selectName === "Custom" ? "" : selectName);
         selectedTimer = customTimers.filter((x) => x["name"] === selectName);
         console.log(selectedTimer);
         if (selectedTimer) { // timer is not nothing 
           displayCustomTimer(selectedTimer[0]);
         }
+    });
+
+    $("#custom-name").on('input', () => {
+        $("#custom-name").removeClass("red-input");
     });
 });
 
