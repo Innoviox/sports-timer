@@ -38,7 +38,32 @@ customTimers = [{
             "direction": "down"
         }
     ]
-}]; // A set of all the timers that have been created
+},
+    /*{
+        "name": "test",
+        "phases": [
+            {
+                "phase-name": "Quarter 1",
+                "length": [0,0,5,0],
+                "direction": "down"
+            },
+            {
+                "phase-name": "Quarter 2",
+                "length": [0,0,4,0],
+                "direction": "down"
+            },
+            {
+                "phase-name": "Quarter 3",
+                "length": [0,0,3,0],
+                "direction": "down"
+            },
+            {
+                "phase-name": "Quarter 4",
+                "length": [0,0,2,0],
+                "direction": "down"
+            }
+        ]
+    }*/]; // A set of all the timers that have been created
 
 /** Pad {number} to {zeros} digits */
 const pad = (number, zeros) => {
@@ -56,7 +81,7 @@ const pause = (paused) => {
     isPaused = paused;
     let s = "";
     if (customTimer !== undefined) {
-        s = `${currentTimer.name} > ${customTimer['phase-name']}: `;
+        s = `(${timerIndex} / ${currentTimer.phases.length}) ${currentTimer.name} > ${customTimer['phase-name']}: `;
     }
     $("#toggle-button").html(s + (paused ? "<u>S</u>tart" : "<u>P</u>ause"));
 };
@@ -100,9 +125,14 @@ const tick = (el, max, padding, updateTime, index) => {
 const userTimer = () => {
 	intervals.push(setInterval(() => {
         if (customTimer !== undefined && !isPaused) {
-            if ((total - (Date.now() - startTime) <= 0)) {
-                if (customTimer.length !== 0 && timerIndex < currentTimer.phases.length) {
-                    goToNextPeriod();
+            if ((total - (Date.now() - startTime) <= 10)) {
+                if (customTimer.length !== 0) {
+                    if (timerIndex < currentTimer.phases.length) {
+                        goToNextPeriod();
+                    } else {
+                        toastr.warning(`Timer ${currentTimer.name} over!`);
+                        currentTimer = undefined;
+                    }
                 }
             }
         }
@@ -126,8 +156,6 @@ const goToNextPeriod = () => {
 
     pause(true);
     pauseTime = undefined;
-	console.log("Running custom timer");
-	console.log(timer);
 	toastr.info(`Starting phase ${phase['phase-name']}`);
     total = reduceToMs(timer);
 };
