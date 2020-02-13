@@ -115,9 +115,10 @@ $(document).ready(() => {
             default: 
 			for(var i = 0; i < customTimers.length; i++){
 				if($("#direction-select").val() === customTimers[i].name){
-						customTimer = customTimers[i];
+						currentTimer = customTimers[i];
 						timerIndex = 0;
-						gotoNextPeriod();
+						goToNextPeriod();
+						break;
 				}
 			}
 			
@@ -246,4 +247,3 @@ $(function () {
   });
 });
 
->>>>>>> master

@@ -106,19 +106,18 @@ const userTimer = () => {
 * Reset the timer and go to the next phase
 */
 const goToNextPeriod = () => {
-	timer = currentTimer.phases[timerIndex++].length;
+	timer = currentTimer.phases[timerIndex++].length.map(Number);
 	
-    $("#hours").html(timer[0]);
-    $("#minutes").html(timer[1]);
-    $("#seconds").html(timer[2]);
-    $("#ms").html(timer[3]);
+    $(".hours").html(timer[0]);
+    $(".minutes").html(timer[1]);
+    $(".seconds").html(timer[2]);
+    $(".ms").html(timer[3]);
 
     pause(false);
 	offset = 0;
     pauseTime = undefined;
-	console.log(timer);
 	console.log("Running custom timer");
-	total = reduceToMs(timer.length);
+	total = reduceToMs(timer);
 }
 
 
