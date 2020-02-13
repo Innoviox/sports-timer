@@ -1,8 +1,7 @@
 # sports-timer
-ZFC: Zermelo-Fraenkel Choice
+Timer
 
-Ideas
+## Innovations
 
-- gradient of best to worst laps
-- triangle ui
-- 
+- count up or down
+- create your own timer
