@@ -104,7 +104,7 @@ const displayCustomTimer = (customTimer) => {
 	for (phase of customTimer.phases) {
 		addNewRow(false);
 		lastRow = $("#rows").children().last();  // note: jQuery selector, not HTML object 
-		lastRow.find(".phase-name").val(phase.phase-name);
+		lastRow.find(".phase-name").val(phase["phase-name"]);
 		lastRow.find(".direction").val(phase.direction);
 		lengthHTMLCollection = lastRow.find(".length")[0].children;
         lengths = Array.prototype.slice.call(lengthHTMLCollection); // Turn HTMLCollection into array
