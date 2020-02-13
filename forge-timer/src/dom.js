@@ -128,22 +128,25 @@ const reset = () => {
     pauseTime = undefined;
 };
 
-const _set_color = (el, color) => {
+// helper method to update el, *if* el is defined,
+// so we don't get dumb errors.
+const _set_style = (el, color, style) => {
     if (el !== undefined) {
         el.style.color = color;
+        el.style.fontStyle = style;
     }
 };
 
 const recolor_laps = () => {
     let amts = lap_lengths.map(reduceToMs);
 
-    $(".lap-number").css('color', 'rgb(0, 0, 0)');
-    $(".lap-amount").css('color', 'rgb(0, 0, 0)');
+    $(".lap-number").css('color', 'rgb(0, 0, 0)').css('font-style', '');
+    $(".lap-amount").css('color', 'rgb(0, 0, 0)').css('font-style', '');
 
-    _set_color($(".lap-number")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)');
-    _set_color($(".lap-amount")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)');
-    _set_color($(".lap-number")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(82, 222, 82)');
-    _set_color($(".lap-amount")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(82, 222, 82)');
+    _set_style($(".lap-number")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)', 'bold');
+    _set_style($(".lap-amount")[amts.length - amts.indexOf(Math.max(...amts))], 'rgb(255, 0, 0)', 'bold');
+    _set_style($(".lap-number")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(37, 138, 54)', 'italic');
+    _set_style($(".lap-amount")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(37, 138, 54)', 'italic');
 };
 
 const addLapDiv = () => {

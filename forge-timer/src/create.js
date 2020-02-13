@@ -18,22 +18,22 @@ const totalFromMs = (total) => {
 };
 
 /** 
- * Set the function to run once the user fills out form [TODO]
- * @param {string} el - ID of element user is editing
- * @param {???} f - function to run once user fills out 
+ * Set the function to run once the user fills out form field
+ * @param {string} el - ID of element user is editing, no #
+ * @param {???} callback - function to run once user fills out
  */
-const onFinish = (el, f) => {
+const onFinish = (el, callback) => {
     $('#'+el).on("keyup", function() {
         var maxLength = $('#'+el).attr("maxlength");
         if(maxLength == $('#'+el).val().length) {
-            f();
+            callback();
         }
     })
 };
 
 /**
  * When done, switch the user focus from the element 'from' to element with ID 'to'.
- * @param {???} from - object to switch focus from
+ * @param {string} from - id of the object to switch focus from
  * @param {string} to - the id of the object to switch focus to
  */
 const next = (from, to) => {
@@ -62,9 +62,10 @@ const next = (from, to) => {
 }(jQuery));
 
 $(document).ready(() => {
-    $(".amount").inputFilter(i => /^\d*$/.test(i));
+    $(".amount").inputFilter(i => /^\d*$/.test(i)); // restrict timer input to integers
 
     $("#direction-select").change((e) => {
+        // disable lap button if type is timer, enable if type is stopwatch
         $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
         switch ($("#direction-select").val()) {
             case "Stopwatch": {
@@ -78,15 +79,20 @@ $(document).ready(() => {
             }
             case "Timer": {
                 ['hours', 'min', 'sec', 'ms'].map(i => {
-                    $(`#${i}-input`).val('');
+                    $(`#${i}-input`).val(''); // clear previously entered timer
                 });
                 $('#create-timer').show();
                 $('#time').hide();
                 $("#hours-input").focus();
+
+                // when the user finishes inputing one value, go to the next
                 next('hours-input', 'min-input');
                 next('min-input', 'sec-input');
                 next('sec-input', 'ms-input');
+
+                // milliseconds are the last, so submit form
                 onFinish('ms-input', () => $("#create-timer").submit());
+
                 $("#create-timer").submit(e => {
                     e.preventDefault();
                     direction = $("#direction-select").val();
@@ -164,6 +170,7 @@ $(document).ready(() => {
     });
 });
 
+// dont change this code under any circumstances. many things will break.
 $(function () {
   'use strict';
 
