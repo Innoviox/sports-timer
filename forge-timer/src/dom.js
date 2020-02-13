@@ -12,13 +12,14 @@ let amount = [0, 0, 0, 0]; // Max amount for Timer, array of hours/minutes/secon
 let total = 0; // The amount array, reduced to milliseconds
 let timerIndex = 0;
 let currentTimer = 0;
+let customTimer;
 
 customTimers = [{
     "name": "Football",
     "phases": [
         {
             "phase-name": "Quarter 1",
-            "length": [0,0,10,10],
+            "length": [0,15,0,0],
             "direction": "down"
         },
         {
@@ -94,29 +95,37 @@ const tick = (el, max, padding, updateTime, index) => {
 */
 const userTimer = () => {
 	intervals.push(setInterval(() => {
-		if(direction === "Timer" && total - (Date.now() - startTime) <= 0){	
-			if(customTimer.length !== 0 && timerIndex < currentTimer.length){
-				goToNextPeriod();
-			}
-	}}), 10)
+        if (customTimer !== undefined) {
+            console.log(customTimer, total, Date.now() - startTime);
+            if ((total - (Date.now() - startTime) <= 0)) {
+                if (customTimer.length !== 0 && timerIndex < currentTimer.phases.length) {
+                    goToNextPeriod();
+                }
+            }
+        }
+    }, 10));
 }
 
 /*
 * Reset the timer and go to the next phase
 */
 const goToNextPeriod = () => {
-	timer = currentTimer.phases[timerIndex++].length.map(Number);
-	
+    let phase = currentTimer.phases[timerIndex++];
+    customTimer = phase;
+	timer = phase.length.map(Number);
+    direction = phase.direction === "up" ? "Stopwatch" : "Timer";
+
     $(".hours").html(timer[0]);
     $(".minutes").html(timer[1]);
     $(".seconds").html(timer[2]);
     $(".ms").html(timer[3]);
 
-    pause(false);
+    pause(true);
 	offset = 0;
     pauseTime = undefined;
 	console.log("Running custom timer");
 	console.log(timer);
+	toastr.info(`Starting phase ${phase['phase-name']}`);
 	total = reduceToMs(timer);
 }
 
