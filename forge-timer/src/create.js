@@ -143,14 +143,20 @@ $(document).ready(() => {
             "name": customName, // Get & store name of timer
             "phases": []
           }; 
-          table = $("#rows").get()[0].children; // Get an HTMLCollection of the rows of the table
+          let tableHTMLCollection = $("#rows").get()[0].children; // Get an HTMLCollection of the rows of the table
+          table = Array.prototype.slice.call(tableHTMLCollection); // Turn HTMLCollection into array
+          table.shift(); // Remove colgroup from table array
           for (row of table) { // Get the values for every phase (name, direction, length) and add to timerJSON
             let phaseJSON = {
               "phase-name": row.getElementsByClassName("phase-name")[0].value,
               "direction": row.getElementsByClassName("direction")[0].value,
-              "length": row.getElementsByClassName("length")[0].value
-            }
-            timerJSON["phases"].push(phaseJSON);
+            };
+            let lengthHTMLCollection = row.getElementsByClassName("length")[0].children;
+            lengthHTMLArr = Array.prototype.slice.call(lengthHTMLCollection) // Turn HTMLCollection into array
+            lengthArr = lengthHTMLArr.map(x => parseInt(x.value));
+            console.log(lengthArr);
+            phaseJSON.length = lengthArr;
+            timerJSON.phases.push(phaseJSON);
           }
         customTimers.push(timerJSON); // Store the new timer in the set
         updateTimerLists();
