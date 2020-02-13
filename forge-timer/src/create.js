@@ -192,7 +192,7 @@ $(function () {
 
   $swipeTabsContainer.slick({
       //slidesToShow: 3.25,
-      slidesToShow: 2,
+      slidesToShow: 3,
       slidesToScroll: 1,
       arrows: false,
       infinite: false,
