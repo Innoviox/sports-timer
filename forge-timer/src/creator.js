@@ -97,21 +97,20 @@ const customTimerNames = () => {
  */
 const displayCustomTimer = (customTimer) => {
 	$("#rows").empty();
-	$("#custom-name").html = customTimer["name"]; 
+	$("#custom-name").html = customTimer.name; 
 	let lastRow = undefined;
 	console.log(lastRow);
 	// add all phases into table
-	for (phase of customTimer["phases"]) {
+	for (phase of customTimer.phases) {
 		addNewRow(false);
 		lastRow = $("#rows").children().last();  // note: jQuery selector, not HTML object 
-		console.log("phase");
-		console.log(phase);
-		console.log("lastRow");
-		console.log(lastRow);
-		lastRow.find(".phase-name").val(phase["phase-name"]);
-		console.log(phase["phase-name"]);
-		lastRow.find(".direction").val(phase["direction"]);
-		lastRow.find(".length").val(phase["length"]);
+		lastRow.find(".phase-name").val(phase.phase-name);
+		lastRow.find(".direction").val(phase.direction);
+		lengthHTMLCollection = lastRow.find(".length")[0].children;
+        lengths = Array.prototype.slice.call(lengthHTMLCollection); // Turn HTMLCollection into array
+        for (i in lengths) {
+        	lengths[i].value = phase.length[i];
+        }
 	}
 }
 

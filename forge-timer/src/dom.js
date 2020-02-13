@@ -16,22 +16,22 @@ customTimers = [{
     "phases": [
         {
             "phase-name": "Quarter 1",
-            "length": 15*60,
+            "length": [0,15,0,0],
             "direction": "down"
         },
         {
             "phase-name": "Quarter 2",
-            "length": 15*60,
+            "length": [0,15,0,0],
             "direction": "down"
         },
         {
             "phase-name": "Quarter 3",
-            "length": 15*60,
+            "length": [0,15,0,0],
             "direction": "down"
         },
         {
             "phase-name": "Quarter 4",
-            "length": 15*60,
+            "length": [0,15,0,0],
             "direction": "down"
         }
     ]
