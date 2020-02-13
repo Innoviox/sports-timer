@@ -39,23 +39,25 @@ const deleteLastRow = () => {
  * in the 'Timer' and 'Create' tab. 
  */
 const updateTimerLists = () => {
-	let timerSelect = $("#direction-select");
+	// let timerSelect = $("#direction-select");
 	let customTimerSelect = $("#type-select");
 
 	// Delete current options in selectors
-	timerSelect.empty();
+	// timerSelect.empty();
+	$("#default-options").empty();
+	$("#custom-options").empty();
 	customTimerSelect.empty();
 	
 	// Add 'Stopwatch' and 'Timer' to #direction-select
-	addOption(timerSelect, "Stopwatch");
-	addOption(timerSelect, "Timer");
+	addOption($("#default-options"), "Stopwatch");
+	addOption($("#default-options"), "Timer");
 
 	addOption(customTimerSelect, "Custom");
 
 	// Add custom timer names to selectors
 	names = customTimerNames();
 	for (var name of names) {
-		addOption(timerSelect, name);
+		addOption($("#custom-options"), name);
 		addOption(customTimerSelect, name);	
 	}
 };
