@@ -18,15 +18,15 @@ const totalFromMs = (total) => {
     return [hours, minutes, seconds, milliseconds].map(i => pad(i, 2).substring(0, 2));
 };
 
-/** 
+/**
  * Set the function to run once the user fills out form field
  * @param {string} el - ID of element user is editing, no #
  * @param {???} callback - function to run once user fills out
  */
 const onFinish = (el, callback) => {
-    $('#'+el).on("keyup", function() {
-        var maxLength = $('#'+el).attr("maxlength");
-        if(maxLength == $('#'+el).val().length) {
+    $(el).on("keyup", function() {
+        var maxLength = $(el).attr("maxlength");
+        if(maxLength == $(el).val().length) {
             callback();
         }
     })
@@ -38,7 +38,7 @@ const onFinish = (el, callback) => {
  * @param {string} to - the id of the object to switch focus to
  */
 const next = (from, to) => {
-    onFinish(from, () => $('#'+to).focus());
+    onFinish(from, () => $(to).focus());
 };
 
 // Restricts input for the given textbox to the given inputFilter function.
@@ -60,10 +60,14 @@ const next = (from, to) => {
             }
         });
     };
+    $.fn.numberFilter = function() {
+        this.inputFilter(i => /^\d*$/.test(i));
+    }
 }(jQuery));
 
+
 $(document).ready(() => {
-    $(".amount").inputFilter(i => /^\d*$/.test(i)); // restrict timer input to integers
+    $(".amount").numberFilter();
 
     $("#direction-select").change((e) => {
         // disable lap button if type is timer, enable if type is stopwatch
@@ -87,12 +91,12 @@ $(document).ready(() => {
                 $("#hours-input").focus();
 
                 // when the user finishes inputing one value, go to the next
-                next('hours-input', 'min-input');
-                next('min-input', 'sec-input');
-                next('sec-input', 'ms-input');
+                next('#hours-input', '#min-input');
+                next('#min-input', '#sec-input');
+                next('#sec-input', '#ms-input');
 
                 // milliseconds are the last, so submit form
-                onFinish('ms-input', () => $("#create-timer").submit());
+                onFinish('#ms-input', () => $("#create-timer").submit());
 
                 $("#create-timer").submit(e => {
                     e.preventDefault();

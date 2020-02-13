@@ -7,12 +7,20 @@ let newRow =
 		<option value="down">Timer</option>
     </select></td>
     <td colspan="1"><div class="length">
-    	<input type="number" class="hours time-in" placeholder="hh" size="2" maxlength="2" />:
-    	<input type="number" class="minutes time-in" placeholder="mm" size="2" maxlength="2" />:
-    	<input type="number" class="seconds time-in" placeholder="ss" size="2" maxlength="2" />.
-    	<input type="number" class="centiseconds time-in" placeholder="cc" size="2" maxlength="2" />
+    	<input type="text" class="hours time-in" placeholder="hh" size="2" maxlength="2" />:
+    	<input type="text" class="minutes time-in" placeholder="mm" size="2" maxlength="2" />:
+    	<input type="text" class="seconds time-in" placeholder="ss" size="2" maxlength="2" />.
+    	<input type="text" class="centiseconds time-in" placeholder="cc" size="2" maxlength="2" />
     </div></td>
 </tr>`;
+
+/**
+ * Make time input better, with autofocusing and no letters.
+ */
+const inputFixer = () => {
+    $(".time-in").numberFilter();
+    $("#rows").children().last()
+};
 
 /** 
  * Append a new row onto 'rows'. 
@@ -20,6 +28,7 @@ let newRow =
  */ 
 const addNewRow = (animate) => {
  	$("#rows").append(newRow);
+ 	inputFixer();
  	if (animate) {	
 	 	$("#rows").children().last().css('height', '0px');
  		$("#rows").children().last().animate({height: '30px'});
