@@ -1,6 +1,7 @@
 let newRow = 
-`<tr class="row">
+`
     <tr hidden><td>col1</td><td>col3</td><td>col1</td><td>col2</td><td>col3</td></tr>
+<tr class="row">
     <td colspan="2"><input type="text" class="phase-name" placeholder="Phase Name" /></td>
     <td colspan="2"><select class="direction">
     	<option value="up">Stopwatch</option>
