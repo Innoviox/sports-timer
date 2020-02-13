@@ -50,6 +50,8 @@ const updateTimerLists = () => {
 	addOption(timerSelect, "Stopwatch");
 	addOption(timerSelect, "Timer");
 
+	addOption(customTimerSelect, "Custom");
+
 	// Add custom timer names to selectors
 	names = customTimerNames();
 	for (var name of names) {

@@ -138,7 +138,7 @@ $(document).ready(() => {
         e.preventDefault();
         let customName = $("#custom-name").get()[0].value
         // if the name is not nothing and isn't already taken...
-        if (customName !== "" && !customTimerNames().includes(customName)) { 
+        if (customName !== "" && customName !== "Custom" && !customTimerNames().includes(customName)) { 
           let timerJSON = {
             "name": customName, // Get & store name of timer
             "phases": []
