@@ -177,12 +177,11 @@ $(document).ready(() => {
           }
         customTimers.push(timerJSON); // Store the new timer in the set
         updateTimerLists();
-            toastr.success('Have fun!', `Timer ${customName} created!`);
+            toastr.success('Have fun!', `Timer '${customName}' created!`);
             $(".swipe-tab")[0].click();
         } else {
           //TODO visible display of improper name
           //TODO edit already existing custom timer if name is redundant
-          console.log(`The timer name '${customName}' is not a valid name.`);
             toastr.error(`The timer name \'${customName}\' is invalid.`, 'Invalid name!');
         }
     });
