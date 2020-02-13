@@ -85,7 +85,7 @@ const tick = (el, max, padding, updateTime, index) => {
 
         let lap_n = currentLapLength()[index];
         $(el+".lap").html(lap_n);
-    }, 10);
+    }, 1);
 };
 
 /**
