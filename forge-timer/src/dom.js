@@ -18,27 +18,87 @@ customTimers = [{
     "name": "Football",
     "phases": [
         {
-            "phase-name": "Quarter 1",
+            "phase-name": "1st Quarter",
             "length": [0,15,0,0],
             "direction": "down"
         },
         {
-            "phase-name": "Quarter 2",
+            "phase-name": "2nd Quarter",
             "length": [0,15,0,0],
             "direction": "down"
         },
         {
-            "phase-name": "Quarter 3",
+            "phase-name": "3rd Quarter",
             "length": [0,15,0,0],
             "direction": "down"
         },
         {
-            "phase-name": "Quarter 4",
+            "phase-name": "4th Quarter",
             "length": [0,15,0,0],
             "direction": "down"
         }
     ]
 },
+    {
+        "name": "Soccer",
+        "phases": [
+            {
+                "phase-name": "1st Half",
+                "length": [0,45,0,0],
+                "direction": "up"
+            },
+            {
+                "phase-name": "2nd Half",
+                "length": [0,45,0,0],
+                "direction": "up"
+            }
+        ]
+    },
+    {
+        "name": "Hockey",
+        "phases": [
+            {
+                "phase-name": "1st Period",
+                "length": [0,20,0,0],
+                "direction": "down"
+            },
+            {
+                "phase-name": "2nd Period",
+                "length": [0,20,0,0],
+                "direction": "down"
+            },
+            {
+                "phase-name": "3rd Period",
+                "length": [0,20,0,0],
+                "direction": "down"
+            },
+        ]
+    },
+    {
+        "name": "Basketball",
+        "phases": [
+            {
+                "phase-name": "1st Quarter",
+                "length": [0,12,0,0],
+                "direction": "down"
+            },
+            {
+                "phase-name": "2nd Quarter",
+                "length": [0,12,0,0],
+                "direction": "down"
+            },
+            {
+                "phase-name": "3rd Quarter",
+                "length": [0,12,0,0],
+                "direction": "down"
+            },
+            {
+                "phase-name": "4th Quarter",
+                "length": [0,12,0,0],
+                "direction": "down"
+            },
+        ]
+    },
     /*{
         "name": "test",
         "phases": [
