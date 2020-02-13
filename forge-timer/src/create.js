@@ -17,6 +17,11 @@ const totalFromMs = (total) => {
     return [hours, minutes, seconds, milliseconds].map(i => pad(i, 2).substring(0, 2));
 };
 
+/** 
+ * Set the function to run once the user fills out form [TODO]
+ * @param {string} el - ID of element user is editing
+ * @param {???} f - function to run once user fills out 
+ */
 const onFinish = (el, f) => {
     $('#'+el).on("keyup", function() {
         var maxLength = $('#'+el).attr("maxlength");
@@ -26,6 +31,11 @@ const onFinish = (el, f) => {
     })
 };
 
+/**
+ * When done, switch the user focus from the element 'from' to element with ID 'to'.
+ * @param {???} from - object to switch focus from
+ * @param {string} to - the id of the object to switch focus to
+ */
 const next = (from, to) => {
     onFinish(from, () => $('#'+to).focus());
 };
