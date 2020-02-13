@@ -1,11 +1,12 @@
 let newRow = 
 `<tr class="row">
-    <td><input type="text" class="phase-name" placeholder="Phase Name" /></td>
-    <td><select class="direction">
+    <tr hidden><td>col1</td><td>col3</td><td>col1</td><td>col2</td><td>col3</td></tr>
+    <td colspan="2"><input type="text" class="phase-name" placeholder="Phase Name" /></td>
+    <td colspan="2"><select class="direction">
     	<option value="up">Stopwatch</option>
 		<option value="down">Timer</option>
     </select></td>
-    <td><div class="length">
+    <td colspan="1"><div class="length">
     	<input type="number" class="hours time-in" placeholder="hh" size="2" maxlength="2" />:
     	<input type="number" class="minutes time-in" placeholder="mm" size="2" maxlength="2" />:
     	<input type="number" class="seconds time-in" placeholder="ss" size="2" maxlength="2" />.

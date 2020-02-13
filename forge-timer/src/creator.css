@@ -1,13 +1,9 @@
-.row {
-	width: 100%; /* TODO: Fix width limit */
-}
-
 #create-custom-form {
 	display: grid;
 	grid-template-rows: 2em 1fr 2em;
 	grid-template-columns: repeat(3, auto);
 	grid-gap: 10px;
-	}
+}
 
 #type-select {
 	grid-area: 1/1/2/2;
@@ -19,7 +15,7 @@
 
 #rows {
 	grid-area: 2/1/3/4;
-	width: 100%
+	width: 100%;
 }
 
 #add-row {
@@ -40,18 +36,6 @@
 	width: 100%;
 }
 
-.phase-name {
-	column-span: 1;
-}
-
-.direction {
-    column-span: 1;
-}
-
-.length {
-    column-span: 1;
-}
-
 .time-in {
-    width: 20%;
+    width: 50px;
 }
