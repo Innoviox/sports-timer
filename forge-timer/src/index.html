@@ -61,31 +61,6 @@
   z-index: 1;
   background-color: white;
 }
-      
-      @-webkit-keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-.fadeOut {
-  -webkit-animation-name: fadeOut;
-  animation-name: fadeOut;
-}
 </style>
   </head>
 
@@ -176,8 +151,8 @@ function myFunction() {
 }
 
 function showPage() {
-  $("#loader").addClass('fadeOut');
-  $("#cover").addClass('fadeOut');
+  $("#loader").fadeOut();
+  $("#cover").fadeOut();
   $("#main-page").show();
 }
 </script>
