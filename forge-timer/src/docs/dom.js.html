@@ -164,9 +164,10 @@ const pad = (number, zeros) => {
 
 /**
  * Pause timer and update timer text.
+ * @param {boolean} paused - is timer currently paused?
  */
 const pause = (paused) => {
-    isPaused = paused;
+    isPaused = paused; // store paused state in global var
     let s = "";
     if (customTimer !== undefined) {
         s = `(${timerIndex} / ${currentTimer.phases.length}) ${currentTimer.name} > ${customTimer['phase-name']}: `;
@@ -208,7 +209,7 @@ const tick = (el, max, padding, updateTime, index) => {
     }, 1);
 };
 /*
-* Create an interval to run custom timers in
+* Create an interval to run custom timers in.
 */
 const userTimer = () => {
 	intervals.push(setInterval(() => {
@@ -228,7 +229,7 @@ const userTimer = () => {
 }
 
 /*
-* Reset the timer and go to the next phase
+* Reset the timer and go to the next phase.
 */
 const goToNextPeriod = () => {
     let phase = currentTimer.phases[timerIndex++];
@@ -251,7 +252,7 @@ const goToNextPeriod = () => {
 
 /**
  * Start incrementing the stopwatch counters. 
- * (Right now, it just automatically starts up.)
+ * Starts when the timer 
  * @param {boolean} resetFirst - if start should reset the startTime
  */
 const start = (resetFirst) => {
@@ -290,8 +291,13 @@ const reset = () => {
     pauseTime = undefined;
 };
 
-// helper method to update el, *if* el is defined,
-// so we don't get dumb errors.
+/**
+ * Helper method to update el, only if el is defined,
+ * so we don't get dumb errors.
+ * @param {object} el - HTML element to set style of
+ * @param {string} color - new color of el
+ * @param {string} style - formatting to set -- either 'italic' or font weight (bold) 
+ */
 const setStyle = (el, color, style) => {
     if (el !== undefined) {
         el.style.color = color;
@@ -299,6 +305,10 @@ const setStyle = (el, color, style) => {
     }
 };
 
+/**
+ * Change color and style of best and worst lap times.
+ * Best (shortest) lap time becomes italicized and green, worst (longest) becomes red and bold.
+ */
 const recolorLaps = () => {
     let amts = lap_lengths.map(reduceToMs);
 
@@ -311,8 +321,12 @@ const recolorLaps = () => {
     setStyle($(".lap-amount")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(37, 138, 54)', 'italic');
 };
 
+/** 
+ * Redisplays all laps into the &lt;div> display in the middle of the 'Timer' tab,
+ * and applies appropriate styling to them (by calling recolorLaps).
+ */
 const addLapDiv = () => {
-    if (direction !== "Stopwatch") { return }
+    if (direction !== "Stopwatch") { return } // ???
     ['hours', 'minutes', 'seconds', 'ms'].map(i => $(".lap").removeClass(i));
     $("#lap-numbers").html(`&lt;span class="lap-number">Lap ${laps.length + 1}&lt;/span>&lt;br>` + $("#lap-numbers").html());
     $("#lap-amounts").html('&lt;div class="time lap-amount">' +
@@ -335,7 +349,7 @@ const currentLapLength = () => {
 
 /**
  * Adds the current time to the list of laps and the HTML text box display.
- * Triggered by clicking the 'Lap' button.
+ * Triggered by clicking the 'Lap' button, or by keyboard shortcut.
  */
 const addLap = () => {
     if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
@@ -347,6 +361,7 @@ const addLap = () => {
 /**
  * Toggle the timer. If it's paused, start it.
  * If it's running, pause it.
+ * Activated by clicking on timer, or by keyboard shortcut.
  */
 const toggleTimer = () => {
     if (!$("#time").is(":visible")) { return } // can't start/pause while inputting timer
@@ -409,13 +424,13 @@ $(document).ready(() => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addLap">addLap</a></li><li><a href="global.html#addNewRow">addNewRow</a></li><li><a href="global.html#addOption">addOption</a></li><li><a href="global.html#customTimerNames">customTimerNames</a></li><li><a href="global.html#deleteLastRow">deleteLastRow</a></li><li><a href="global.html#displayCustomTimer">displayCustomTimer</a></li><li><a href="global.html#inputFixer">inputFixer</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#onFinish">onFinish</a></li><li><a href="global.html#pad">pad</a></li><li><a href="global.html#pause">pause</a></li><li><a href="global.html#reduceToMs">reduceToMs</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#tick">tick</a></li><li><a href="global.html#toggleTimer">toggleTimer</a></li><li><a href="global.html#updateTimerLists">updateTimerLists</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addLap">addLap</a></li><li><a href="global.html#addLapDiv">addLapDiv</a></li><li><a href="global.html#addNewRow">addNewRow</a></li><li><a href="global.html#addOption">addOption</a></li><li><a href="global.html#customTimerNames">customTimerNames</a></li><li><a href="global.html#deleteLastRow">deleteLastRow</a></li><li><a href="global.html#displayCustomTimer">displayCustomTimer</a></li><li><a href="global.html#inputFixer">inputFixer</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#onFinish">onFinish</a></li><li><a href="global.html#pad">pad</a></li><li><a href="global.html#pause">pause</a></li><li><a href="global.html#recolorLaps">recolorLaps</a></li><li><a href="global.html#reduceToMs">reduceToMs</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#tick">tick</a></li><li><a href="global.html#toggleTimer">toggleTimer</a></li><li><a href="global.html#totalFromMs">totalFromMs</a></li><li><a href="global.html#updateTimerLists">updateTimerLists</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Feb 13 2020 18:55:38 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Feb 14 2020 06:56:53 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
