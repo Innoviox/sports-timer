@@ -1,11 +1,16 @@
 /**
- * Reduce an array to milliseconds
- * @param arr
- * @returns {number | any | BigInt | T}
+ * Reduce an array to milliseconds.
+ * @param {number[]} arr - integer values of [hours, minutes, seconds, centiseconds]
+ * @returns {number | any | BigInt | T} - time, in number of centiseconds
  */
 const reduceToMs = (arr) => arr.map((e, idx) => (isNaN(e) ? 0 : e) * [3600000, 60000, 1000, 10][idx]).reduce((a, b) => a + b);
 
 // const totalFromMs = (total) => [3600000, 60000, 1000, 10].map(i => pad(Math.trunc(total / i), 2).substring(0, 2));
+/**
+ * Convert number stored as centiseconds into an array of timer segments.
+ * @param {} total - a number, written as number of centiseconds (hundredths of seconds)
+ * @return {number[]} the integers representing the hours, minutes, seconds and centiseconds, respectively that the number represents
+ */
 const totalFromMs = (total) => {
     var milliseconds = parseInt((total % 1000) / 10),
         seconds = Math.floor((total / 1000) % 60),
@@ -21,7 +26,7 @@ const totalFromMs = (total) => {
 /**
  * Set the function to run once the user fills out form field
  * @param {string} el - ID of element user is editing, no #
- * @param {???} callback - function to run once user fills out
+ * @param {function} callback - function to run once user fills out
  */
 const onFinish = (el, callback) => {
     $(el).on("keyup", function() {

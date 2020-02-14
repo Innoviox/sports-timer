@@ -136,9 +136,10 @@ const pad = (number, zeros) => {
 
 /**
  * Pause timer and update timer text.
+ * @param {boolean} paused - is timer currently paused?
  */
 const pause = (paused) => {
-    isPaused = paused;
+    isPaused = paused; // store paused state in global var
     let s = "";
     if (customTimer !== undefined) {
         s = `(${timerIndex} / ${currentTimer.phases.length}) ${currentTimer.name} > ${customTimer['phase-name']}: `;
@@ -180,7 +181,7 @@ const tick = (el, max, padding, updateTime, index) => {
     }, 1);
 };
 /*
-* Create an interval to run custom timers in
+* Create an interval to run custom timers in.
 */
 const userTimer = () => {
 	intervals.push(setInterval(() => {
@@ -200,7 +201,7 @@ const userTimer = () => {
 }
 
 /*
-* Reset the timer and go to the next phase
+* Reset the timer and go to the next phase.
 */
 const goToNextPeriod = () => {
     let phase = currentTimer.phases[timerIndex++];
@@ -223,7 +224,7 @@ const goToNextPeriod = () => {
 
 /**
  * Start incrementing the stopwatch counters. 
- * (Right now, it just automatically starts up.)
+ * Starts when the timer 
  * @param {boolean} resetFirst - if start should reset the startTime
  */
 const start = (resetFirst) => {
@@ -262,8 +263,13 @@ const reset = () => {
     pauseTime = undefined;
 };
 
-// helper method to update el, *if* el is defined,
-// so we don't get dumb errors.
+/**
+ * Helper method to update el, only if el is defined,
+ * so we don't get dumb errors.
+ * @param {object} el - HTML element to set style of
+ * @param {string} color - new color of el
+ * @param {string} style - formatting to set -- either 'italic' or font weight (bold) 
+ */
 const setStyle = (el, color, style) => {
     if (el !== undefined) {
         el.style.color = color;
@@ -271,6 +277,10 @@ const setStyle = (el, color, style) => {
     }
 };
 
+/**
+ * Change color and style of best and worst lap times.
+ * Best (shortest) lap time becomes italicized and green, worst (longest) becomes red and bold.
+ */
 const recolorLaps = () => {
     let amts = lap_lengths.map(reduceToMs);
 
@@ -283,8 +293,12 @@ const recolorLaps = () => {
     setStyle($(".lap-amount")[amts.length - amts.indexOf(Math.min(...amts))], 'rgb(37, 138, 54)', 'italic');
 };
 
+/** 
+ * Redisplays all laps into the <div> display in the middle of the 'Timer' tab,
+ * and applies appropriate styling to them (by calling recolorLaps).
+ */
 const addLapDiv = () => {
-    if (direction !== "Stopwatch") { return }
+    if (direction !== "Stopwatch") { return } // ???
     ['hours', 'minutes', 'seconds', 'ms'].map(i => $(".lap").removeClass(i));
     $("#lap-numbers").html(`<span class="lap-number">Lap ${laps.length + 1}</span><br>` + $("#lap-numbers").html());
     $("#lap-amounts").html('<div class="time lap-amount">' +
@@ -307,7 +321,7 @@ const currentLapLength = () => {
 
 /**
  * Adds the current time to the list of laps and the HTML text box display.
- * Triggered by clicking the 'Lap' button.
+ * Triggered by clicking the 'Lap' button, or by keyboard shortcut.
  */
 const addLap = () => {
     if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
@@ -319,6 +333,7 @@ const addLap = () => {
 /**
  * Toggle the timer. If it's paused, start it.
  * If it's running, pause it.
+ * Activated by clicking on timer, or by keyboard shortcut.
  */
 const toggleTimer = () => {
     if (!$("#time").is(":visible")) { return } // can't start/pause while inputting timer
