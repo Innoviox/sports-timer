@@ -1,6 +1,5 @@
 let newRow = 
 `
-    <tr hidden><td>col1</td><td>col3</td><td>col1</td><td>col2</td><td>col3</td></tr>
 <tr class="row">
     <td colspan="2"><input type="text" class="phase-name" placeholder="Phase Name" /></td>
     <td colspan="2"><select class="direction">
@@ -30,7 +29,7 @@ const inputFixer = () => {
  * @param {boolean} animate - whether the row should animate height when added
  */ 
 const addNewRow = (animate) => {
- 	$("#rows").append(newRow);
+    $("#rows").append(newRow);
  	inputFixer();
  	if (animate) {	
 	 	$("#rows").children().last().css('height', '0px');
@@ -42,6 +41,7 @@ const addNewRow = (animate) => {
  * Shrink height of last element in 'rows' to zero, then remove it. 
  */
 const deleteLastRow = () => {
+    if ($(".row").length === 1) { return } // can't delete last row
     $("#rows").children().last().animate({height: '0px'}, () => {
 		$("#rows").children().last().remove();
     });
@@ -117,4 +117,5 @@ const displayCustomTimer = (customTimer) => {
 
 $(document).ready(() => {
 	updateTimerLists();
+	addNewRow(false); // always starts with a row
 });
