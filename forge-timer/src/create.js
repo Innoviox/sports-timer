@@ -205,8 +205,11 @@ $(document).ready(() => {
         $("#custom-name").val(selectName === "Custom" ? "" : selectName);
         selectedTimer = customTimers.filter((x) => x["name"] === selectName);
         console.log(selectedTimer);
-        if (selectedTimer) { // timer is not nothing 
+        if (selectedTimer.length > 0) { // timer is not nothing
           displayCustomTimer(selectedTimer[0]);
+        } else {
+            $("#rows").empty();
+            addNewRow(false);
         }
     });
 
