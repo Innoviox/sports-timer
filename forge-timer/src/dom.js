@@ -216,7 +216,14 @@ const goToNextPeriod = () => {
     $(".ms").html(timer[3]);
 
     pause(true);
-    pauseTime = undefined;
+
+    if (direction === "Stopwatch") {
+        startTime = Date.now();
+        pauseTime = Date.now();
+    } else {
+        pauseTime = undefined;
+    }
+
 	toastr.info(`Starting phase ${phase['phase-name']}`);
     total = reduceToMs(timer);
 };
