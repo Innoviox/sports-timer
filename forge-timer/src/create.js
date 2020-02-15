@@ -196,7 +196,7 @@ $(document).ready(() => {
                 s = "Must choose a new name."
             }
             toastr.error(s, 'Invalid name!');
-            $("#custom-name").addClass("red-input");
+            $("#custom-name").addClass("is-invalid");
         }
     });
 
@@ -211,7 +211,7 @@ $(document).ready(() => {
     });
 
     $("#custom-name").on('input', () => {
-        $("#custom-name").removeClass("red-input");
+        $("#custom-name").removeClass("is-invalid");
     });
 });
 

@@ -8,6 +8,9 @@
     <!--<script src="lib/jquery-3.js"></script> -->
       <link rel="stylesheet" href="lib/normalize.css" />
 
+      <!--<link rel="stylesheet" href="lib/lumen.bootstrap.css" />-->
+      <link rel="stylesheet" href="lib/lumen.extracted.bootstrap.css" />
+
       <link rel="stylesheet" href="lib/odometer-theme-default.css" />
       <!--<script src="https://github.hubspot.com/odometer/odometer.js"></script>-->
       <script src="lib/odometer.min.js"></script>
@@ -79,7 +82,7 @@
           <div class="swipe-tabs-container">
               <div class="swipe-tab-content">
                   <div class="container">
-                      <select id="direction-select">
+                      <select id="direction-select" class="form-control">
                           <optgroup id="default-options" label="Default"></optgroup>
                           <optgroup id="custom-options" label="Custom"></optgroup>
                       </select>
@@ -100,18 +103,18 @@
                           <div class="timer-label" id="toggle-button" onclick="toggleTimer()"><u>S</u>tart</div>
                       </div>
 
-                      <button id="add-lap" onclick="addLap()"><u>L</u>ap</button>
+                      <button id="add-lap" onclick="addLap()" class="btn btn-primary"><u>L</u>ap</button>
                       <div id="lap-list">
                           <div id="lap-numbers"></div>
                           <div id="lap-amounts"></div>
                       </div>
-                      <button id="reset" onclick="reset()"><u>R</u>eset</button>
+                      <button id="reset" onclick="reset()" class="btn btn-primary"><u>R</u>eset</button>
                   </div>
               </div>
               <div class="swipe-tab-content">
                   <form id="create-custom-form">
-                        <select id="type-select"></select>
-                        <input id="custom-name" />
+                        <select id="type-select" class="form-control"></select>
+                        <input id="custom-name"  class="form-control"/>
                       <table id="rows">
                       	<colgroup>
     						<col class="name">
@@ -119,9 +122,9 @@
     						<col class="length">
   						</colgroup>
                       </table>
-                        <button type="button" id="add-row" onclick="addNewRow(true)">Add Row</button>
-                        <button type="button" id="delete-row" onclick="deleteLastRow()">Delete Row</button>
-                        <button type="submit" id="submit-custom-button">Create</button>
+                        <button type="button" id="add-row" onclick="addNewRow(true)" class="btn btn-outline-primary">Add Row</button>
+                        <button type="button" id="delete-row" onclick="deleteLastRow()" class="btn btn-outline-danger">Delete Row</button>
+                        <button type="submit" id="submit-custom-button" class="btn btn-outline-success">Create</button>
                   </form>
               </div>
               <div class="swipe-tab-content">
