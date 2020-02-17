@@ -128,7 +128,7 @@ $(document).ready(() => {
 				if($("#direction-select").val() === customTimers[i].name){
 						currentTimer = customTimers[i];
 						timerIndex = 0;
-						goToNextPeriod();
+						goToNextPhase();
 						break;
 				}
 			}

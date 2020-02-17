@@ -125,7 +125,12 @@ customTimers = [{
         ]
     }*/]; // A set of all the timers that have been created
 
-/** Pad {number} to {zeros} digits */
+/** 
+ * Pad {number} to {zeros} digits.
+ * @param {number} number - Number to pad
+ * @param {number} zeros - minimum length of output string
+ * @return {string} Number (in string form) with appropriate number of zeroes prepended
+ */
 const pad = (number, zeros) => {
     let string = number.toString();
     while (string.length < zeros) {
@@ -147,7 +152,7 @@ const pause = (paused) => {
     $("#toggle-button").html(s + (paused ? "<u>S</u>tart" : "<u>P</u>ause"));
     if ($("#direction-select").val()==="Timer") {
         $("#add-lap").attr('disabled', true); // disable timer if timer is set to 'Timer' 
-    }else {
+    } else {
         $("#add-lap").attr('disabled', paused); // disable timer if paused 
     }
 
@@ -195,7 +200,7 @@ const userTimer = () => {
             if ((total - (Date.now() - startTime) <= 10)) {
                 if (customTimer.length !== 0) {
                     if (timerIndex < currentTimer.phases.length) {
-                        goToNextPeriod();
+                        goToNextPhase();
                     } else {
                         toastr.warning(`Timer ${currentTimer.name} over!`);
                         currentTimer = undefined;
@@ -206,10 +211,10 @@ const userTimer = () => {
     }, 10));
 }
 
-/*
-* Reset the timer and go to the next phase.
-*/
-const goToNextPeriod = () => {
+/**
+ * Reset the timer and go to the next phase.
+ */
+const goToNextPhase = () => {
     let phase = currentTimer.phases[timerIndex++];
     customTimer = phase;
 	timer = phase.length.map(Number);
@@ -236,7 +241,6 @@ const goToNextPeriod = () => {
 
 /**
  * Start incrementing the stopwatch counters. 
- * Starts when the timer 
  * @param {boolean} resetFirst - if start should reset the startTime
  */
 const start = (resetFirst) => {
@@ -246,13 +250,12 @@ const start = (resetFirst) => {
         startTime = Date.now();
     }
     console.log("direction Timer?: " + $("#direction-select").val()==="Timer");
-    $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer"); // unable to add laps if using 'Timer'
     pause(false);
 };
 
 /** 
  * Reset the stopwatch - reset counters to zero and stop updating the display.
- * Also clear lap-list
+ * Also clear the lap list - both JS and HTML.  
  * Called when the user presses 'Reset'.
  */ 
 const reset = () => {
@@ -308,7 +311,7 @@ const recolorLaps = () => {
 
 /** 
  * Redisplays all laps into the <div> display in the middle of the 'Timer' tab,
- * and applies appropriate styling to them (by calling recolorLaps).
+ * and applies appropriate styling to them (by calling recolorLaps()).
  */
 const addLapDiv = () => {
     if (direction !== "Stopwatch") { return } // ???
@@ -323,6 +326,10 @@ const addLapDiv = () => {
     recolorLaps();
 };
 
+/**
+ * Get the time of the current lap (in hh:mm:ss:cc format) 
+ * @return {number[]} the time between the time of the last lap and the current time.
+ */
 const currentLapLength = () => {
     let last = laps.slice(-1)[0]; // get last element
     let diff = reduceToMs(timer);
