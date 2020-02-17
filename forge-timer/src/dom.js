@@ -135,7 +135,7 @@ const pad = (number, zeros) => {
 };
 
 /**
- * Pause timer and update timer text.
+ * Set state of 'pause' variable timer and update various HTML based on its state.
  * @param {boolean} paused - is timer currently paused?
  */
 const pause = (paused) => {
@@ -145,6 +145,12 @@ const pause = (paused) => {
         s = `(${timerIndex} / ${currentTimer.phases.length}) ${currentTimer.name} > ${customTimer['phase-name']}: `;
     }
     $("#toggle-button").html(s + (paused ? "<u>S</u>tart" : "<u>P</u>ause"));
+    if ($("#direction-select").val()==="Timer") {
+        $("#add-lap").attr('disabled', true); // disable timer if timer is set to 'Timer' 
+    }else {
+        $("#add-lap").attr('disabled', paused); // disable timer if paused 
+    }
+
 };
 
 /** 
@@ -208,7 +214,6 @@ const goToNextPeriod = () => {
     customTimer = phase;
 	timer = phase.length.map(Number);
     direction = phase.direction === "up" ? "Stopwatch" : "Timer";
-    $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
 
     $(".hours").html(timer[0]);
     $(".minutes").html(timer[1]);
@@ -235,21 +240,22 @@ const goToNextPeriod = () => {
  * @param {boolean} resetFirst - if start should reset the startTime
  */
 const start = (resetFirst) => {
+    console.log("Started...");
     if (resetFirst) {
         reset();
         startTime = Date.now();
     }
-
+    console.log("direction Timer?: " + $("#direction-select").val()==="Timer");
+    $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer"); // unable to add laps if using 'Timer'
     pause(false);
 };
 
 /** 
- * Reset the stopwatch - reser counters to zero and stop updating the display.
+ * Reset the stopwatch - reset counters to zero and stop updating the display.
  * Also clear lap-list
  * Called when the user presses 'Reset'.
  */ 
 const reset = () => {
-    $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
     timer = amount.slice(); // ['00', '00', '00', '00'];
     laps = [];
     lap_lengths = [];

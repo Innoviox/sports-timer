@@ -99,10 +99,8 @@
                               <input id='sec-input' class="amount" type="text" maxlength="2" placeholder='00' size="2"/>.
                               <input id='ms-input' class="amount" type="text" maxlength="2" placeholder='00' size="2"/>
                           </form>
-
                           <div class="timer-label" id="toggle-button" onclick="toggleTimer()"><u>S</u>tart</div>
                       </div>
-
                       <button id="add-lap" onclick="addLap()" class="btn btn-primary"><u>L</u>ap</button>
                       <div id="lap-list">
                           <div id="lap-numbers"></div>
@@ -112,16 +110,16 @@
                   </div>
               </div>
               <div class="swipe-tab-content">
-                  <form id="create-custom-form">
+                  <form id="create-custom-form" class="form-group">
                         <select id="type-select" class="form-control"></select>
                         <input id="custom-name"  class="form-control"/>
-                      <table id="rows">
-                      	<colgroup>
-    						<col class="name">
-    						<col class="direction">
-    						<col class="length">
-  						</colgroup>
-                          <tr hidden><td>col1</td><td>col3</td><td>col1</td><td>col2</td><td>col3</td></tr>
+                  <table id="rows">
+                      <colgroup>
+            						<col class="name">
+            						<col class="direction">
+            						<col class="length">
+          						</colgroup>
+                      <tr hidden><td>col1</td><td>col3</td><td>col1</td><td>col2</td><td>col3</td></tr>
                       </table>
                         <button type="button" id="add-row" onclick="addNewRow(true)" class="btn btn-outline-primary">Add Row</button>
                         <button type="button" id="delete-row" onclick="deleteLastRow()" class="btn btn-outline-danger">Delete Row</button>
