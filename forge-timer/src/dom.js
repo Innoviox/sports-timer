@@ -1,16 +1,16 @@
 let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
-let lap_lengths = [];
+let lapLengths = [];
 
 let startTime = Date.now(), pauseTime;
 let offset = 0; // Amount of time the user has paused the current stopwatch
 let isPaused = true; // If the timer is paused or not; starts paused
-let intervals = []; // the set of intervals
+let intervals = []; // the IFS of the generated intervals
 
 let direction = "Stopwatch"; // Direction (Stopwatch -> count up, Timer -> count down)
 let amount = [0, 0, 0, 0]; // Max amount for Timer, array of hours/minutes/seconds/ms
 let total = 0; // The amount array, reduced to milliseconds
-let timerIndex = 0;
+let phaseIndex = 0;
 let currentTimer = 0;
 let customTimer;
 
@@ -147,7 +147,7 @@ const pause = (paused) => {
     isPaused = paused; // store paused state in global var
     let s = "";
     if (customTimer !== undefined) {
-        s = `(${timerIndex} / ${currentTimer.phases.length}) ${currentTimer.name} > ${customTimer['phase-name']}: `;
+        s = `(${phaseIndex} / ${currentTimer.phases.length}) ${currentTimer.name} > ${customTimer['phase-name']}: `;
     }
     $("#toggle-button").html(s + (paused ? "<u>S</u>tart" : "<u>P</u>ause"));
     if ($("#direction-select").val()==="Timer") {
@@ -187,8 +187,8 @@ const tick = (el, max, padding, updateTime, index) => {
         timer[index] = number;
         $(el+".main").html(number);
 
-        let lap_n = currentLapLength()[index];
-        $(el+".lap").html(lap_n);
+        let lapN = currentLapLength()[index];
+        $(el+".lap").html(lapN);
     }, 1);
 };
 /*
@@ -199,7 +199,7 @@ const userTimer = () => {
         if (customTimer !== undefined && !isPaused) {
             if ((total - (Date.now() - startTime) <= 10)) {
                 if (customTimer.length !== 0) {
-                    if (timerIndex < currentTimer.phases.length) {
+                    if (phaseIndex < currentTimer.phases.length) {
                         goToNextPhase();
                     } else {
                         toastr.warning(`Timer ${currentTimer.name} over!`);
@@ -215,7 +215,11 @@ const userTimer = () => {
  * Reset the timer and go to the next phase.
  */
 const goToNextPhase = () => {
-    let phase = currentTimer.phases[timerIndex++];
+    console.log("currentTimer");
+    console.log(currentTimer);
+    console.log("customTimer");
+    console.log(customTimer);
+    let phase = currentTimer.phases[phaseIndex++];
     customTimer = phase;
 	timer = phase.length.map(Number);
     direction = phase.direction === "up" ? "Stopwatch" : "Timer";
@@ -244,12 +248,10 @@ const goToNextPhase = () => {
  * @param {boolean} resetFirst - if start should reset the startTime
  */
 const start = (resetFirst) => {
-    console.log("Started...");
     if (resetFirst) {
         reset();
         startTime = Date.now();
     }
-    console.log("direction Timer?: " + $("#direction-select").val()==="Timer");
     pause(false);
 };
 
@@ -261,7 +263,7 @@ const start = (resetFirst) => {
 const reset = () => {
     timer = amount.slice(); // ['00', '00', '00', '00'];
     laps = [];
-    lap_lengths = [];
+    lapLengths = [];
     offset = 0;
 
     $("#lap-numbers").html("");
@@ -298,7 +300,7 @@ const setStyle = (el, color, style) => {
  * Best (shortest) lap time becomes italicized and green, worst (longest) becomes red and bold.
  */
 const recolorLaps = () => {
-    let amts = lap_lengths.map(reduceToMs);
+    let amts = lapLengths.map(reduceToMs);
 
     $(".lap-number").css('color', 'rgb(0, 0, 0)').css('font-style', '').css('font-weight', '');
     $(".lap-amount").css('color', 'rgb(0, 0, 0)').css('font-style', '').css('font-weight', '');
@@ -345,7 +347,7 @@ const currentLapLength = () => {
  */
 const addLap = () => {
     if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
-    lap_lengths.push(currentLapLength().slice());
+    lapLengths.push(currentLapLength().slice());
     laps.push(timer.slice());
     addLapDiv();
 };
@@ -356,6 +358,10 @@ const addLap = () => {
  * Activated by clicking on timer, or by keyboard shortcut.
  */
 const toggleTimer = () => {
+    console.log("currentTimer");
+    console.log(currentTimer);
+    console.log("customTimer");
+    console.log(customTimer);
     if (!$("#time").is(":visible")) { return } // can't start/pause while inputting timer
     if (isPaused) {
         if (pauseTime !== undefined) {

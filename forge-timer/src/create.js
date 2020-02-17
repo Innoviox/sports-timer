@@ -72,8 +72,7 @@ const next = (from, to) => {
 
 
 $(document).ready(() => {
-    $(".amount").numberFilter();
-
+    $(".amount").numberFilter(); //TODO what does this...do?
     $("#direction-select").change((e) => {
         $("#toggle-button").html("<u>S</u>tart");
         // disable lap button if type is timer, enable if type is stopwatch
@@ -124,35 +123,19 @@ $(document).ready(() => {
                 });
                 break;
             }
-            default: for(var i = 0; i < customTimers.length; i++){
-				if($("#direction-select").val() === customTimers[i].name){
-						currentTimer = customTimers[i];
-						timerIndex = 0;
-						goToNextPhase();
-						break;
-				}
-			}
-			break;
+            default: 
+                for (let i = 0; i < customTimers.length; i++) {
+            				if ($("#direction-select").val() === customTimers[i].name) {
+            						currentTimer = customTimers[i];
+            						timerIndex = 0;
+                        reset();
+            						goToNextPhase();
+            						break;
+            				}
+    			       }
+			          break;
         }
     });
-
-    //Form on 'Timer' page
-    // $("#create-form").on('submit', (e) => {
-    //     e.preventDefault();
-    //     direction = $("#direction-select").val();
-    //     amount = $(".amount").map(function() { // get user time input
-    //         let v = parseInt(this.value);
-    //         if (isNaN(v)) {
-    //             return 0;
-    //         }
-    //         return v
-    //     }).get();
-    //     if (direction === "Stopwatch") { amount = [0, 0, 0, 0]; }
-    //     $("#add-lap").attr('disabled', direction==="Timer");
-    //     // represent amount as milliseconds
-    //     total = reduceToMs(amount);
-    //     reset();
-    // });
           
     $("#create-custom-form").on('submit', (e) => {
         e.preventDefault();
@@ -169,7 +152,7 @@ $(document).ready(() => {
           for (row of $(".row")) { // Get the values for every phase (name, direction, length) and add to timerJSON
             if ($(row).is(":visible")) {
                 let phaseJSON = {
-                    "phase-name": row.getElementsByClassName("phase-name")[0].value,
+                    "phase-name": row.getElementsByClassName("phase-name")[0].value, //TODO check if all phases have non-empty names
                     "direction": row.getElementsByClassName("direction")[0].value,
                 };
                 let lengthHTMLCollection = row.getElementsByClassName("length")[0].children;
@@ -185,8 +168,7 @@ $(document).ready(() => {
             toastr.success('Have fun!', `Timer '${customName}' created!`);
             $(".swipe-tab")[0].click();
         } else {
-          //TODO visible display of improper name
-          //TODO edit already existing custom timer if name is redundant
+          //TODO edit already existing custom timer if name is already used
             let s = `The timer name \'${customName}\' is invalid.`;
             if (customName === "") {
                 s = "Must type a name.";
