@@ -119,3 +119,22 @@ $(document).ready(() => {
 	updateTimerLists();
 	addNewRow(false); // always starts with a row
 });
+
+/**
+ * Write 'customTimer' to a file and download to the user computer 
+ * (Not Implemented)
+ * @param {string} fileNameOut - name of the file to output the timers into
+ */
+const writeTimersToFile = (fileNameOut) => {
+	//TODO
+}
+
+/** 
+ * Given a file name, get the object with that file name
+ * and set 'customTimer' to that.
+ * (Not Implemented)
+ * @param {string} fileNameIn - name of the file to get the list of custom timer sfrom
+ */
+const uploadTimersFromFile = (fileNameIn) => {
+	//TODO
+}
