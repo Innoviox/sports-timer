@@ -28,17 +28,17 @@
         <article>
             <pre class="prettyprint source linenums"><code>let timer = []; // Stores the current time on the stopwatch
 let laps = []; // Stores the various lap times (times when user pressed 'Lap')
-let lap_lengths = [];
+let lapLengths = [];
 
 let startTime = Date.now(), pauseTime;
 let offset = 0; // Amount of time the user has paused the current stopwatch
 let isPaused = true; // If the timer is paused or not; starts paused
-let intervals = []; // the set of intervals
+let intervals = []; // the IFS of the generated intervals
 
 let direction = "Stopwatch"; // Direction (Stopwatch -> count up, Timer -> count down)
 let amount = [0, 0, 0, 0]; // Max amount for Timer, array of hours/minutes/seconds/ms
 let total = 0; // The amount array, reduced to milliseconds
-let timerIndex = 0;
+let phaseIndex = 0;
 let currentTimer = 0;
 let customTimer;
 
@@ -153,7 +153,12 @@ customTimers = [{
         ]
     }*/]; // A set of all the timers that have been created
 
-/** Pad {number} to {zeros} digits */
+/** 
+ * Pad {number} to {zeros} digits.
+ * @param {number} number - Number to pad
+ * @param {number} zeros - minimum length of output string
+ * @return {string} Number (in string form) with appropriate number of zeroes prepended
+ */
 const pad = (number, zeros) => {
     let string = number.toString();
     while (string.length &lt; zeros) {
@@ -163,16 +168,22 @@ const pad = (number, zeros) => {
 };
 
 /**
- * Pause timer and update timer text.
+ * Set state of 'pause' variable timer and update various HTML based on its state.
  * @param {boolean} paused - is timer currently paused?
  */
 const pause = (paused) => {
     isPaused = paused; // store paused state in global var
     let s = "";
     if (customTimer !== undefined) {
-        s = `(${timerIndex} / ${currentTimer.phases.length}) ${currentTimer.name} > ${customTimer['phase-name']}: `;
+        s = `(${phaseIndex} / ${currentTimer.phases.length}) ${currentTimer.name} > ${customTimer['phase-name']}: `;
     }
     $("#toggle-button").html(s + (paused ? "&lt;u>S&lt;/u>tart" : "&lt;u>P&lt;/u>ause"));
+    if ($("#direction-select").val()==="Timer") {
+        $("#add-lap").attr('disabled', true); // disable timer if timer is set to 'Timer' 
+    } else {
+        $("#add-lap").attr('disabled', paused); // disable timer if paused 
+    }
+
 };
 
 /** 
@@ -194,9 +205,12 @@ const tick = (el, max, padding, updateTime, index) => {
             number = total - currentTime - offset;
         }
         
-        if (direction === "Timer" &amp;&amp; number &lt;= 0) {
+        if (number &lt;= 0) {
             // pause time if timer finishes
-            pause(true);
+            if (direction === "Timer") {
+                pause(true);
+                pauseTime = undefined;
+            }
             number = 0;
         }
 
@@ -204,8 +218,8 @@ const tick = (el, max, padding, updateTime, index) => {
         timer[index] = number;
         $(el+".main").html(number);
 
-        let lap_n = currentLapLength()[index];
-        $(el+".lap").html(lap_n);
+        let lapN = currentLapLength()[index];
+        $(el+".lap").html(lapN);
     }, 1);
 };
 /*
@@ -214,13 +228,15 @@ const tick = (el, max, padding, updateTime, index) => {
 const userTimer = () => {
 	intervals.push(setInterval(() => {
         if (customTimer !== undefined &amp;&amp; !isPaused) {
-            if ((total - (Date.now() - startTime) &lt;= 10)) {
+            if ((total + offset - (Date.now() - startTime) &lt;= 5)) {
                 if (customTimer.length !== 0) {
-                    if (timerIndex &lt; currentTimer.phases.length) {
-                        goToNextPeriod();
+                    if (phaseIndex &lt; currentTimer.phases.length) {
+                        goToNextPhase();
                     } else {
                         toastr.warning(`Timer ${currentTimer.name} over!`);
                         currentTimer = undefined;
+                        pause(true);
+                        pauseTime = undefined;
                     }
                 }
             }
@@ -228,15 +244,18 @@ const userTimer = () => {
     }, 10));
 }
 
-/*
-* Reset the timer and go to the next phase.
-*/
-const goToNextPeriod = () => {
-    let phase = currentTimer.phases[timerIndex++];
+/**
+ * Reset the timer and go to the next phase.
+ */
+const goToNextPhase = () => {
+    console.log("currentTimer");
+    console.log(currentTimer);
+    console.log("customTimer");
+    console.log(customTimer);
+    let phase = currentTimer.phases[phaseIndex++];
     customTimer = phase;
 	timer = phase.length.map(Number);
     direction = phase.direction === "up" ? "Stopwatch" : "Timer";
-    $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
 
     $(".hours").html(timer[0]);
     $(".minutes").html(timer[1]);
@@ -244,7 +263,14 @@ const goToNextPeriod = () => {
     $(".ms").html(timer[3]);
 
     pause(true);
-    pauseTime = undefined;
+
+    if (direction === "Stopwatch") {
+        startTime = Date.now();
+        pauseTime = Date.now();
+    } else {
+        pauseTime = undefined;
+    }
+
 	toastr.info(`Starting phase ${phase['phase-name']}`);
     total = reduceToMs(timer);
 };
@@ -252,7 +278,6 @@ const goToNextPeriod = () => {
 
 /**
  * Start incrementing the stopwatch counters. 
- * Starts when the timer 
  * @param {boolean} resetFirst - if start should reset the startTime
  */
 const start = (resetFirst) => {
@@ -260,20 +285,18 @@ const start = (resetFirst) => {
         reset();
         startTime = Date.now();
     }
-
     pause(false);
 };
 
 /** 
- * Reset the stopwatch - reser counters to zero and stop updating the display.
- * Also clear lap-list
+ * Reset the stopwatch - reset counters to zero and stop updating the display.
+ * Also clear the lap list - both JS and HTML.  
  * Called when the user presses 'Reset'.
  */ 
 const reset = () => {
-    $("#add-lap").attr('disabled', $("#direction-select").val()==="Timer");
     timer = amount.slice(); // ['00', '00', '00', '00'];
     laps = [];
-    lap_lengths = [];
+    lapLengths = [];
     offset = 0;
 
     $("#lap-numbers").html("");
@@ -310,7 +333,7 @@ const setStyle = (el, color, style) => {
  * Best (shortest) lap time becomes italicized and green, worst (longest) becomes red and bold.
  */
 const recolorLaps = () => {
-    let amts = lap_lengths.map(reduceToMs);
+    let amts = lapLengths.map(reduceToMs);
 
     $(".lap-number").css('color', 'rgb(0, 0, 0)').css('font-style', '').css('font-weight', '');
     $(".lap-amount").css('color', 'rgb(0, 0, 0)').css('font-style', '').css('font-weight', '');
@@ -323,7 +346,7 @@ const recolorLaps = () => {
 
 /** 
  * Redisplays all laps into the &lt;div> display in the middle of the 'Timer' tab,
- * and applies appropriate styling to them (by calling recolorLaps).
+ * and applies appropriate styling to them (by calling recolorLaps()).
  */
 const addLapDiv = () => {
     if (direction !== "Stopwatch") { return } // ???
@@ -338,6 +361,10 @@ const addLapDiv = () => {
     recolorLaps();
 };
 
+/**
+ * Get the time of the current lap (in hh:mm:ss:cc format) 
+ * @return {number[]} the time between the time of the last lap and the current time.
+ */
 const currentLapLength = () => {
     let last = laps.slice(-1)[0]; // get last element
     let diff = reduceToMs(timer);
@@ -353,7 +380,7 @@ const currentLapLength = () => {
  */
 const addLap = () => {
     if (isPaused) return; // don't lap if timer is not running (todo: is this correct?)
-    lap_lengths.push(currentLapLength().slice());
+    lapLengths.push(currentLapLength().slice());
     laps.push(timer.slice());
     addLapDiv();
 };
@@ -364,6 +391,10 @@ const addLap = () => {
  * Activated by clicking on timer, or by keyboard shortcut.
  */
 const toggleTimer = () => {
+    console.log("currentTimer");
+    console.log(currentTimer);
+    console.log("customTimer");
+    console.log(customTimer);
     if (!$("#time").is(":visible")) { return } // can't start/pause while inputting timer
     if (isPaused) {
         if (pauseTime !== undefined) {
@@ -424,13 +455,13 @@ $(document).ready(() => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addLap">addLap</a></li><li><a href="global.html#addLapDiv">addLapDiv</a></li><li><a href="global.html#addNewRow">addNewRow</a></li><li><a href="global.html#addOption">addOption</a></li><li><a href="global.html#customTimerNames">customTimerNames</a></li><li><a href="global.html#deleteLastRow">deleteLastRow</a></li><li><a href="global.html#displayCustomTimer">displayCustomTimer</a></li><li><a href="global.html#inputFixer">inputFixer</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#onFinish">onFinish</a></li><li><a href="global.html#pad">pad</a></li><li><a href="global.html#pause">pause</a></li><li><a href="global.html#recolorLaps">recolorLaps</a></li><li><a href="global.html#reduceToMs">reduceToMs</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#tick">tick</a></li><li><a href="global.html#toggleTimer">toggleTimer</a></li><li><a href="global.html#totalFromMs">totalFromMs</a></li><li><a href="global.html#updateTimerLists">updateTimerLists</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addLap">addLap</a></li><li><a href="global.html#addLapDiv">addLapDiv</a></li><li><a href="global.html#currentLapLength">currentLapLength</a></li><li><a href="global.html#goToNextPhase">goToNextPhase</a></li><li><a href="global.html#pad">pad</a></li><li><a href="global.html#pause">pause</a></li><li><a href="global.html#recolorLaps">recolorLaps</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#tick">tick</a></li><li><a href="global.html#toggleTimer">toggleTimer</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Feb 14 2020 06:56:53 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Feb 18 2020 06:58:57 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
