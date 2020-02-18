@@ -126,6 +126,7 @@ $(document).ready(() => {
             default:
                 $('#create-timer').hide();
                 $('#time').show();
+                phaseIndex = 0;
                 for (let i = 0; i < customTimers.length; i++) {
             				if ($("#direction-select").val() === customTimers[i].name) {
             						currentTimer = customTimers[i];
