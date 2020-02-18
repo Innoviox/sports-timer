@@ -207,8 +207,10 @@ const userTimer = () => {
                     } else {
                         toastr.warning(`Timer ${currentTimer.name} over!`);
                         currentTimer = undefined;
+                        customTimer = undefined;
                         pause(true);
                         pauseTime = undefined;
+                        phaseIndex = 0;
                     }
                 }
             }
@@ -220,10 +222,6 @@ const userTimer = () => {
  * Reset the timer and go to the next phase.
  */
 const goToNextPhase = () => {
-    console.log("currentTimer");
-    console.log(currentTimer);
-    console.log("customTimer");
-    console.log(customTimer);
     let phase = currentTimer.phases[phaseIndex++];
     customTimer = phase;
 	timer = phase.length.map(Number);
