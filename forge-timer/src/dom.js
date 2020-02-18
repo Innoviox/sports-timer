@@ -177,10 +177,12 @@ const tick = (el, max, padding, updateTime, index) => {
             number = total - currentTime - offset;
         }
         
-        if (direction === "Timer" && number <= 0) {
+        if (number <= 0) {
             // pause time if timer finishes
-            pause(true);
-            pauseTime = undefined;
+            if (direction === "Timer") {
+                pause(true);
+                pauseTime = undefined;
+            }
             number = 0;
         }
 
@@ -198,13 +200,15 @@ const tick = (el, max, padding, updateTime, index) => {
 const userTimer = () => {
 	intervals.push(setInterval(() => {
         if (customTimer !== undefined && !isPaused) {
-            if ((total - (Date.now() - startTime) <= 10)) {
+            if ((total + offset - (Date.now() - startTime) <= 5)) {
                 if (customTimer.length !== 0) {
                     if (phaseIndex < currentTimer.phases.length) {
                         goToNextPhase();
                     } else {
                         toastr.warning(`Timer ${currentTimer.name} over!`);
                         currentTimer = undefined;
+                        pause(true);
+                        pauseTime = undefined;
                     }
                 }
             }
