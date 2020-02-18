@@ -123,7 +123,9 @@ $(document).ready(() => {
                 });
                 break;
             }
-            default: 
+            default:
+                $('#create-timer').hide();
+                $('#time').show();
                 for (let i = 0; i < customTimers.length; i++) {
             				if ($("#direction-select").val() === customTimers[i].name) {
             						currentTimer = customTimers[i];
