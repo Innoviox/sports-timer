@@ -361,10 +361,6 @@ const addLap = () => {
  * Activated by clicking on timer, or by keyboard shortcut.
  */
 const toggleTimer = () => {
-    console.log("currentTimer");
-    console.log(currentTimer);
-    console.log("customTimer");
-    console.log(customTimer);
     if (!$("#time").is(":visible")) { return } // can't start/pause while inputting timer
     if (isPaused) {
         if (pauseTime !== undefined) {
