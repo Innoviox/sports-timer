@@ -180,6 +180,7 @@ const tick = (el, max, padding, updateTime, index) => {
         if (direction === "Timer" && number <= 0) {
             // pause time if timer finishes
             pause(true);
+            pauseTime = undefined;
             number = 0;
         }
 
